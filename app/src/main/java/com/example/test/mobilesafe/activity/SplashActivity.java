@@ -1,4 +1,4 @@
-package com.example.test.mobilesafe;
+package com.example.test.mobilesafe.activity;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,6 +12,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.test.mobilesafe.R;
 
 public class SplashActivity extends AppCompatActivity {
     private LinearLayout ll_splash;
