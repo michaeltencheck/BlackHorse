@@ -6,6 +6,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -13,21 +14,22 @@ import java.io.InputStream;
  */
 public class UpdateInfoparser {
     private UpdateInfo updateInfo;
-    public UpdateInfo parseUpdateInfo(InputStream inputStream) {
+    public UpdateInfo parseUpdateInfo(InputStream inputStream) throws IOException {
         try {
             XmlPullParserFactory xmlPullParserFactory = XmlPullParserFactory.newInstance();
             xmlPullParserFactory.setNamespaceAware(true);
             XmlPullParser xmlPullParser = xmlPullParserFactory.newPullParser();
             xmlPullParser.setInput(inputStream, "utf-8");
             int eventType = xmlPullParser.getEventType();
-            while (eventType != xmlPullParser.END_TAG) {
+            while (eventType != xmlPullParser.END_DOCUMENT) {
                 if ("version".equals(eventType)) {
-                    updateInfo.setVersion(xmlPullParser.getText());
+                    updateInfo.setVersion(xmlPullParser.nextText());
                 }else if ("description".equals(eventType)) {
-                    updateInfo.setDesciption(xmlPullParser.getText());
+                    updateInfo.setDesciption(xmlPullParser.nextText());
                 }else if ("apkurl".equals(eventType)) {
-                    updateInfo.setApkurl(xmlPullParser.getText());
+                    updateInfo.setApkurl(xmlPullParser.nextText());
                 }
+                eventType = xmlPullParser.next();
             }
             return updateInfo;
         } catch (XmlPullParserException e) {

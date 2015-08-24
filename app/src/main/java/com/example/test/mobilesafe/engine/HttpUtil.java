@@ -11,7 +11,7 @@ import java.net.URL;
  * Created by test on 8/23/2015.
  */
 public class HttpUtil {
-    private static InputStream connectWebsite(URL url) {
+    public static InputStream connectWebsite(URL url) {
         try {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
