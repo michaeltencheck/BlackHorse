@@ -4,10 +4,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -15,21 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
-import com.example.test.mobilesafe.domain.UpdateInfo;
-import com.example.test.mobilesafe.engine.HttpUtil;
-import com.example.test.mobilesafe.engine.UpdateInfoparser;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class SplashActivity extends AppCompatActivity {
     private LinearLayout ll_splash;
     private TextView tv_splash_version;
-    private URL url;
-    private InputStream inputStream;
-    private UpdateInfo updateInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +34,6 @@ public class SplashActivity extends AppCompatActivity {
 
         tv_splash_version.setText("Version " + getVersionName());
 
-        String path = "http://localhost:8080";
-        try {
-            url = new URL(path);
-            inputStream = HttpUtil.connectWebsite(url);
-            UpdateInfoparser updateInfoparser = new UpdateInfoparser();
-            try {
-                updateInfo = updateInfoparser.parseUpdateInfo(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        String version = updateInfo.getVersion();
-        Log.d("aaaa", version);
     }
 
     private String getVersionName() {
