@@ -18,7 +18,7 @@ public class UpdateInfoParser {
         XmlPullParser xmlPullParser = Xml.newPullParser();
         xmlPullParser.setInput(inputStream, "utf-8");
         int eventType = xmlPullParser.getEventType();
-        while (eventType != xmlPullParser.END_DOCUMENT) {
+        while (eventType != XmlPullParser.END_DOCUMENT) {
             switch (eventType) {
                 case XmlPullParser.START_TAG:
                     if ("version".equals(xmlPullParser.getName())) {
@@ -36,8 +36,7 @@ public class UpdateInfoParser {
                     break;
             }
             eventType = xmlPullParser.next();
-            return updateInfo;
         }
-        return null;
+        return updateInfo;
     }
 }
