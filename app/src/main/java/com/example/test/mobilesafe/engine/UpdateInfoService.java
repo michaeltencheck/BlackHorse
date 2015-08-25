@@ -1,6 +1,10 @@
 package com.example.test.mobilesafe.engine;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.test.mobilesafe.domain.UpdateInfo;
 
@@ -20,7 +24,7 @@ public class UpdateInfoService {
         this.context = context;
     }
 
-    public UpdateInfo getUpdateInfo(final int urlId) throws Exception{
+    public void getUpdateInfo(final int urlId) throws Exception{
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -32,12 +36,25 @@ public class UpdateInfoService {
                     httpURLConnection.setConnectTimeout(8888);
                     InputStream inputStream = httpURLConnection.getInputStream();
                     updateInfo = UpdateInfoParser.parseUpdateInfo(inputStream);
+                    SharedPreferences.Editor editor =
+                            PreferenceManager.getDefaultSharedPreferences(context).edit();
+                    editor.putString("version", updateInfo.getVersion());
+                    editor.putString("description", updateInfo.getDesciption());
+                    editor.putString("apkurl", updateInfo.getApkurl());
+                    editor.commit();
+                    /*PreferenceManager preferenceManager = (PreferenceManager)
+                            PreferenceManager.getDefaultSharedPreferences(context);
+                    SharedPreferences sharedPreferences = preferenceManager.getSharedPreferences();
+                    sharedPreferences.edit().putString("version", updateInfo.getVersion());
+                    sharedPreferences.edit().putString("description", updateInfo.getDesciption());
+                    sharedPreferences.edit().putString("apkurl", updateInfo.getApkurl());
+                    sharedPreferences.edit().commit();*/
+                    Log.i("aaaa", updateInfo.getDesciption());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-        return updateInfo;
         /*String path = context.getResources().getString(urlId);
         URL url = new URL(path);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

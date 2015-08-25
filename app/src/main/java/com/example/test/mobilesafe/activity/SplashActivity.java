@@ -1,9 +1,14 @@
 package com.example.test.mobilesafe.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -13,10 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.domain.UpdateInfo;
+import com.example.test.mobilesafe.engine.UpdateInfoService;
 
 public class SplashActivity extends AppCompatActivity {
+    private static final String TAG = "SplashActivity";
     private LinearLayout ll_splash;
     private TextView tv_splash_version;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,49 @@ public class SplashActivity extends AppCompatActivity {
 
         tv_splash_version.setText("Version " + getVersionName());
 
+        if (isNeedUpdate(getVersionName())) {
+            showDialog();
+        }
+
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setIcon(R.drawable.icon5);
+        builder.setTitle("升级提醒");
+        builder.setMessage(sp.getString("description", ""));
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i(TAG, "正在下载" + sp.getString("apkurl", ""));
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    private boolean isNeedUpdate(String versionName)  {
+        UpdateInfoService service = new UpdateInfoService(this);
+
+        try {
+            service.getUpdateInfo(R.string.apkurl);
+            sp = PreferenceManager.getDefaultSharedPreferences(this);
+            String serviceVersion = sp.getString("version", "");
+            if (versionName.equals(serviceVersion)) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private String getVersionName() {
