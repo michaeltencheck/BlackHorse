@@ -10,7 +10,7 @@ import java.net.URL;
  * Created by test on 8/26/2015.
  */
 public class DownloadFileTask {
-    public File getFile(String downloadPath, String filePath) throws Exception {
+    public static File getFile(String downloadPath, String filePath) throws Exception {
         URL url = new URL(downloadPath);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.domain.UpdateInfo;
+import com.example.test.mobilesafe.engine.DownloadFileTask;
 import com.example.test.mobilesafe.engine.UpdateInfoService;
 import com.example.test.mobilesafe.engine.UpdateInfoServiceByUpdateInfo;
 
@@ -72,6 +73,28 @@ public class SplashActivity extends AppCompatActivity {
             }
         }).start();
         return updateInfo;
+    }
+
+    private class downloadThread implements Runnable {
+        private String path;
+        private String filePath;
+
+        public downloadThread(String path, String filePath) {
+            this.path = path;
+            this.filePath = filePath;
+        }
+
+        @Override
+        public void run() {
+            try {
+                DownloadFileTask.getFile(path, filePath);
+                Log.i(TAG, "downloading, please wait");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i(TAG, "downloading mistake");
+                loadMainUI();
+            }
+        }
     }
 
     private void loadMainUI() {
