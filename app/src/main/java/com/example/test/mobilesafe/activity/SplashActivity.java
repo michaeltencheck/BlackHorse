@@ -2,6 +2,7 @@ package com.example.test.mobilesafe.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -49,6 +50,12 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    private void loadMainUI() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
@@ -64,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                loadMainUI();
             }
         });
         builder.create().show();
@@ -78,13 +85,16 @@ public class SplashActivity extends AppCompatActivity {
             sp = PreferenceManager.getDefaultSharedPreferences(this);
             String serviceVersion = sp.getString("version", "");
             if (versionName.equals(serviceVersion)) {
+                loadMainUI();
                 return false;
+
             } else {
                 return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        loadMainUI();
         return false;
     }
 
