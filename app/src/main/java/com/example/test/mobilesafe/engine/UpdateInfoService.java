@@ -43,14 +43,6 @@ public class UpdateInfoService {
                     editor.putString("apkurl", updateInfo.getApkurl());
                     editor.commit();
                     Log.i("aaaa", updateInfo.getVersion());
-                    /*PreferenceManager preferenceManager = (PreferenceManager)
-                            PreferenceManager.getDefaultSharedPreferences(context);
-                    SharedPreferences sharedPreferences = preferenceManager.getSharedPreferences();
-                    sharedPreferences.edit().putString("version", updateInfo.getVersion());
-                    sharedPreferences.edit().putString("description", updateInfo.getDesciption());
-                    sharedPreferences.edit().putString("apkurl", updateInfo.getApkurl());
-                    sharedPreferences.edit().commit();*/
-                    Log.i("aaaa", updateInfo.getDesciption());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

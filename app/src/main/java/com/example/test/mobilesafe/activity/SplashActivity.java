@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
-import com.example.test.mobilesafe.domain.UpdateInfo;
 import com.example.test.mobilesafe.engine.UpdateInfoService;
 
 public class SplashActivity extends AppCompatActivity {
@@ -75,6 +74,12 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    private boolean isNeedUpdateByUpdateInfo(String localVersion) {
+        UpdateInfoService updateInfoService = new UpdateInfoService(this);
+        Thread thread = new Thread();
+        return false;
     }
 
     private boolean isNeedUpdate(String versionName)  {
