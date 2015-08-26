@@ -19,13 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.domain.UpdateInfo;
 import com.example.test.mobilesafe.engine.UpdateInfoService;
+import com.example.test.mobilesafe.engine.UpdateInfoServiceByUpdateInfo;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
     private LinearLayout ll_splash;
     private TextView tv_splash_version;
     private SharedPreferences sp;
+    private UpdateInfo updateInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,55 @@ public class SplashActivity extends AppCompatActivity {
             showDialog();
         }
 
+        /*if (isNeedUpdateByUpdateInfo(getVersionName())) {
+            showDialog2();
+        }*/
+
+    }
+
+    private UpdateInfo updateInfoThread() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UpdateInfoServiceByUpdateInfo updateInfoServiceByUpdateInfo =
+                        new UpdateInfoServiceByUpdateInfo(getApplicationContext());
+                try {
+                    updateInfo = updateInfoServiceByUpdateInfo.getUpdateInfo(R.string.apkurl);
+                    Log.i("dddd", updateInfo.getVersion());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        return updateInfo;
     }
 
     private void loadMainUI() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void showDialog2() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setIcon(R.drawable.icon5);
+        builder.setTitle("升级提醒");
+        builder.setMessage(updateInfo.getDesciption());
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i(TAG, "正在下载" + updateInfo.getApkurl());
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loadMainUI();
+            }
+        });
+        builder.create().show();
     }
 
     private void showDialog() {
@@ -77,9 +123,13 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean isNeedUpdateByUpdateInfo(String localVersion) {
-        UpdateInfoService updateInfoService = new UpdateInfoService(this);
-        Thread thread = new Thread();
-        return false;
+        updateInfoThread();
+        Log.i("aaaa", updateInfo.getVersion());
+        if (localVersion.equals(updateInfo.getVersion())) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private boolean isNeedUpdate(String versionName)  {
