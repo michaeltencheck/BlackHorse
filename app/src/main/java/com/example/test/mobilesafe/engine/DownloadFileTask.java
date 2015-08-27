@@ -15,6 +15,7 @@ public class DownloadFileTask {
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");
         httpURLConnection.setConnectTimeout(8888);
+        httpURLConnection.setReadTimeout(8888);
         if (httpURLConnection.getResponseCode() == 200) {
             InputStream inputStream = httpURLConnection.getInputStream();
             File file = new File(filePath);

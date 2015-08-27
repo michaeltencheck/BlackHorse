@@ -96,7 +96,7 @@ public class SplashActivity extends AppCompatActivity {
             try {
                 File file = DownloadFileTask.getFile(path, filePath);
                 progressDialog.dismiss();
-                Log.i(TAG, "downloading, please wait");
+                Log.i(TAG, "thread running");
             } catch (Exception e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
@@ -143,11 +143,14 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "正在下载" + sp.getString("apkurl", ""));
+                String path = getApplicationContext().getResources().getString(R.string.apkdownload);
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                Log.i(TAG, filePath);
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                     progressDialog.show();
-                    DownloadThread downloadThread =
-                            new DownloadThread(sp.getString("apkurl", ""), "/sdcard/new.apk");
+                    DownloadThread downloadThread = new DownloadThread(path, filePath + "/bignewone.apk");
                     new Thread(downloadThread).start();
+                    Log.i(TAG, "download successful");
                 } else {
                     Log.i(TAG, "can not store");
                     loadMainUI();
