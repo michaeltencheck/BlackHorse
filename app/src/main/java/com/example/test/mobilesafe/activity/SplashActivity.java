@@ -57,6 +57,7 @@ public class SplashActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("downloading, please wait");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
         ll_splash = (LinearLayout) findViewById(R.id.ll_splash);
 
@@ -125,7 +126,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                File file = DownloadFileTask.getFile(path, filePath);
+                File file = DownloadFileTask.getFile(path, filePath, progressDialog);
                 progressDialog.dismiss();
                 Log.i(TAG, "thread running");
                 install(file);
