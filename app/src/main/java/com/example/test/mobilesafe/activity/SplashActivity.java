@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +38,15 @@ public class SplashActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private ProgressDialog progressDialog;
     private UpdateInfo updateInfo;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (isNeedUpdate(getVersionName())) {
+                showDialog();
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +66,33 @@ public class SplashActivity extends AppCompatActivity {
 
         tv_splash_version.setText("Version " + getVersionName());
 
-        if (isNeedUpdate(getVersionName())) {
-            showDialog();
-        }
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    sleep(3333);
+                    handler.sendEmptyMessage(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+
 
         /*if (isNeedUpdateByUpdateInfo(getVersionName())) {
             showDialog2();
         }*/
 
+    }
+
+    private void install(File file) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        finish();
+        startActivity(intent);
     }
 
     private UpdateInfo updateInfoThread() {
@@ -97,6 +128,7 @@ public class SplashActivity extends AppCompatActivity {
                 File file = DownloadFileTask.getFile(path, filePath);
                 progressDialog.dismiss();
                 Log.i(TAG, "thread running");
+                install(file);
             } catch (Exception e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
@@ -148,7 +180,7 @@ public class SplashActivity extends AppCompatActivity {
                 Log.i(TAG, filePath);
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                     progressDialog.show();
-                    DownloadThread downloadThread = new DownloadThread(path, filePath + "/bignewone.apk");
+                    DownloadThread downloadThread = new DownloadThread(path, filePath + "/mobilesafe.apk");
                     new Thread(downloadThread).start();
                     Log.i(TAG, "download successful");
                 } else {
