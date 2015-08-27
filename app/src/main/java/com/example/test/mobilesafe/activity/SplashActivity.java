@@ -1,11 +1,13 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,11 +26,14 @@ import com.example.test.mobilesafe.engine.DownloadFileTask;
 import com.example.test.mobilesafe.engine.UpdateInfoService;
 import com.example.test.mobilesafe.engine.UpdateInfoServiceByUpdateInfo;
 
+import java.io.File;
+
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
     private LinearLayout ll_splash;
     private TextView tv_splash_version;
     private SharedPreferences sp;
+    private ProgressDialog progressDialog;
     private UpdateInfo updateInfo;
 
     @Override
@@ -38,6 +43,8 @@ public class SplashActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("downloading, please wait");
         tv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
         ll_splash = (LinearLayout) findViewById(R.id.ll_splash);
 
@@ -75,11 +82,11 @@ public class SplashActivity extends AppCompatActivity {
         return updateInfo;
     }
 
-    private class downloadThread implements Runnable {
+    private class DownloadThread implements Runnable {
         private String path;
         private String filePath;
 
-        public downloadThread(String path, String filePath) {
+        public DownloadThread(String path, String filePath) {
             this.path = path;
             this.filePath = filePath;
         }
@@ -87,10 +94,12 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                DownloadFileTask.getFile(path, filePath);
+                File file = DownloadFileTask.getFile(path, filePath);
+                progressDialog.dismiss();
                 Log.i(TAG, "downloading, please wait");
             } catch (Exception e) {
                 e.printStackTrace();
+                progressDialog.dismiss();
                 Log.i(TAG, "downloading mistake");
                 loadMainUI();
             }
@@ -134,6 +143,15 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.i(TAG, "正在下载" + sp.getString("apkurl", ""));
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    progressDialog.show();
+                    DownloadThread downloadThread =
+                            new DownloadThread(sp.getString("apkurl", ""), "/sdcard/new.apk");
+                    new Thread(downloadThread).start();
+                } else {
+                    Log.i(TAG, "can not store");
+                    loadMainUI();
+                }
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
