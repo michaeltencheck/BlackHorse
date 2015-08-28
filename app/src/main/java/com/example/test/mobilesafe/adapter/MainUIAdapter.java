@@ -1,6 +1,7 @@
 package com.example.test.mobilesafe.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +25,14 @@ public class MainUIAdapter extends BaseAdapter{
             R.drawable.widget07, R.drawable.widget08, R.drawable.widget01};
     private Context context;
     private LayoutInflater inflater;
+    private SharedPreferences sp;
+    private static ImageView imageView;
+    private static TextView textView;
 
     public MainUIAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
+        sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -49,10 +54,16 @@ public class MainUIAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.i("aaaa", "getView" + position);
         View view = inflater.inflate(R.layout.main_item, null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.iv_function);
-        TextView textView = (TextView) view.findViewById(R.id.tv_functionText);
+        imageView = (ImageView) view.findViewById(R.id.iv_function);
+        textView = (TextView) view.findViewById(R.id.tv_functionText);
         imageView.setImageResource(picID[position]);
-        textView.setText(names[position]);
+        if (position == 0) {
+            String chagedName = sp.getString("changed name", "");
+            Log.i("MainActivity", chagedName);
+            textView.setText(chagedName);
+        } else {
+            textView.setText(names[position]);
+        }
         return view;
     }
 }
