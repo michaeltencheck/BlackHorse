@@ -1,6 +1,7 @@
 package com.example.test.mobilesafe.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class MainUIAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i("aaaa", "getView" + position);
         View view = inflater.inflate(R.layout.main_item, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.iv_function);
         TextView textView = (TextView) view.findViewById(R.id.tv_functionText);
