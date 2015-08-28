@@ -4,15 +4,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.GridView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.adapter.MainUIAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    private GridView gv_main;
+    private MainUIAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gv_main = (GridView) findViewById(R.id.gv_main);
+        adapter = new MainUIAdapter(this);
+        gv_main.setAdapter(adapter);
     }
 
     @Override

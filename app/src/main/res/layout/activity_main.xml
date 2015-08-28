@@ -2,14 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
     android:orientation="vertical"
     tools:context="com.example.test.mobilesafe.activity.MainActivity">
 
-    <GridLayout
-        android:id="@+id/gl_main"
+    <GridView
+        android:id="@+id/gv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="3">
-    </GridLayout>
+        android:numColumns="3">
+    </GridView>
 
 </LinearLayout>
