@@ -2,6 +2,7 @@ package com.example.test.mobilesafe.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (position) {
             case 0:
                 Log.i(TAG, "进入手机防盗");
+                Intent intent = new Intent(this, LostProtectActivity.class);
+                startActivity(intent);
                 break;
         }
     }
