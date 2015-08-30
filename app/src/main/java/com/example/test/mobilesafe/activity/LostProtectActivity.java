@@ -19,7 +19,7 @@ public class LostProtectActivity extends AppCompatActivity {
 
 
         if (isPwdSetUp()) {
-            
+
         }
 
     }
