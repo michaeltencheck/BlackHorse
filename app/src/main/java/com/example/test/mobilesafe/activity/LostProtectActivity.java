@@ -1,5 +1,6 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,11 +9,30 @@ import android.view.MenuItem;
 import com.example.test.mobilesafe.R;
 
 public class LostProtectActivity extends AppCompatActivity {
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_protect);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+
+
+        if (isPwdSetUp()) {
+            
+        }
+
+    }
+
+    private boolean isPwdSetUp() {
+        String password = sp.getString("password", null);
+        if (password == null) {
+            return false;
+        }else if (password == "") {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
