@@ -1,5 +1,6 @@
 package com.example.test.mobilesafe.activity;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,9 +20,20 @@ public class LostProtectActivity extends AppCompatActivity {
 
 
         if (isPwdSetUp()) {
-
+            showPwdSetUp();
+        } else {
+            showPwdNotSetUp();
         }
 
+    }
+
+    private void showPwdNotSetUp() {
+        Dialog dialog = new Dialog(this, R.style.MyDialog);
+        dialog.setContentView(R.layout.pwd_not_setup);
+        dialog.show();
+    }
+
+    private void showPwdSetUp() {
     }
 
     private boolean isPwdSetUp() {
