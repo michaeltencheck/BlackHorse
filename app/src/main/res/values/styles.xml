@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="MyDialog" parent="Theme.AppCompat.Dialog">
+    <style name="MyDialog" parent="Base.Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@drawable/item_background</item>
     </style>

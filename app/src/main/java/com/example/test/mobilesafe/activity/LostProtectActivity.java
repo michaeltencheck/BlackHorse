@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.example.test.mobilesafe.R;
 
@@ -28,9 +29,15 @@ public class LostProtectActivity extends AppCompatActivity {
     }
 
     private void showPwdNotSetUp() {
-        Dialog dialog = new Dialog(this, R.style.MyDialog);
+        /*Dialog dialog = new Dialog(this, R.style.MyDialog);
+        dialog.setContentView(R.layout.pwd_not_setup);
+        dialog.show();*/
+        Dialog dialog = new Dialog(this);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setTitle("设置密码");
         dialog.setContentView(R.layout.pwd_not_setup);
         dialog.show();
+
     }
 
     private void showPwdSetUp() {
