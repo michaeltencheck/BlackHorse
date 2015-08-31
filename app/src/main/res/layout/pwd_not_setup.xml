@@ -19,7 +19,7 @@
 
     <EditText
         android:id="@+id/et_pwd"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:hint="点击设定密码"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -32,10 +32,30 @@
 
     <EditText
         android:id="@+id/et_pwdConfirm"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:hint="点击再次确认密码"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_ok"
+            android:text="Ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
