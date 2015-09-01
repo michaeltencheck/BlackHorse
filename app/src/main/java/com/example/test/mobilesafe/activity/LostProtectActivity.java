@@ -114,8 +114,12 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                     pwdConfirm.setText("");
                     return;
                 }
+                break;
             case R.id.bt_cancel:
                 dialog.dismiss();
+                break;
+            default:
+                break;
         }
     }
 }
