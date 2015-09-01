@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.util.MD5Encode;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LostProtectActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "LostProtectActivity";
@@ -104,6 +108,8 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     public void onClick(View v) {
 
@@ -117,7 +123,7 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                     return;
                 }else if (pwdText.equals(pwdConfirmText)) {
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("password", pwdConfirmText);
+                    editor.putString("password", MD5Encode.MD5Encoding(pwdConfirmText));
                     editor.commit();
                 } else {
                     Log.i(TAG, "密码不同，请重新输入");
@@ -132,10 +138,12 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.bt_pwdOk:
                 String pwd = pwdInput.getText().toString().trim();
+                String pwdMD5 = MD5Encode.MD5Encoding(pwd);
                 String pwdOrigin = sp.getString("password", "");
-                if (pwd.equals(pwdOrigin)) {
+                if (pwdMD5.equals(pwdOrigin)) {
                     Log.i(TAG, "进入防盗界面");
                     Toast.makeText(this, "进入防盗界面", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
                 } else {
                     pwdInput.setText("");
                     Log.i(TAG, "密码不正确，请重新输入");
