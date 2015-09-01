@@ -18,13 +18,13 @@
 
         <Button
             android:id="@+id/bt_pwdOk"
-            android:text="Cancel"
+            android:text="Ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/bt_pwdCancel"
-            android:text="Ok"
+            android:text="Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -19,6 +19,7 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
     private SharedPreferences sp;
     private EditText pwd;
     private EditText pwdConfirm;
+    private EditText pwdInput;
     private Dialog dialog;
 
     @Override
@@ -58,6 +59,16 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showPwdSetUp() {
+        dialog = new Dialog(this);
+        View view = View.inflate(this, R.layout.pwd_setup, null);
+        dialog.setContentView(view);
+        dialog.setTitle("请输入密码");
+        pwdInput = (EditText) view.findViewById(R.id.et_pwdInput);
+        Button bt_ok = (Button) view.findViewById(R.id.bt_pwdOk);
+        Button bt_cancel = (Button) view.findViewById(R.id.bt_pwdCancel);
+        bt_ok.setOnClickListener(this);
+        bt_cancel.setOnClickListener(this);
+        dialog.show();
     }
 
     private boolean isPwdSetUp() {
@@ -95,10 +106,11 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        String pwdText = pwd.getText().toString().trim();
-        String pwdConfirmText = pwdConfirm.getText().toString().trim();
+
         switch (v.getId()) {
             case R.id.bt_ok:
+                String pwdText = pwd.getText().toString().trim();
+                String pwdConfirmText = pwdConfirm.getText().toString().trim();
                 if ("".equals(pwdText) || "".equals(pwdConfirmText)) {
                     Log.i(TAG, "密码不能为空");
                     Toast.makeText(this, "密码不能为空，请重新输入", Toast.LENGTH_LONG).show();
@@ -116,6 +128,22 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.bt_cancel:
+                dialog.dismiss();
+                break;
+            case R.id.bt_pwdOk:
+                String pwd = pwdInput.getText().toString().trim();
+                String pwdOrigin = sp.getString("password", "");
+                if (pwd.equals(pwdOrigin)) {
+                    Log.i(TAG, "进入防盗界面");
+                    Toast.makeText(this, "进入防盗界面", Toast.LENGTH_LONG).show();
+                } else {
+                    pwdInput.setText("");
+                    Log.i(TAG, "密码不正确，请重新输入");
+                    Toast.makeText(this, "密码不正确，请重新输入", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                break;
+            case R.id.bt_pwdCancel:
                 dialog.dismiss();
                 break;
             default:
