@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundcolor"
+    tools:context="com.example.test.mobilesafe.activity.SetUpwizard">
+
+    <TextView
+        style="@style/wizard_title"
+        android:text="1.欢迎使用防盗设置" />
+
+    <ImageView
+        style="@style/wizard_devide_line"/>
+
+    <TextView
+        style="@style/wizard_message"
+        android:text="防盗卫士保护您："
+         />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/wizard_star" />
+
+        <TextView
+            android:text="sim卡变更报警"
+            style="@style/wizard_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/wizard_star" />
+
+        <TextView
+            android:text="gps追踪"
+            style="@style/wizard_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/wizard_star" />
+
+        <TextView
+            android:text="销毁数据"
+            style="@style/wizard_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/wizard_star" />
+
+        <TextView
+            android:text="远程锁屏"
+            style="@style/wizard_content" />
+
+    </LinearLayout>
+</LinearLayout>

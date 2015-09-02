@@ -125,6 +125,11 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("password", MD5Encode.MD5Encoding(pwdConfirmText));
                     editor.commit();
+                    if (isPwdSetUp()) {
+
+                    } else {
+
+                    }
                 } else {
                     Log.i(TAG, "密码不同，请重新输入");
                     Toast.makeText(this, "密码不同，请重新输入", Toast.LENGTH_LONG).show();
@@ -157,5 +162,10 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
             default:
                 break;
         }
+    }
+
+    private boolean isSetUp() {
+
+        return false;
     }
 }

@@ -9,5 +9,41 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@drawable/item_background</item>
     </style>
+    
+    <style name="wizard_title">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/textcolorwizard</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wizard_devide_line">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:src">@drawable/devide_line</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wizard_star">
+        <item name="android:src">@android:drawable/star_big_on</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wizard_content">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">@color/textcolorwizard</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="wizard_message">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/textcolorwizard</item>
+    </style>
 
 </resources>
