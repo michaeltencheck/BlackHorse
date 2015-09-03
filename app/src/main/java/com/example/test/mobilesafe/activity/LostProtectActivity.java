@@ -1,6 +1,7 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -147,6 +148,8 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                 String pwdOrigin = sp.getString("password", "");
                 if (pwdMD5.equals(pwdOrigin)) {
                     Log.i(TAG, "进入防盗界面");
+                    Intent intent = new Intent(LostProtectActivity.this, SetUpwizard.class);
+                    this.startActivity(intent);
                     Toast.makeText(this, "进入防盗界面", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                 } else {

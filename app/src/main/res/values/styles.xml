@@ -46,4 +46,31 @@
         <item name="android:textColor">@color/textcolorwizard</item>
     </style>
 
+    <style name="wizard_online_point">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@android:drawable/presence_online</item>
+    </style>
+
+    <style name="wizard_offline_point">
+        <item name="android:src">@android:drawable/presence_offline</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="wizard_pic">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="wizard_next_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableRight">@drawable/next</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:text">NEXT</item>
+    </style>
+
 </resources>

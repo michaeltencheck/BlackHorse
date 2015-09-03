@@ -77,4 +77,37 @@
             style="@style/wizard_content" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/wizard_online_point"/>
+
+        <ImageView
+            style="@style/wizard_offline_point" />
+
+        <ImageView
+            style="@style/wizard_offline_point" />
+
+        <ImageView
+            style="@style/wizard_offline_point" />
+
+    </LinearLayout>
+
+    <ImageView
+        style="@style/wizard_pic"
+        android:src="@drawable/setup1" />
+
+    <RelativeLayout
+        android:layout_marginTop="23dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="@style/wizard_next_button"/>
+    </RelativeLayout>
 </LinearLayout>
