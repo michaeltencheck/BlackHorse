@@ -103,11 +103,11 @@
         android:src="@drawable/setup1" />
 
     <RelativeLayout
-        android:layout_marginTop="23dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/bt_wizard_right"
             style="@style/wizard_next_button"/>
     </RelativeLayout>
 </LinearLayout>

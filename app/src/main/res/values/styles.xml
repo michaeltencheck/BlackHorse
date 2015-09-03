@@ -69,8 +69,18 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawableRight">@drawable/next</item>
+        <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:text">NEXT</item>
+        <item name="android:text">下一步</item>
+    </style>
+
+    <style name="wizard_previous_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableLeft">@drawable/previous</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:text">上一步</item>
     </style>
 
 </resources>

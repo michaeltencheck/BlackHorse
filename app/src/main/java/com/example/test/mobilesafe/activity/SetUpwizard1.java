@@ -1,37 +1,24 @@
 package com.example.test.mobilesafe.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.test.mobilesafe.R;
 
-public class SetUpwizard extends AppCompatActivity {
-    private Button next;
+public class SetUpwizard1 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_upwizard);
-
-        next = (Button) findViewById(R.id.bt_wizard_right);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SetUpwizard.this, SetUpwizard1.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_set_upwizard1);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_set_upwizard, menu);
+        getMenuInflater().inflate(R.menu.menu_set_upwizard1, menu);
         return true;
     }
 
