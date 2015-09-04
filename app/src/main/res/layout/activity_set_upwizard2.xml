@@ -8,7 +8,7 @@
 
     <TextView
         style="@style/wizard_title"
-        android:text="2.手机卡绑定" />
+        android:text="3.设置安全号码" />
 
     <ImageView
         style="@style/wizard_devide_line"/>
@@ -16,27 +16,20 @@
     <TextView
         style="@style/wizard_message"
         android:text=
-            "每次开机重启后，如sim卡发生改变，自动发送报警短信" />
+            "sim更换后，会自动发送短信报警到该号码" />
 
-    <LinearLayout
+    <EditText
         android:layout_marginTop="30dp"
-        android:orientation="horizontal"
+        android:id="@+id/et_tel_number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" />
 
-        <Button
-            android:text="绑定sim卡"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content" />
-
-        <CheckBox
-            android:layout_marginLeft="10dp"
-            android:text="暂未绑定"
-            android:textColor="#ffeeeeee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/bt_choose_number"
+        android:text="请选择联系人"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <LinearLayout
@@ -49,10 +42,10 @@
             style="@style/wizard_offline_point" />
 
         <ImageView
-            style="@style/wizard_online_point"/>
+            style="@style/wizard_offline_point" />
 
         <ImageView
-            style="@style/wizard_offline_point" />
+            style="@style/wizard_online_point"/>
 
         <ImageView
             style="@style/wizard_offline_point" />
@@ -61,7 +54,7 @@
 
     <ImageView
         style="@style/wizard_pic"
-        android:src="@drawable/bind" />
+        android:src="@drawable/phone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

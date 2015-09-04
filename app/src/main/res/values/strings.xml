@@ -7,4 +7,5 @@
     <string name="title_activity_lost_protect">LostProtectActivity</string>
     <string name="title_activity_set_upwizard">SetUpwizard</string>
     <string name="title_activity_set_upwizard1">SetUpwizard1</string>
+    <string name="title_activity_set_upwizard2">SetUpwizard2</string>
 </resources>

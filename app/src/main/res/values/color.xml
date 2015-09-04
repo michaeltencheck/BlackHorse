@@ -3,4 +3,5 @@
     <color name="backgroundcolor">#ff333333</color>
     <color name="textcolor">#ffc0c0c0</color>
     <color name="textcolorwizard">#ff00ff99</color>
+    <color name="color_wizard_background">#ff777777</color>
 </resources>
