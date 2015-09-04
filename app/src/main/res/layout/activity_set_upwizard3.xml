@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/backgroundcolor"
+    tools:context="com.example.test.mobilesafe.activity.SetUpwizard">
+
+    <TextView
+        style="@style/wizard_title"
+        android:text="4.恭喜您，设置完成" />
+
+    <ImageView
+        style="@style/wizard_devide_line"/>
+
+    <TextView
+        style="@style/wizard_message"
+        android:text=
+            "强烈建议您开启保护" />
+
+    <CheckBox
+        android:layout_marginTop="30dp"
+        android:id="@+id/cb_protection"
+        android:text="开启保护"
+        android:textColor="#ffeeeeee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            style="@style/wizard_offline_point" />
+
+        <ImageView
+            style="@style/wizard_offline_point" />
+
+        <ImageView
+            style="@style/wizard_offline_point" />
+
+        <ImageView
+            style="@style/wizard_online_point"/>
+
+    </LinearLayout>
+
+    <ImageView
+        style="@style/wizard_pic"
+        android:src="@drawable/luyang"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            style="@style/wizard_next_button"/>
+
+        <Button
+
+            style="@style/wizard_previous_button" />
+    </RelativeLayout>
+</LinearLayout>
