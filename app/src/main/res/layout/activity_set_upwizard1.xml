@@ -25,11 +25,13 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/bt_bind"
             android:text="绑定sim卡"
             android:layout_width="280dp"
             android:layout_height="wrap_content" />
 
         <CheckBox
+            android:id="@+id/cb_bind"
             android:layout_marginLeft="10dp"
             android:text="暂未绑定"
             android:textColor="#ffeeeeee"
@@ -68,10 +70,11 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/bt_next"
             style="@style/wizard_next_button"/>
 
         <Button
-
+            android:id="@+id/bt_previous"
             style="@style/wizard_previous_button" />
     </RelativeLayout>
 </LinearLayout>
