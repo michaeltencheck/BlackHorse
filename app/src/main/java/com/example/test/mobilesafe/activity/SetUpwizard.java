@@ -24,6 +24,7 @@ public class SetUpwizard extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SetUpwizard.this, SetUpwizard1.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
             }
         });
     }
