@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.engine.ContactInfoService;
 
 public class SetUpwizard2 extends AppCompatActivity implements View.OnClickListener{
     private Button next;
@@ -70,7 +71,8 @@ public class SetUpwizard2 extends AppCompatActivity implements View.OnClickListe
                 overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
                 break;
             case R.id.bt_select_contact:
-
+                ContactInfoService contactInfoService = new ContactInfoService(this);
+                contactInfoService.getContacts();
                 break;
             default:
                 break;

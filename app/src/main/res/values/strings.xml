@@ -9,4 +9,5 @@
     <string name="title_activity_set_upwizard1">SetUpwizard1</string>
     <string name="title_activity_set_upwizard2">SetUpwizard2</string>
     <string name="title_activity_set_upwizard3">SetUpwizard3</string>
+    <string name="title_activity_contact_info">ContactInfoActivity</string>
 </resources>
