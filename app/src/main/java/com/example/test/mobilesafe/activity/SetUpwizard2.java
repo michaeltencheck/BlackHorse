@@ -71,8 +71,10 @@ public class SetUpwizard2 extends AppCompatActivity implements View.OnClickListe
                 overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
                 break;
             case R.id.bt_select_contact:
-                ContactInfoService contactInfoService = new ContactInfoService(this);
-                contactInfoService.getContacts();
+                /*ContactInfoService contactInfoService = new ContactInfoService(this);
+                contactInfoService.getContacts();*/
+                Intent intent2 = new Intent(this, ContactInfoActivity.class);
+                startActivityForResult(intent2, 0);
                 break;
             default:
                 break;
