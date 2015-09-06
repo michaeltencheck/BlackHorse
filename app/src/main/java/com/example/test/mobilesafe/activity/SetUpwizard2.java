@@ -31,6 +31,7 @@ public class SetUpwizard2 extends AppCompatActivity implements View.OnClickListe
         next.setOnClickListener(this);
         previous.setOnClickListener(this);
         selectContact.setOnClickListener(this);
+
     }
 
     @Override
@@ -78,6 +79,15 @@ public class SetUpwizard2 extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            String number = data.getStringExtra("number");
+            contact.setText(number);
         }
     }
 }

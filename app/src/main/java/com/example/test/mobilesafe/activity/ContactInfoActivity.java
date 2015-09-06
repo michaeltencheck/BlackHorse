@@ -1,11 +1,14 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,6 +35,18 @@ public class ContactInfoActivity extends AppCompatActivity {
         contacts = contactInfoService.getContacts();
 
         lv_contact.setAdapter(new ContactsAdapter());
+
+        lv_contact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact contact = contacts.get(position);
+                String number = contact.getNumber();
+                Intent intent = new Intent();
+                intent.putExtra("number", number);
+                setResult(0, intent);
+                finish();
+            }
+        });
 
     }
 
@@ -60,7 +75,9 @@ public class ContactInfoActivity extends AppCompatActivity {
             TextView tv_name = new TextView(ContactInfoActivity.this);
             TextView tv_number = new TextView(ContactInfoActivity.this);
             tv_name.setText("姓名 : " + contact.getName());
+            tv_name.setTextColor(getResources().getColor(R.color.textcolor));
             tv_number.setText("号码 : " + contact.getNumber());
+            tv_number.setTextColor(getResources().getColor(R.color.textcolor));
             linearLayout.addView(tv_name);
             linearLayout.addView(tv_number);
             return linearLayout;
