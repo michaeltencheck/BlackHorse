@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
@@ -25,6 +27,10 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
     private EditText pwd;
     private EditText pwdConfirm;
     private EditText pwdInput;
+    private TextView safeNumber;
+    private CheckBox cb_protected;
+    private Button reWizard;
+
     private Dialog dialog;
 
     @Override
@@ -150,6 +156,18 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                 if (pwdMD5.equals(pwdOrigin) && finishWizard) {
                     Log.i(TAG, "进入防盗界面");
                     dialog.dismiss();
+                    setContentView(R.layout.activity_lost_protect);
+
+                    safeNumber = (TextView) findViewById(R.id.tv_safe_number);
+                    cb_protected = (CheckBox) findViewById(R.id.cb_whether_protectd);
+                    reWizard = (Button) findViewById(R.id.bt_rewizard);
+
+                    String number = sp.getString("safeNumber", "");
+                    safeNumber.setText(number);
+                    cb_protected.setChecked(true);
+                    reWizard.setOnClickListener(this);
+
+
                 }else if (pwdMD5.equals(pwdOrigin) && !finishWizard) {
                     Log.i(TAG, "进入设置向导界面");
                     Intent intent = new Intent(LostProtectActivity.this, SetUpwizard.class);
@@ -167,6 +185,11 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
             case R.id.bt_pwdCancel:
                 dialog.dismiss();
                 break;
+            case R.id.bt_rewizard:
+                Intent intent = new Intent(this, SetUpwizard.class);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
             default:
                 break;
         }

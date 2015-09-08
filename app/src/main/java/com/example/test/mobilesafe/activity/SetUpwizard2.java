@@ -83,10 +83,10 @@ public class SetUpwizard2 extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_previous:
                 Intent intent1 = new Intent(this, SetUpwizard1.class);
-                finish();
-                startActivity(intent1);
-                overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
-                break;
+            finish();
+            startActivity(intent1);
+            overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
+            break;
             case R.id.bt_select_contact:
                 /*ContactInfoService contactInfoService = new ContactInfoService(this);
                 contactInfoService.getContacts();*/
