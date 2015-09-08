@@ -146,8 +146,12 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                 String pwd = pwdInput.getText().toString().trim();
                 String pwdMD5 = MD5Encode.MD5Encoding(pwd);
                 String pwdOrigin = sp.getString("password", "");
-                if (pwdMD5.equals(pwdOrigin)) {
+                boolean finishWizard = sp.getBoolean("finishWizard", false);
+                if (pwdMD5.equals(pwdOrigin) && finishWizard) {
                     Log.i(TAG, "进入防盗界面");
+                    dialog.dismiss();
+                }else if (pwdMD5.equals(pwdOrigin) && !finishWizard) {
+                    Log.i(TAG, "进入设置向导界面");
                     Intent intent = new Intent(LostProtectActivity.this, SetUpwizard.class);
                     this.startActivity(intent);
                     Toast.makeText(this, "进入防盗界面", Toast.LENGTH_LONG).show();
@@ -158,6 +162,7 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(this, "密码不正确，请重新输入", Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 break;
             case R.id.bt_pwdCancel:
                 dialog.dismiss();

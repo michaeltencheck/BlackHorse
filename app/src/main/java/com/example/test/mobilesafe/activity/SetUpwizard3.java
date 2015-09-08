@@ -3,6 +3,7 @@ package com.example.test.mobilesafe.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,7 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
     private Button next;
     private Button previous;
     private boolean checked;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
         cb_protection = (CheckBox) findViewById(R.id.cb_protection);
         next = (Button) findViewById(R.id.bt_next);
         previous = (Button) findViewById(R.id.bt_previous);
-        checked = false;
+        checked = true;
+        sp = getSharedPreferences("config", MODE_PRIVATE);
 
         cb_protection.setChecked(true);
 
@@ -81,6 +84,9 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_next:
                 if (checked) {
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putBoolean("finishWizard", true);
+                    editor.commit();
                     Intent intent1 = new Intent(this, LostProtectActivity.class);
                     finish();
                     startActivity(intent1);
@@ -99,7 +105,9 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             cb_protection.setChecked(true);
-                            finish();
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putBoolean("finishWizard", true);
+                            editor.commit();
                             Intent intent2 = new Intent(SetUpwizard3.this, LostProtectActivity.class);
                             finish();
                             startActivity(intent2);
