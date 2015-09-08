@@ -58,10 +58,14 @@
         android:layout_height="match_parent">
 
         <Button
+            android:id="@+id/bt_next"
+            android:text="设置完成"
+            android:layout_width="100dp"
             style="@style/wizard_next_button"/>
 
         <Button
-
+            android:id="@+id/bt_previous"
+            android:layout_width="100dp"
             style="@style/wizard_previous_button" />
     </RelativeLayout>
 </LinearLayout>
