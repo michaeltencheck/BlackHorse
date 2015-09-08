@@ -43,8 +43,10 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     checked = true;
+                    cb_protection.setText("手机保护中");
                 } else {
                     checked = false;
+                    cb_protection.setText("暂未开启保护");
                     Toast.makeText(SetUpwizard3.this, "保护没有开启，可能会遭受攻击", Toast.LENGTH_LONG).show();
                 }
             }
