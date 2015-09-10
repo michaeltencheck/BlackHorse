@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import com.example.test.mobilesafe.engine.LocationInfo;
 
@@ -20,7 +21,9 @@ public class SMSLocationReceiver extends BroadcastReceiver {
         for (Object pdu : pdus) {
             SmsMessage smsMessage = SmsMessage.createFromPdu((byte[])pdu);
             String content = smsMessage.getMessageBody();
+            Log.i("SMSLocationReceiver", content);
             String address = smsMessage.getOriginatingAddress();
+            Log.i("SMSLocationReceiver", address);
             if ("#*location*#".equals(content)) {
                 abortBroadcast();
                 LocationInfo locationInfo = LocationInfo.getInstance(context);
