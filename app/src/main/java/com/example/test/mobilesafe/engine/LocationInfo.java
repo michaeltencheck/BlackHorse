@@ -44,8 +44,8 @@ public class LocationInfo {
         locationManager.requestLocationUpdates(provider, 6000, 50, getListener());
         SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
 
-        String locationInfo = sp.getString("location", "");
-        return locationInfo;
+        String info = sp.getString("location", "");
+        return info;
 
     }
 
