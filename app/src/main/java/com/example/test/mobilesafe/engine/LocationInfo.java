@@ -17,6 +17,7 @@ import java.security.Provider;
 public class LocationInfo {
     private static LocationInfo locationInfo;
     private static Context context;
+    private static MyLocationListener listener;
 
     private LocationInfo() {
     }
@@ -29,7 +30,7 @@ public class LocationInfo {
         return locationInfo;
     }
 
-    public void getLocationInfo() {
+    public String getLocationInfo() {
         LocationManager locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -38,11 +39,21 @@ public class LocationInfo {
         criteria.setAccuracy(60000);
         criteria.setSpeedAccuracy(3000);
         String provider = locationManager.getBestProvider(criteria, true);
-        MyLocationListener myLocationListener = new MyLocationListener();
 
 
-        locationManager.requestLocationUpdates(provider, 6000, 50, myLocationListener);
+        locationManager.requestLocationUpdates(provider, 6000, 50, getListener());
+        SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
 
+        String locationInfo = sp.getString("location", "");
+        return locationInfo;
+
+    }
+
+    private synchronized MyLocationListener getListener() {
+        if (listener == null) {
+            listener = new MyLocationListener();
+        }
+        return listener;
     }
 
     private class MyLocationListener implements LocationListener {
@@ -51,10 +62,10 @@ public class LocationInfo {
         public void onLocationChanged(Location location) {
             String longitude = "jingdu : " + location.getLongitude();
             String latitude = "weidu : " + location.getLatitude();
+            String locationInfo = longitude + "----" + latitude;
             SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("longitude", longitude);
-            editor.putString("latitude", latitude);
+            editor.putString("location", locationInfo);
             editor.commit();
         }
 
