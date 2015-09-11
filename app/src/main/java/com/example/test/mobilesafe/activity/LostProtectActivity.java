@@ -1,6 +1,8 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.Dialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.receiver.MyDeviceAdminReceiver;
 import com.example.test.mobilesafe.util.MD5Encode;
 
 import java.security.MessageDigest;
@@ -38,6 +41,13 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_protect);
         sp = getSharedPreferences("config", MODE_PRIVATE);
+        DevicePolicyManager manager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+        ComponentName name = new ComponentName(this, MyDeviceAdminReceiver.class);
+        if (!manager.isAdminActive(name)) {
+            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, name);
+            startActivity(intent);
+        }
 
 
         if (isPwdSetUp()) {
