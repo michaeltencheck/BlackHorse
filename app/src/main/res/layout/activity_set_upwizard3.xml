@@ -21,7 +21,7 @@
     <CheckBox
         android:layout_marginTop="30dp"
         android:id="@+id/cb_protection"
-        android:text="手机保护中"
+        android:text="暂未开启保护"
         android:textColor="#ffeeeeee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

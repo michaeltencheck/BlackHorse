@@ -215,6 +215,7 @@ public class SplashActivity extends AppCompatActivity {
         try {
             service.getUpdateInfo(R.string.apkurl);
             sp = PreferenceManager.getDefaultSharedPreferences(this);
+            sp.edit().putString("version", "1.0").commit();
             String serviceVersion = sp.getString("version", "");
             if (versionName.equals(serviceVersion)) {
                 loadMainUI();

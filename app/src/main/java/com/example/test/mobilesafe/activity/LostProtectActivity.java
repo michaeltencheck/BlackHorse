@@ -41,13 +41,7 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_protect);
         sp = getSharedPreferences("config", MODE_PRIVATE);
-        DevicePolicyManager manager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
-        ComponentName name = new ComponentName(this, MyDeviceAdminReceiver.class);
-        if (!manager.isAdminActive(name)) {
-            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, name);
-            startActivity(intent);
-        }
+
 
 
         if (isPwdSetUp()) {
@@ -89,6 +83,7 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
         Button bt_cancel = (Button) view.findViewById(R.id.bt_pwdCancel);
         bt_ok.setOnClickListener(this);
         bt_cancel.setOnClickListener(this);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
@@ -142,11 +137,10 @@ public class LostProtectActivity extends AppCompatActivity implements View.OnCli
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putString("password", MD5Encode.MD5Encoding(pwdConfirmText));
                     editor.commit();
-                    if (isPwdSetUp()) {
-
-                    } else {
-
-                    }
+                    dialog.dismiss();
+                    Intent intent = new Intent(this, SetUpwizard.class);
+                    finish();
+                    startActivity(intent);
                 } else {
                     Log.i(TAG, "密码不同，请重新输入");
                     Toast.makeText(this, "密码不同，请重新输入", Toast.LENGTH_LONG).show();

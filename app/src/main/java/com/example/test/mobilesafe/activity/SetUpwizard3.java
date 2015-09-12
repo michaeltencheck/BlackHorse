@@ -1,6 +1,8 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.receiver.MyDeviceAdminReceiver;
 
 public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListener{
     private CheckBox cb_protection;
@@ -31,10 +34,10 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
         cb_protection = (CheckBox) findViewById(R.id.cb_protection);
         next = (Button) findViewById(R.id.bt_next);
         previous = (Button) findViewById(R.id.bt_previous);
-        checked = true;
+        checked = false;
         sp = getSharedPreferences("config", MODE_PRIVATE);
 
-        cb_protection.setChecked(true);
+        cb_protection.setChecked(false);
 
         next.setOnClickListener(this);
         previous.setOnClickListener(this);
@@ -42,8 +45,16 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    DevicePolicyManager manager = (DevicePolicyManager)
+                            getSystemService(DEVICE_POLICY_SERVICE);
+                    ComponentName name = new ComponentName(SetUpwizard3.this, MyDeviceAdminReceiver.class);
+                    if (!manager.isAdminActive(name)) {
+                        Intent intentAdmin = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                        intentAdmin.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, name);
+                        startActivity(intentAdmin);
+                    }
                     checked = true;
-                    cb_protection.setText("手机保护中");
+                    cb_protection.setText("已经开启保护");
                 } else {
                     checked = false;
                     cb_protection.setText("暂未开启保护");
@@ -89,6 +100,7 @@ public class SetUpwizard3 extends AppCompatActivity implements View.OnClickListe
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putBoolean("finishWizard", true);
                     editor.commit();
+
                     Intent intent1 = new Intent(this, LostProtectActivity.class);
                     finish();
                     startActivity(intent1);
