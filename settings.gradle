@@ -1,1 +1,1 @@
-include ':testasjave', ':app'
+include ':testasjave', ':app', ':testdeviceadmin'
