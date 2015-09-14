@@ -104,6 +104,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intent = new Intent(this, LostProtectActivity.class);
                 startActivity(intent);
                 break;
+            case 7:
+                Intent intent7 = new Intent(this, HighCastActivity.class);
+                finish();
+                startActivity(intent7);
+                overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
         }
     }
 }
