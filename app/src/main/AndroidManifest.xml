@@ -104,6 +104,10 @@
             android:name=".activity.HighCastActivity"
             android:label="@string/title_activity_high_cast" >
         </activity>
+        <activity
+            android:name=".activity.TelNumLocationActivity"
+            android:label="@string/title_activity_tel_num_location" >
+        </activity>
     </application>
 
 </manifest>

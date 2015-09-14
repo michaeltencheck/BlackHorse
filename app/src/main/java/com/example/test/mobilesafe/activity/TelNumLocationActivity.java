@@ -1,31 +1,24 @@
 package com.example.test.mobilesafe.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.test.mobilesafe.R;
 
-public class HighCastActivity extends AppCompatActivity implements View.OnClickListener{
-    private Button numberLocation;
+public class TelNumLocationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_cast);
-
-        numberLocation = (Button) findViewById(R.id.bt_numberLocation);
-        numberLocation.setOnClickListener(this);
+        setContentView(R.layout.activity_tel_num_location);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_high_cast, menu);
+        getMenuInflater().inflate(R.menu.menu_tel_num_location, menu);
         return true;
     }
 
@@ -42,15 +35,5 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bt_numberLocation:
-                Intent intent = new Intent(this, TelNumLocationActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
-        }
     }
 }
