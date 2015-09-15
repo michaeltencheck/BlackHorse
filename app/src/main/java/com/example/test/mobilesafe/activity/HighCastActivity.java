@@ -1,8 +1,11 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.engine.DownloadFileTask;
@@ -17,9 +21,25 @@ import com.example.test.mobilesafe.engine.DownloadFileTask;
 import java.io.File;
 
 public class HighCastActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final int ERROR = 10;
+    private static final String TAG = "HighCastActivity";
+    private static final int SUCCEED = 20;
     private Button numberLocation;
     private String path;
     private ProgressDialog pd;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case ERROR:
+                    Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show();
+                    break;
+                case SUCCEED:
+                    Toast.makeText(getApplicationContext(),"下载成功", Toast.LENGTH_LONG).show();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +83,7 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     pd = new ProgressDialog(this);
                     pd.setMessage("正在下载");
+                    pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                     pd.show();
                     if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                         new Thread(){
@@ -72,9 +93,15 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                                 try {
                                     DownloadFileTask.getFile(downloadPath, path, pd);
                                     pd.dismiss();
+                                    Message msg = new Message();
+                                    msg.what = SUCCEED;
+                                    handler.sendMessage(msg);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     pd.dismiss();
+                                    Message message = new Message();
+                                    message.what = ERROR;
+                                    handler.sendMessage(message);
                                 }
                             }
                         }.start();
@@ -85,13 +112,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private boolean isDBExist() {
-        path = Environment.getExternalStorageDirectory().getAbsolutePath();
+    public boolean isDBExist() {
+        path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/address.db";
         File file = new File(path);
-        if (file.exists()) {
-            return true;
-        } else {
-            return false;
-        }
+        return file.exists();
     }
 }
