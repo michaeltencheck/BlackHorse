@@ -2,4 +2,5 @@
 <resources>
     <string name="apkurl">http://192.168.4.11:8080/update.xml</string>
     <string name="apkdownload">http://192.168.4.11:8080/mobilesafe.apk</string>
+    <string name="address_db_url">http://192.168.4.11:8080/address.db</string>
 </resources>

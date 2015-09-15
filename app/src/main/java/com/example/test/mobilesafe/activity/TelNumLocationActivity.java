@@ -1,18 +1,33 @@
 package com.example.test.mobilesafe.activity;
 
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
 
-public class TelNumLocationActivity extends AppCompatActivity {
+import java.io.File;
+
+public class TelNumLocationActivity extends AppCompatActivity{
+    private EditText et_number;
+    private TextView tv_numberLocation;
+    private Button bt_queryNumLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tel_num_location);
+
+        et_number = (EditText) findViewById(R.id.et_number);
+        tv_numberLocation = (TextView) findViewById(R.id.tv_numberLocation);
+        bt_queryNumLocation = (Button) findViewById(R.id.bt_queryNumLocation);
+
     }
 
     @Override
@@ -36,4 +51,6 @@ public class TelNumLocationActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

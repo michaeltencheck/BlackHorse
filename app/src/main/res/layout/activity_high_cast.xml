@@ -22,7 +22,7 @@
             android:id="@+id/tv_hc_showTelLocation"
             android:textSize="30sp"
             android:textColor="@color/textcolor"
-            android:text="来电显示归属地已开启"
+            android:text="来电显示归属地未开启"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
