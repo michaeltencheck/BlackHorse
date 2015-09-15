@@ -13,4 +13,25 @@
         android:textSize="30sp"
         android:text="号码归属地查询"/>
 
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_hc_showTelLocation"
+            android:textSize="30sp"
+            android:textColor="@color/textcolor"
+            android:text="来电显示归属地已开启"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cb_hc_showTelLocation"
+            android:buttonTint="@color/textcolor"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
 </LinearLayout>
