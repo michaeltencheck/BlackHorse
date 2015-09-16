@@ -3,18 +3,22 @@ package com.example.test.mobilesafe.activity;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 
 import java.io.File;
 
-public class TelNumLocationActivity extends AppCompatActivity{
+public class TelNumLocationActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText et_number;
     private TextView tv_numberLocation;
     private Button bt_queryNumLocation;
@@ -27,6 +31,8 @@ public class TelNumLocationActivity extends AppCompatActivity{
         et_number = (EditText) findViewById(R.id.et_number);
         tv_numberLocation = (TextView) findViewById(R.id.tv_numberLocation);
         bt_queryNumLocation = (Button) findViewById(R.id.bt_queryNumLocation);
+
+        bt_queryNumLocation.setOnClickListener(this);
 
     }
 
@@ -53,4 +59,27 @@ public class TelNumLocationActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_queryNumLocation:
+                query();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void query() {
+        String number = et_number.getText().toString().trim();
+        if (TextUtils.isEmpty(number)) {
+//            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+//            et_number.setAnimation(shake);
+            Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake2);
+            et_number.startAnimation(shake);
+            Toast.makeText(this, "aaaaaa", Toast.LENGTH_LONG).show();
+        } else {
+
+        }
+    }
 }
