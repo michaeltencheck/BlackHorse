@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.engine.AddressService;
 
 import java.io.File;
 
@@ -33,6 +34,9 @@ public class TelNumLocationActivity extends AppCompatActivity implements View.On
         bt_queryNumLocation = (Button) findViewById(R.id.bt_queryNumLocation);
 
         bt_queryNumLocation.setOnClickListener(this);
+
+
+
 
     }
 
@@ -79,7 +83,9 @@ public class TelNumLocationActivity extends AppCompatActivity implements View.On
             et_number.startAnimation(shake);
             Toast.makeText(this, "aaaaaa", Toast.LENGTH_LONG).show();
         } else {
-
+            AddressService addressService = new AddressService();
+            String address = addressService.getAddress(number);
+            tv_numberLocation.setText(address);
         }
     }
 }
