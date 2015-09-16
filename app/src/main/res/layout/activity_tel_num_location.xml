@@ -5,11 +5,14 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:orientation="vertical"
+    android:background="@color/backgroundcolor"
     tools:context="com.example.test.mobilesafe.activity.TelNumLocationActivity">
 
     <EditText
         android:id="@+id/et_number"
         android:layout_marginTop="15dp"
+        android:textColor="@color/textcolor"
+        android:textColorHint="@color/textcolor"
         android:hint="请输入号码"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -17,16 +20,34 @@
     <TextView
         android:id="@+id/tv_numberLocation"
         android:layout_marginTop="15dp"
+        android:textColor="@color/textcolor"
         android:textSize="30sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/bt_queryNumLocation"
-        android:text="查询"
-        android:layout_marginTop="15dp"
-        android:textSize="30sp"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_queryNumLocation"
+            android:text="查询"
+            android:layout_marginTop="15dp"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/bt_clear"
+            android:text="清空"
+            android:layout_marginTop="15dp"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
 </LinearLayout>

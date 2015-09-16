@@ -23,6 +23,7 @@ public class TelNumLocationActivity extends AppCompatActivity implements View.On
     private EditText et_number;
     private TextView tv_numberLocation;
     private Button bt_queryNumLocation;
+    private Button bt_clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +33,10 @@ public class TelNumLocationActivity extends AppCompatActivity implements View.On
         et_number = (EditText) findViewById(R.id.et_number);
         tv_numberLocation = (TextView) findViewById(R.id.tv_numberLocation);
         bt_queryNumLocation = (Button) findViewById(R.id.bt_queryNumLocation);
+        bt_clear = (Button) findViewById(R.id.bt_clear);
 
         bt_queryNumLocation.setOnClickListener(this);
-
-
-
-
+        bt_clear.setOnClickListener(this);
     }
 
     @Override
@@ -69,6 +68,9 @@ public class TelNumLocationActivity extends AppCompatActivity implements View.On
             case R.id.bt_queryNumLocation:
                 query();
                 break;
+            case R.id.bt_clear:
+                et_number.setText("");
+                break;
             default:
                 break;
         }
@@ -83,8 +85,9 @@ public class TelNumLocationActivity extends AppCompatActivity implements View.On
             et_number.startAnimation(shake);
             Toast.makeText(this, "aaaaaa", Toast.LENGTH_LONG).show();
         } else {
-            AddressService addressService = new AddressService();
-            String address = addressService.getAddress(number);
+            /*AddressService addressService = new AddressService();
+            String address = addressService.getAddress(number);*/
+            String address = AddressService.getAddress(number);
             tv_numberLocation.setText(address);
         }
     }
