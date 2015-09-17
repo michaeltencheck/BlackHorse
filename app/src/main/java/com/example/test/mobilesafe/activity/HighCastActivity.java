@@ -12,11 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.engine.DownloadFileTask;
+import com.example.test.mobilesafe.service.ShowTelLocService;
 
 import java.io.File;
 
@@ -26,6 +30,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private static final int SUCCEED = 20;
     private Button numberLocation;
     private String path;
+    private TextView textView;
+    private Intent intent;
+    private CheckBox checkBox;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
         @Override
@@ -48,6 +55,24 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
 
         numberLocation = (Button) findViewById(R.id.bt_numberLocation);
         numberLocation.setOnClickListener(this);
+
+        textView = (TextView) findViewById(R.id.tv_hc_showTelLocation);
+
+        intent = new Intent(this, ShowTelLocService.class);
+
+        checkBox = (CheckBox) findViewById(R.id.cb_hc_showTelLocation);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startService(intent);
+                    textView.setText("来电显示归属地已开启");
+                } else {
+                    stopService(intent);
+                    textView.setText("来电显示归属地未开启");
+                }
+            }
+        });
     }
 
     @Override
