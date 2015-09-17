@@ -17,6 +17,7 @@ public class ShowTelLocService extends Service {
     private MyPhoneListener listener;
     private TelephonyManager manager;
     private WindowManager windowManager;
+    private TextView textView;
 
     public ShowTelLocService() {
     }
@@ -46,10 +47,19 @@ public class ShowTelLocService extends Service {
                 case TelephonyManager.CALL_STATE_RINGING:
                     String address = AddressService.getAddress(incomingNumber);
                     Log.i(TAG, address);
+                    showLocation(address);
                     break;
                 case TelephonyManager.CALL_STATE_IDLE:
+                    if (textView != null) {
+                        windowManager.removeView(textView);
+                        textView = null;
+                    }
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
+                    if (textView != null) {
+                        windowManager.removeView(textView);
+                        textView = null;
+                    }
                     break;
                 default:
                     break;
@@ -75,10 +85,9 @@ public class ShowTelLocService extends Service {
         params.format = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
         params.setTitle("Toast");
 
-        TextView textView = new TextView(this);
+        textView = new TextView(this);
         textView.setText("号码归属地为: " + address);
 
         windowManager.addView(textView, params);
-
     }
 }
