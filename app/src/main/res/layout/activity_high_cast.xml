@@ -28,7 +28,6 @@
 
         <CheckBox
             android:id="@+id/cb_hc_showTelLocation"
-            android:buttonTint="@color/textcolor"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
