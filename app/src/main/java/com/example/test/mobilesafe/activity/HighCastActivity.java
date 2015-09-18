@@ -1,8 +1,11 @@
 package com.example.test.mobilesafe.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +36,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private String path;
     private TextView textView;
     private Intent intent;
+    private SharedPreferences.Editor editor;
     private CheckBox checkBox;
+    private int color;
     private RelativeLayout relativeLayout;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
@@ -54,6 +59,8 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_cast);
+
+        editor = getSharedPreferences("config", MODE_PRIVATE).edit();
 
         relativeLayout = (RelativeLayout) findViewById(R.id.rl_hc_colorChange);
         relativeLayout.setOnClickListener(this);
@@ -137,8 +144,42 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                         }.start();
                     }
                 }
-
                 break;
+            case R.id.rl_hc_colorChange:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("选择颜色");
+                String[] items = new String[]{"天空灰", "活力橙", "卫士蓝"};
+                builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                editor.putInt("toast_color", 0);
+                                break;
+                            case 1:
+                                editor.putInt("toast_color", 1);
+                                break;
+                            case 2:
+                                editor.putInt("toast_color", 2);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editor.commit();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
         }
     }
 
