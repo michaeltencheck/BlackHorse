@@ -2,6 +2,8 @@ package com.example.test.mobilesafe.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -20,6 +22,7 @@ public class ShowTelLocService extends Service {
     private TelephonyManager manager;
     private WindowManager windowManager;
     private TextView textView;
+    private SharedPreferences sp;
     private View view;
 
     public ShowTelLocService() {
@@ -36,6 +39,7 @@ public class ShowTelLocService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         manager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         listener = new MyPhoneListener();
         manager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -93,6 +97,21 @@ public class ShowTelLocService extends Service {
 
         view = View.inflate(getApplicationContext(), R.layout.color_change, null);
         textView = (TextView) view.findViewById(R.id.tv_cc_location);
+
+        int color = sp.getInt("toast_color", 0);
+        switch (color) {
+            case 0:
+                view.setBackgroundColor(Color.GRAY);
+                break;
+            case 1:
+                view.setBackgroundColor(Color.CYAN);
+                break;
+            case 2:
+                view.setBackgroundColor(Color.BLUE);
+                break;
+            default:
+                break;
+        }
 
         windowManager.addView(textView, params);
     }
