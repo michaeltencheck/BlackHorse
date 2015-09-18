@@ -6,10 +6,12 @@ import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.engine.AddressService;
 
 public class ShowTelLocService extends Service {
@@ -18,6 +20,7 @@ public class ShowTelLocService extends Service {
     private TelephonyManager manager;
     private WindowManager windowManager;
     private TextView textView;
+    private View view;
 
     public ShowTelLocService() {
     }
@@ -85,8 +88,11 @@ public class ShowTelLocService extends Service {
         params.format = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
         params.setTitle("Toast");
 
-        textView = new TextView(this);
-        textView.setText("号码归属地为: " + address);
+        /*textView = new TextView(this);
+        textView.setText("号码归属地为: " + address);*/
+
+        view = View.inflate(getApplicationContext(), R.layout.color_change, null);
+        textView = (TextView) view.findViewById(R.id.tv_cc_location);
 
         windowManager.addView(textView, params);
     }

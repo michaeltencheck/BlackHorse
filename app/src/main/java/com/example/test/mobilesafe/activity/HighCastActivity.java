@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private TextView textView;
     private Intent intent;
     private CheckBox checkBox;
+    private RelativeLayout relativeLayout;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
         @Override
@@ -52,6 +54,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_cast);
+
+        relativeLayout = (RelativeLayout) findViewById(R.id.rl_hc_colorChange);
+        relativeLayout.setOnClickListener(this);
 
         numberLocation = (Button) findViewById(R.id.bt_numberLocation);
         numberLocation.setOnClickListener(this);
