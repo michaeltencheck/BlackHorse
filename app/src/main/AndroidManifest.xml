@@ -115,6 +115,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".activity.MoveDisplayActivity"
+            android:label="@string/title_activity_move_display" >
+        </activity>
     </application>
 
 </manifest>

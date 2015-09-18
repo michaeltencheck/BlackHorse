@@ -12,4 +12,5 @@
     <string name="title_activity_contact_info">ContactInfoActivity</string>
     <string name="title_activity_high_cast">高级功能</string>
     <string name="title_activity_tel_num_location">TelNumLocationActivity</string>
+    <string name="title_activity_move_display">MoveDisplayActivity</string>
 </resources>
