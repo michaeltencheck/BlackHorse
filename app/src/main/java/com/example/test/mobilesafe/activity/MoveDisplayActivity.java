@@ -19,6 +19,12 @@ public class MoveDisplayActivity extends AppCompatActivity implements View.OnTou
     private int startY;
     private int endX;
     private int endY;
+    private int dx;
+    private int dy;
+    private int l;
+    private int r;
+    private int t;
+    private int b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +72,20 @@ public class MoveDisplayActivity extends AppCompatActivity implements View.OnTou
                     case MotionEvent.ACTION_MOVE:
                         endX = (int) event.getRawX();
                         endY = (int) event.getRawY();
-                        int dx = endX - startX;
-                        int dy = endY - startY;
-                        int l = displayLocation.getLeft();
-                        int r = displayLocation.getRight();
-                        int t = displayLocation.getTop();
-                        int b = displayLocation.getBottom();
-                        displayLocation.layout(l+dx,t+dy,r+dx,b+dy);
+                        dx = endX - startX;
+                        dy = endY - startY;
+                        l = displayLocation.getLeft();
+                        r = displayLocation.getRight();
+                        t = displayLocation.getTop();
+                        b = displayLocation.getBottom();
+                        if (t > 900) {
+                            introduction1.setVisibility(View.VISIBLE);
+                            introduction2.setVisibility(View.INVISIBLE);
+                        } else if (t < 300) {
+                            introduction1.setVisibility(View.INVISIBLE);
+                            introduction2.setVisibility(View.VISIBLE);
+                        }
+                        displayLocation.layout(l + dx, t + dy, r + dx, b + dy);
                         startX = endX;
                         startY = endY;
                         break;
