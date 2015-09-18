@@ -39,7 +39,8 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private SharedPreferences.Editor editor;
     private CheckBox checkBox;
     private int color;
-    private RelativeLayout relativeLayout;
+    private RelativeLayout colorChange;
+    private RelativeLayout locationChange;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
         @Override
@@ -62,8 +63,11 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
 
         editor = getSharedPreferences("config", MODE_PRIVATE).edit();
 
-        relativeLayout = (RelativeLayout) findViewById(R.id.rl_hc_colorChange);
-        relativeLayout.setOnClickListener(this);
+        colorChange = (RelativeLayout) findViewById(R.id.rl_hc_colorChange);
+        colorChange.setOnClickListener(this);
+
+        locationChange = (RelativeLayout) findViewById(R.id.rl_hc_locationChange);
+        locationChange.setOnClickListener(this);
 
         numberLocation = (Button) findViewById(R.id.bt_numberLocation);
         numberLocation.setOnClickListener(this);
@@ -181,6 +185,10 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
                 builder.create().show();
+                break;
+            case R.id.rl_hc_locationChange:
+                Intent locationIntent = new Intent(this, MoveDisplayActivity.class);
+                startActivity(locationIntent);
         }
     }
 
