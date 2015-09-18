@@ -148,6 +148,7 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
             case R.id.rl_hc_colorChange:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("选择颜色");
+                builder.setCancelable(false);
                 String[] items = new String[]{"天空灰", "活力橙", "卫士蓝"};
                 builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     @Override

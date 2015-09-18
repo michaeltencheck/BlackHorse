@@ -13,6 +13,13 @@
         android:textSize="30sp"
         android:text="号码归属地查询"/>
 
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:src="@drawable/solidline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
@@ -33,6 +40,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:src="@drawable/solidline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:id="@+id/rl_hc_colorChange"
