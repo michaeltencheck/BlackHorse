@@ -12,11 +12,11 @@
         tools:text="aaaa"
         android:background="#ff258369"
         android:textSize="30sp"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:layout_marginTop="100dp"
         android:id="@+id/iv_md_display"
         android:background="#ff3"
         android:layout_width="100dp"

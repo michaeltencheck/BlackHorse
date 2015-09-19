@@ -118,6 +118,7 @@
 
         <activity
             android:name=".activity.MoveDisplayActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:label="@string/title_activity_move_display" >
         </activity>
     </application>
