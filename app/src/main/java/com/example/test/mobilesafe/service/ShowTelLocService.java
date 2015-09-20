@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -88,6 +89,12 @@ public class ShowTelLocService extends Service {
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE|
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        params.gravity = Gravity.LEFT | Gravity.TOP;
+        int lastX = sp.getInt("lastX", 0);
+        int lastY = sp.getInt("lastY", 0);
+        params.x = lastX;
+        params.y = lastY;
+
         params.type = WindowManager.LayoutParams.TYPE_TOAST;
         params.format = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
         params.setTitle("Toast");

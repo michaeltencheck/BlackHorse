@@ -53,7 +53,7 @@ public class MoveDisplayActivity extends AppCompatActivity implements View.OnTou
         Log.i(TAG, "y = " + lastY);
         RelativeLayout.LayoutParams p = (RelativeLayout.LayoutParams) displayLocation.getLayoutParams();
         p.leftMargin = lastX;
-        p.topMargin = lastY-28;
+        p.topMargin = lastY;
         displayLocation.setLayoutParams(p);
 
 
@@ -134,7 +134,7 @@ public class MoveDisplayActivity extends AppCompatActivity implements View.OnTou
                         int reX = (int) event.getX();
                         int reY = (int) event.getY();
                         editor.putInt("lastX", startX-reX);
-                        editor.putInt("lastY", startY-reY);
+                        editor.putInt("lastY", startY-reY-28);
                         editor.commit();
                         break;
                     default:
