@@ -5,6 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by test on 9/20/2015.
  */
@@ -61,5 +64,21 @@ public class BlackNumberDAO {
                     new Object[]{newNumber, oldNumber});
             database.close();
         }
+    }
+
+    public List<String> findAll(String columeName) {
+        List<String> list = new ArrayList<>();
+        SQLiteDatabase database = helper.getReadableDatabase();
+        if (database.isOpen()) {
+            Cursor cursor = database.rawQuery("select number from blacknumber", null);
+            while (cursor.moveToNext()) {
+                String numberInTable = cursor.getString(0);
+                list.add(numberInTable);
+            }
+            cursor.close();
+            database.close();
+            return list;
+        }
+        return null;
     }
 }
