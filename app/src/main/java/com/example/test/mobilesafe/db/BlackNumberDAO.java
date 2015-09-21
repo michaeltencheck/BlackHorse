@@ -29,4 +29,15 @@ public class BlackNumberDAO {
         }
         return false;
     }
+
+    public void add(String number) {
+        if (find(number)) {
+            return;
+        }
+        SQLiteDatabase database = helper.getWritableDatabase();
+        if (database.isOpen()) {
+            database.execSQL("insert into blacknumber (number) values (?)", new Object[]{number});
+            database.close();
+        }
+    }
 }
