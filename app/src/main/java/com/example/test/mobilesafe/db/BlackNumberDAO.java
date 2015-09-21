@@ -53,4 +53,13 @@ public class BlackNumberDAO {
             return;
         }
     }
+
+    public void update(String newNumber, String oldNumber) {
+        SQLiteDatabase database = helper.getWritableDatabase();
+        if (database.isOpen()) {
+            database.execSQL("update blacknumber set number=? where number=?",
+                    new Object[]{newNumber, oldNumber});
+            database.close();
+        }
+    }
 }
