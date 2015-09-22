@@ -66,7 +66,7 @@ public class BlackNumberDAO {
         }
     }
 
-    public List<String> findAll(String columeName) {
+    public List<String> findAll() {
         List<String> list = new ArrayList<>();
         SQLiteDatabase database = helper.getReadableDatabase();
         if (database.isOpen()) {
