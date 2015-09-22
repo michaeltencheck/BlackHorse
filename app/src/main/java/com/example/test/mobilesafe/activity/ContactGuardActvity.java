@@ -28,6 +28,15 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
     private ListView listView;
     private BlackNumberDAO dao;
     private Button button;
+    private List<String> numbers;
+
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        numbers = dao.findAll();
+        listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
+                R.id.tv_cg_blacklist_item, numbers));
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,7 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
             dao.add(number + i + "");
         }
 
-        List<String> numbers = dao.findAll();
+        numbers = dao.findAll();
 
         listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
                 R.id.tv_cg_blacklist_item, numbers));
@@ -109,7 +118,13 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
                     public void onClick(View v) {
                         String newNumber = editText.getText().toString().trim();
                         if (!TextUtils.isEmpty(newNumber)) {
+                            dao.add(newNumber);
                             dialog.dismiss();
+                        } else {
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                                    R.anim.shake2);
+                            editText.startAnimation(animation);
+                            Toast.makeText(getApplicationContext(),"号码不能为空",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
