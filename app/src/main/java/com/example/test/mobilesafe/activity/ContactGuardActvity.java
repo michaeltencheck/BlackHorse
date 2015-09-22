@@ -1,12 +1,17 @@
 package com.example.test.mobilesafe.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -15,9 +20,10 @@ import com.example.test.mobilesafe.db.BlackNumberDAO;
 
 import java.util.List;
 
-public class ContactGuardActvity extends AppCompatActivity {
+public class ContactGuardActvity extends AppCompatActivity implements View.OnClickListener{
     private ListView listView;
     private BlackNumberDAO dao;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,9 @@ public class ContactGuardActvity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_guard_actvity);
 
         listView = (ListView) findViewById(R.id.lv_cg_blacklist);
+        button = (Button) findViewById(R.id.bt_cg_add);
+        button.setOnClickListener(this);
+
         dao = new BlackNumberDAO(this);
         long number = 13888881000l;
 
@@ -58,5 +67,33 @@ public class ContactGuardActvity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_cg_add:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("请输入号码");
+                final EditText editText = new EditText(this);
+                builder.setView(editText);
+                builder.setCancelable(false);
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newNumber = editText.getText().toString().trim();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+                break;
+            default:
+                break;
+        }
     }
 }
