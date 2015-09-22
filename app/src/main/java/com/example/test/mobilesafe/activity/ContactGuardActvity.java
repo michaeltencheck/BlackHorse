@@ -5,15 +5,19 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.db.BlackNumberDAO;
@@ -73,7 +77,7 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_cg_add:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("请输入号码");
                 final EditText editText = new EditText(this);
                 builder.setView(editText);
@@ -81,7 +85,15 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String newNumber = editText.getText().toString().trim();
+                        /*String newNumber = editText.getText().toString().trim();
+                        if (TextUtils.isEmpty(newNumber)) {
+                            Toast.makeText(getApplicationContext(), "号码不能为空", Toast.LENGTH_LONG).show();
+                            Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
+                                    R.anim.shake2);
+                            editText.startAnimation(animation);
+                        } else {
+                            dao.add(newNumber);
+                        }*/
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -90,7 +102,17 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
 
                     }
                 });
-                builder.create().show();
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String newNumber = editText.getText().toString().trim();
+                        if (!TextUtils.isEmpty(newNumber)) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
                 break;
             default:
                 break;
