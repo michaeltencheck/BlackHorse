@@ -118,8 +118,12 @@
 
         <activity
             android:name=".activity.MoveDisplayActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:label="@string/title_activity_move_display" >
+            android:label="@string/title_activity_move_display"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".activity.ContactGuardActvity"
+            android:label="@string/title_activity_contact_guard_actvity" >
         </activity>
     </application>
 
