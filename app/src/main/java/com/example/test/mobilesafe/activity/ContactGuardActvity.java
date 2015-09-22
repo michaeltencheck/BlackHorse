@@ -34,7 +34,8 @@ public class ContactGuardActvity extends AppCompatActivity {
 
         List<String> numbers = dao.findAll();
 
-        listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, numbers));
+        listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
+                R.id.tv_cg_blacklist_item, numbers));
     }
 
     @Override

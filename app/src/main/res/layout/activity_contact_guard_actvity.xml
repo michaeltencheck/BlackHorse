@@ -34,6 +34,8 @@
     <ListView
         android:id="@+id/lv_cg_blacklist"
         android:layout_width="match_parent"
+        android:divider="#ff394185"
+        android:dividerHeight="2dp"
         android:layout_height="match_parent">
 
     </ListView>
