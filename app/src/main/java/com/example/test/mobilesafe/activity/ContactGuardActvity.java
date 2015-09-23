@@ -1,23 +1,29 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
@@ -51,6 +57,7 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
         listView = (ListView) findViewById(R.id.lv_cg_blacklist);
         button = (Button) findViewById(R.id.bt_cg_add);
         button.setOnClickListener(this);
+        registerForContextMenu(listView);
 
         dao = new BlackNumberDAO(this);
         long number = 13888881000l;
@@ -67,6 +74,29 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
         /*listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
                 R.id.tv_cg_blacklist_item, numbers));*/
         listView.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_blacklist, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete:
+                int id = (int) info.id;
+                dao.delete(numbers.get(id));
+                numbers.clear();
+                numbers.addAll(dao.findAll());
+                adapter.notifyDataSetChanged();
+                break;
+        }
+        return false;
     }
 
     @Override
@@ -98,6 +128,7 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("请输入号码");
                 final EditText editText = new EditText(this);
+                editText.setInputType(InputType.TYPE_CLASS_PHONE);
                 builder.setView(editText);
                 builder.setCancelable(false);
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
