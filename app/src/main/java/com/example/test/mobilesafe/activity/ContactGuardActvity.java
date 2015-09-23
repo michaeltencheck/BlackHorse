@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,15 +26,19 @@ import com.example.test.mobilesafe.db.BlackNumberDAO;
 import java.util.List;
 
 public class ContactGuardActvity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "ContactGuardActvity";
     private ListView listView;
     private BlackNumberDAO dao;
     private Button button;
     private List<String> numbers;
+    private ArrayAdapter<String> adapter;
 
     /*@Override
     protected void onResume() {
         super.onResume();
         numbers = dao.findAll();
+        String num = numbers.get(numbers.size()-1);
+        Log.i(TAG, num);
         listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
                 R.id.tv_cg_blacklist_item, numbers));
     }*/
@@ -56,8 +61,12 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
 
         numbers = dao.findAll();
 
-        listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
-                R.id.tv_cg_blacklist_item, numbers));
+        adapter = new ArrayAdapter<>(this, R.layout.blacklist_item,
+                R.id.tv_cg_blacklist_item, numbers);
+
+        /*listView.setAdapter(new ArrayAdapter(this, R.layout.blacklist_item,
+                R.id.tv_cg_blacklist_item, numbers));*/
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -119,6 +128,9 @@ public class ContactGuardActvity extends AppCompatActivity implements View.OnCli
                         String newNumber = editText.getText().toString().trim();
                         if (!TextUtils.isEmpty(newNumber)) {
                             dao.add(newNumber);
+                            numbers.clear();
+                            numbers.addAll(dao.findAll());
+                            adapter.notifyDataSetChanged();
                             dialog.dismiss();
                         } else {
                             Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),
