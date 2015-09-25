@@ -27,7 +27,7 @@ public class SmsInfoService {
         ContentResolver resolver = context.getContentResolver();
         List<SmsInfo> smsInfos = new ArrayList<>();
         Cursor cursor = resolver.query
-                (uri, new String[]{"id", "address", "date", "type", "body"}, null, null, null);
+                (uri, new String[]{"_id", "address", "date", "type", "body"}, null, null, null);
         SmsInfo smsInfo;
         while (cursor.moveToNext()) {
             String id = cursor.getString(0);

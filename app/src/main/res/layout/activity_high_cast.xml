@@ -112,6 +112,7 @@
         android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:id="@+id/rl_hc_smsRestore"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
@@ -143,6 +144,7 @@
         android:layout_height="wrap_content" />
 
     <RelativeLayout
+        android:id="@+id/rl_hc_smsBackup"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
