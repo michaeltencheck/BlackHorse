@@ -25,7 +25,7 @@ public class RestoreSms {
         this.context = context;
     }
 
-    public void getRestore(String path) throws Exception{
+    public void getRestore(String path, ProgressDialog pd) throws Exception{
         File file = new File(path);
 //        ContentResolver resolver = context.getContentResolver();
         ContentValues values = null;
@@ -36,10 +36,14 @@ public class RestoreSms {
             XmlPullParser xmlPullParser = xmlPullParserFactory.newPullParser();
             xmlPullParser.setInput(fileInputStream, "utf-8");
             int type = xmlPullParser.getEventType();
+        int currentCount = 0;
             while (type != XmlPullParser.END_DOCUMENT) {
                 switch (type) {
                     case XmlPullParser.START_TAG:
-                        if ("sms".equals(xmlPullParser.getName())) {
+                        if ("count".equals(xmlPullParser.getName())) {
+                            pd.setMax(Integer.parseInt(xmlPullParser.nextText()));
+                        }
+                        else if ("sms".equals(xmlPullParser.getName())) {
                             values = new ContentValues();
                         }else if ("address".equals(xmlPullParser.getName())) {
                             String address = xmlPullParser.nextText();
@@ -62,6 +66,9 @@ public class RestoreSms {
                             resolver.insert(Uri.parse("content://sms/"), values);
                             values = null;
                             Log.i("aaaa", "bbbb");
+                            currentCount++;
+                            Thread.sleep(300);
+                            pd.setProgress(currentCount);
                         }
                         break;
                     default:

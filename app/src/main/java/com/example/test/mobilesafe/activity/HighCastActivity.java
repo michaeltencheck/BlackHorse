@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.engine.DownloadFileTask;
+import com.example.test.mobilesafe.engine.RestoreSms;
 import com.example.test.mobilesafe.service.RestoreSmsService;
 import com.example.test.mobilesafe.service.ShowTelLocService;
 import com.example.test.mobilesafe.service.SmsBackupService;
@@ -205,10 +206,25 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                 startService(smsBackup);
                 break;
             case R.id.rl_hc_smsRestore:
-                /*ProgressDialog pd = new ProgressDialog(this);
-                pd.setCancelable(false);*/
-                Intent smsRestore = new Intent(this, RestoreSmsService.class);
-                startService(smsRestore);
+                /*Intent smsRestore = new Intent(this, RestoreSmsService.class);
+                startService(smsRestore);*/
+                final ProgressDialog pd = new ProgressDialog(this);
+                pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                pd.setCancelable(false);
+                pd.show();
+                final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/smsbackup.xml";
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        RestoreSms restoreSms = new RestoreSms(getApplicationContext());
+                        try {
+                            restoreSms.getRestore(path,pd);
+                            pd.dismiss();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
         }
     }
 

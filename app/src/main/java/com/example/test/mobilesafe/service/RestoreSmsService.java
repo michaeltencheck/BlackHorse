@@ -1,5 +1,6 @@
 package com.example.test.mobilesafe.service;
 
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Environment;
@@ -28,7 +29,7 @@ public class RestoreSmsService extends Service {
                 RestoreSms restoreSms = new RestoreSms(getApplicationContext());
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/smsbackup.xml";
                 try {
-                    restoreSms.getRestore(path);
+                    restoreSms.getRestore(path, new ProgressDialog(getApplicationContext()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
