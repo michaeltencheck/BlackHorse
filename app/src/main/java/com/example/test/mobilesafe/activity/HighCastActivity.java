@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.engine.DownloadFileTask;
+import com.example.test.mobilesafe.service.RestoreSmsService;
 import com.example.test.mobilesafe.service.ShowTelLocService;
 import com.example.test.mobilesafe.service.SmsBackupService;
 
@@ -43,6 +44,7 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout colorChange;
     private RelativeLayout locationChange;
     private RelativeLayout smsBackup;
+    private RelativeLayout smsRestore;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
         @Override
@@ -67,6 +69,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
 
         smsBackup = (RelativeLayout) findViewById(R.id.rl_hc_smsBackup);
         smsBackup.setOnClickListener(this);
+
+        smsRestore = (RelativeLayout) findViewById(R.id.rl_hc_smsRestore);
+        smsRestore.setOnClickListener(this);
 
         colorChange = (RelativeLayout) findViewById(R.id.rl_hc_colorChange);
         colorChange.setOnClickListener(this);
@@ -199,6 +204,11 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                 Intent smsBackup = new Intent(this, SmsBackupService.class);
                 startService(smsBackup);
                 break;
+            case R.id.rl_hc_smsRestore:
+                /*ProgressDialog pd = new ProgressDialog(this);
+                pd.setCancelable(false);*/
+                Intent smsRestore = new Intent(this, RestoreSmsService.class);
+                startService(smsRestore);
         }
     }
 

@@ -46,6 +46,9 @@ public class SmsBackupService extends Service {
                     FileOutputStream fileOutputStream = new FileOutputStream(file);
                     serializer.setOutput(fileOutputStream, "utf-8");
                     serializer.startDocument("utf-8", true);
+                    serializer.startTag(null, "count");
+                    serializer.text(smsInfos.size() + "");
+                    serializer.endTag(null, "count");
                     serializer.startTag(null, "smss");
                     for (SmsInfo smsInfo : smsInfos) {
                         serializer.startTag(null, "sms");
@@ -91,7 +94,5 @@ public class SmsBackupService extends Service {
 
             }
         }.start();
-
-
     }
 }

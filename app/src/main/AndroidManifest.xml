@@ -133,6 +133,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+        <service
+            android:name=".service.RestoreSmsService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
