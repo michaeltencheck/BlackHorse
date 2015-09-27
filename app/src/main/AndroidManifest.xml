@@ -138,6 +138,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".activity.AppManagerAct"
+            android:label="@string/title_activity_app_manager" >
+        </activity>
     </application>
 
 </manifest>

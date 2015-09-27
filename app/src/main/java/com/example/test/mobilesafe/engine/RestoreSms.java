@@ -25,6 +25,7 @@ public class RestoreSms {
         this.context = context;
     }
 
+
     public void getRestore(String path, ProgressDialog pd) throws Exception{
         File file = new File(path);
 //        ContentResolver resolver = context.getContentResolver();
@@ -119,5 +120,6 @@ public class RestoreSms {
         } catch (Exception e) {
             e.printStackTrace();
         }*/
+
     }
 }

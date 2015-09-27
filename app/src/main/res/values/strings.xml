@@ -14,4 +14,5 @@
     <string name="title_activity_tel_num_location">TelNumLocationActivity</string>
     <string name="title_activity_move_display">MoveDisplayActivity</string>
     <string name="title_activity_contact_guard_actvity">ContactGuardActvity</string>
+    <string name="title_activity_app_manager">AppManagerAct</string>
 </resources>
