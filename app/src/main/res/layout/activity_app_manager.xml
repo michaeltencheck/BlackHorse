@@ -20,20 +20,39 @@
 
         <ListView
             android:id="@+id/lv_ama_appInfo"
+            android:divider="#ff709394"
+            android:dividerHeight="1dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </ListView>
 
-        <ProgressBar
-            android:id="@+id/pb_ama_progressBar"
+        <LinearLayout
+            android:id="@+id/ll_ama"
+            android:orientation="vertical"
             android:layout_centerInParent="true"
-            android:visibility="invisible"
-            android:maxHeight="50dp"
-            android:minHeight="50dp"
-            android:maxWidth="50dp"
-            android:minWidth="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/pb_ama_progressBar"
+                android:maxHeight="50dp"
+                android:minHeight="50dp"
+                android:maxWidth="50dp"
+                android:minWidth="50dp"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="正在加载，请稍候"
+                android:textColor="@color/textcolor"
+                android:textAppearance="@android:style/TextAppearance.Holo.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 </LinearLayout>

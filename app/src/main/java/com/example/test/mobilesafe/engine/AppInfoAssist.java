@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.test.mobilesafe.domain.AppInfo;
 
@@ -40,7 +42,6 @@ public class AppInfoAssist {
             AppInfo appInfo = new AppInfo(appName, packageName, icon, isSystemApp);
             appInfos.add(appInfo);
         }
-
         return appInfos;
     }
 
