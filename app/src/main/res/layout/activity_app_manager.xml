@@ -22,7 +22,6 @@
             android:id="@+id/lv_ama_appInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </ListView>
 
         <ProgressBar
