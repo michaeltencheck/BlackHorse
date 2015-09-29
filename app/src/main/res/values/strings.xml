@@ -15,4 +15,5 @@
     <string name="title_activity_move_display">MoveDisplayActivity</string>
     <string name="title_activity_contact_guard_actvity">ContactGuardActvity</string>
     <string name="title_activity_app_manager">AppManagerAct</string>
+    <string name="title_activity_test_cardview">TestCardview</string>
 </resources>

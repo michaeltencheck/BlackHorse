@@ -62,7 +62,7 @@ public class AppInfoAdapter extends BaseAdapter{
         return view;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         private ImageView imageView;
         private TextView textView;
     }
