@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/cardviewtest" />
             <option value="$PROJECT_DIR$/testasjave" />
             <option value="$PROJECT_DIR$/testdeviceadmin" />
           </set>
