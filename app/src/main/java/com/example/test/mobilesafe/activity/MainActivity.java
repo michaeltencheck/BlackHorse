@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
                 break;
             case 3:
+                Intent intent3 = new Intent(this, CardViewTest.class);
+                startActivity(intent3);
                 break;
             case 7:
                 Intent intent7 = new Intent(this, HighCastActivity.class);

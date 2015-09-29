@@ -143,6 +143,10 @@
             android:name=".activity.AppManagerAct"
             android:label="@string/title_activity_app_manager" >
         </activity>
+        <activity
+            android:name=".activity.CardViewTest"
+            android:label="@string/title_activity_card_view_test" >
+        </activity>
     </application>
 
 </manifest>
