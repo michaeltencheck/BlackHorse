@@ -1,16 +1,22 @@
 package com.example.test.mobilesafe.activity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.adapter.AppInfoAdapter;
@@ -24,7 +30,10 @@ public class AppManagerAct extends AppCompatActivity {
     private ListView lv_appInfos;
     private AppInfoAdapter appInfoAdapter;
     private List<AppInfo> appInfos;
+    private static AppInfo appInfo = null;
+    private PopupWindow popupWindow = null;
     private LinearLayout ll;
+    private boolean scroll = false;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -59,6 +68,45 @@ public class AppManagerAct extends AppCompatActivity {
                 handler.sendMessage(message);
             }
         }).start();
+
+        lv_appInfos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                popupDismiss();
+                TextView textView = new TextView(getApplicationContext());
+                appInfo = appInfos.get(position);
+                textView.setText(appInfo.getAppName());
+                Drawable drawable = new ColorDrawable(Color.CYAN);
+                textView.setBackground(drawable);
+
+                int[] arrayOf = new int[2];
+                view.getLocationOnScreen(arrayOf);
+                int i = arrayOf[0] + 60;
+                int j = arrayOf[1];
+
+                popupWindow = new PopupWindow(textView, 60, 60);
+                popupWindow.showAtLocation(view, Gravity.LEFT | Gravity.TOP, i, j);
+            }
+        });
+
+        lv_appInfos.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                popupDismiss();
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                popupDismiss();
+            }
+        });
+    }
+
+    public void popupDismiss() {
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+            popupWindow = null;
+        }
     }
 
     @Override
