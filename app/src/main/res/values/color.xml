@@ -4,4 +4,6 @@
     <color name="textcolor">#ffc0c0c0</color>
     <color name="textcolorwizard">#ff00ff99</color>
     <color name="color_wizard_background">#ff777777</color>
+    <color name="color_pressed">#F0F0F0</color>
+    <color name="color_focus">#00F000</color>
 </resources>

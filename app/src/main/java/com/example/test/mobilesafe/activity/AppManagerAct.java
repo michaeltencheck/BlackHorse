@@ -105,7 +105,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 int j = arrayOf[1];
 
 //                popupWindow = new PopupWindow(textView, 60, 60);
-                popupWindow = new PopupWindow(popupwindowView, 260, 80);
+                popupWindow = new PopupWindow(popupwindowView, 242, 80);
                 Drawable drawable = new ColorDrawable(Color.TRANSPARENT);
                 popupWindow.setBackgroundDrawable(drawable);
                 popupWindow.showAtLocation(view, Gravity.LEFT | Gravity.TOP, i, j);
