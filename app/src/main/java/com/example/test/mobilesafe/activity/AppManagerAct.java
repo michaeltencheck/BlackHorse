@@ -73,11 +73,11 @@ public class AppManagerAct extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 popupDismiss();
-                TextView textView = new TextView(getApplicationContext());
                 appInfo = appInfos.get(position);
+                /*TextView textView = new TextView(getApplicationContext());
                 textView.setText(appInfo.getAppName());
                 Drawable drawable = new ColorDrawable(Color.CYAN);
-                textView.setBackground(drawable);
+                textView.setBackground(drawable);*/
 
                 int[] arrayOf = new int[2];
                 view.getLocationOnScreen(arrayOf);
