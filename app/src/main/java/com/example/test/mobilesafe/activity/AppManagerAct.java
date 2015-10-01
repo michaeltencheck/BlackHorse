@@ -1,5 +1,9 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -7,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.adapter.AppInfoAdapter;
@@ -28,15 +34,15 @@ import com.example.test.mobilesafe.engine.AppInfoAssist;
 
 import java.util.List;
 
-public class AppManagerAct extends AppCompatActivity {
+public class AppManagerAct extends AppCompatActivity implements View.OnClickListener{
     private static final int GET_ALL_APPINFOS = 200;
+    private static final String TAG = "AppManagerAct";
     private ListView lv_appInfos;
     private AppInfoAdapter appInfoAdapter;
     private List<AppInfo> appInfos;
-    private static AppInfo appInfo = null;
     private PopupWindow popupWindow = null;
+    private View popupwindowView;
     private LinearLayout ll;
-    private boolean scroll = false;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -82,7 +88,17 @@ public class AppManagerAct extends AppCompatActivity {
                 textView.setBackground(drawable);*/
                 Animation animation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f);
                 animation.setDuration(300);
-                View popupwindowView = View.inflate(AppManagerAct.this, R.layout.popupwindow_item, null);
+                popupwindowView = View.inflate(AppManagerAct.this, R.layout.popupwindow_item, null);
+                popupwindowView.setTag(position);
+
+                LinearLayout ll_start = (LinearLayout) popupwindowView.findViewById(R.id.ll_ama_start);
+                LinearLayout ll_uninstall = (LinearLayout) popupwindowView.findViewById(R.id.ll_ama_uninstall);
+                LinearLayout ll_share = (LinearLayout) popupwindowView.findViewById(R.id.ll_ama_share);
+
+                ll_start.setOnClickListener(AppManagerAct.this);
+                ll_uninstall.setOnClickListener(AppManagerAct.this);
+                ll_share.setOnClickListener(AppManagerAct.this);
+
                 int[] arrayOf = new int[2];
                 view.getLocationOnScreen(arrayOf);
                 int i = arrayOf[0] + 60;
@@ -137,5 +153,34 @@ public class AppManagerAct extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int position = (int) popupwindowView.getTag();
+        AppInfo appInfo = appInfos.get(position);
+        String packageName = appInfo.getPackageName();
+        /*PackageInfo packageInfo = getPackageManager()
+                .getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES).get(position);*/
+
+        switch (v.getId()) {
+            case R.id.ll_ama_start:
+                try {
+                    PackageInfo packageInfo = getPackageManager().getPackageInfo
+                            (packageName, PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_ACTIVITIES);
+                    ActivityInfo[] activityInfos = packageInfo.activities;
+                    if (activityInfos.length > 0) {
+                        Intent intent = new Intent();
+                        intent.setClassName(packageName, activityInfos[0].name);
+                        startActivity(intent);
+                    } else {
+                        Log.i(TAG, "该程序无法启动");
+                        Toast.makeText(this, "该程序无法启动", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 }
