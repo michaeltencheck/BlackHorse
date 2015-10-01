@@ -8,9 +8,12 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -73,19 +76,24 @@ public class AppManagerAct extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 popupDismiss();
-                appInfo = appInfos.get(position);
                 /*TextView textView = new TextView(getApplicationContext());
                 textView.setText(appInfo.getAppName());
                 Drawable drawable = new ColorDrawable(Color.CYAN);
                 textView.setBackground(drawable);*/
-
+                Animation animation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f);
+                animation.setDuration(300);
+                View popupwindowView = View.inflate(AppManagerAct.this, R.layout.popupwindow_item, null);
                 int[] arrayOf = new int[2];
                 view.getLocationOnScreen(arrayOf);
                 int i = arrayOf[0] + 60;
                 int j = arrayOf[1];
 
-                popupWindow = new PopupWindow(textView, 60, 60);
+//                popupWindow = new PopupWindow(textView, 60, 60);
+                popupWindow = new PopupWindow(popupwindowView, 260, 80);
+                Drawable drawable = new ColorDrawable(Color.TRANSPARENT);
+                popupWindow.setBackgroundDrawable(drawable);
                 popupWindow.showAtLocation(view, Gravity.LEFT | Gravity.TOP, i, j);
+                popupwindowView.startAnimation(animation);
             }
         });
 
