@@ -181,6 +181,16 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 break;
+            case R.id.ll_ama_uninstall:
+                break;
+            case R.id.ll_ama_share:
+                Intent intentShare = new Intent();
+                intentShare.setAction(Intent.ACTION_SEND);
+                intentShare.setType("text/plain");
+                intentShare.putExtra(Intent.EXTRA_SUBJECT, "分享");
+                intentShare.putExtra(Intent.EXTRA_TEXT, "强烈推荐一个应用：" + appInfo.getAppName());
+                startActivity(intentShare);
+                break;
         }
     }
 }
