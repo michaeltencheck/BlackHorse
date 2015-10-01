@@ -166,19 +166,24 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.ll_ama_start:
                 try {
+//                  packageInfo所含内容过多，需要flags修饰过滤，GET_UNINSTALLED_PACKAGES，即
+//                  把有数据目录存在的package返回，GET_ACTIVITIES即返回package的所有act
                     PackageInfo packageInfo = getPackageManager().getPackageInfo
-                            (packageName, PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_ACTIVITIES);
+                            (packageName, PackageManager.GET_ACTIVITIES);
                     ActivityInfo[] activityInfos = packageInfo.activities;
                     if (activityInfos.length > 0) {
                         Intent intent = new Intent();
                         intent.setClassName(packageName, activityInfos[0].name);
                         startActivity(intent);
+                        popupWindow.dismiss();
                     } else {
                         Log.i(TAG, "该程序无法启动");
                         Toast.makeText(this, "该程序无法启动", Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.i(TAG, "该程序无法启动");
+                    Toast.makeText(this, "该程序无法启动", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.ll_ama_uninstall:
@@ -190,6 +195,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 intentShare.putExtra(Intent.EXTRA_SUBJECT, "分享");
                 intentShare.putExtra(Intent.EXTRA_TEXT, "强烈推荐一个应用：" + appInfo.getAppName());
                 startActivity(intentShare);
+                popupWindow.dismiss();
                 break;
         }
     }
