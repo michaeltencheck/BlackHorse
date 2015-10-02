@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +38,9 @@ import java.util.List;
 public class AppManagerAct extends AppCompatActivity implements View.OnClickListener{
     private static final int GET_ALL_APPINFOS = 200;
     private static final String TAG = "AppManagerAct";
+    private static final int DELETE_SUCCECE = 23;
     private ListView lv_appInfos;
+    private AppInfo appInfo;
     private AppInfoAdapter appInfoAdapter;
     private List<AppInfo> appInfos;
     private PopupWindow popupWindow = null;
@@ -67,16 +70,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         lv_appInfos = (ListView) findViewById(R.id.lv_ama_appInfo);
         ll = (LinearLayout) findViewById(R.id.ll_ama);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AppInfoAssist appInfoAssist = new AppInfoAssist(getApplicationContext());
-                appInfos = appInfoAssist.getAppInfos();
-                Message message = new Message();
-                message.what = GET_ALL_APPINFOS;
-                handler.sendMessage(message);
-            }
-        }).start();
+        initAdapter();
 
         lv_appInfos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -126,6 +120,19 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    private void initAdapter() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AppInfoAssist appInfoAssist = new AppInfoAssist(getApplicationContext());
+                appInfos = appInfoAssist.getAppInfos();
+                Message message = new Message();
+                message.what = GET_ALL_APPINFOS;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
     public void popupDismiss() {
         if (popupWindow != null) {
             popupWindow.dismiss();
@@ -158,7 +165,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         int position = (int) popupwindowView.getTag();
-        AppInfo appInfo = appInfos.get(position);
+        appInfo = appInfos.get(position);
         String packageName = appInfo.getPackageName();
         /*PackageInfo packageInfo = getPackageManager()
                 .getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES).get(position);*/
@@ -187,6 +194,12 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.ll_ama_uninstall:
+                String uriString = "package:" + packageName;
+                Uri uri = Uri.parse(uriString);
+                Intent intentUninstall = new Intent();
+                intentUninstall.setAction(Intent.ACTION_UNINSTALL_PACKAGE);
+                intentUninstall.setData(uri);
+                startActivityForResult(intentUninstall, 0);
                 break;
             case R.id.ll_ama_share:
                 Intent intentShare = new Intent();
@@ -198,5 +211,13 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 popupWindow.dismiss();
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//            initAdapter();
+            appInfos.remove(appInfo);
+            appInfoAdapter.notifyDataSetChanged();
     }
 }
