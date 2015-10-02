@@ -120,7 +120,13 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
             }
         });
 
-
+        UninstallReceiver uninstallReceiver = new UninstallReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addDataScheme("package");
+        registerReceiver(uninstallReceiver, intentFilter);
+        Log.i("aaaaa", "bbbbb");
     }
 
     private void initAdapter() {
@@ -202,8 +208,8 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 Intent intentUninstall = new Intent();
                 intentUninstall.setAction(Intent.ACTION_UNINSTALL_PACKAGE);
                 intentUninstall.setData(uri);
-                startActivityForResult(intentUninstall, 0);
-//                startActivity(intentUninstall);
+//                startActivityForResult(intentUninstall, 0);
+                startActivity(intentUninstall);
                 break;
             case R.id.ll_ama_share:
                 Intent intentShare = new Intent();
@@ -217,12 +223,12 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //            initAdapter();
-            /*appInfos.remove(appInfo);
-            appInfoAdapter.notifyDataSetChanged();*/
+            *//*appInfos.remove(appInfo);
+            appInfoAdapter.notifyDataSetChanged();*//*
         UninstallReceiver uninstallReceiver = new UninstallReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
@@ -230,7 +236,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         intentFilter.addDataScheme("package");
         registerReceiver(uninstallReceiver, intentFilter);
         Log.i("aaaaa", "bbbbb");
-    }
+    }*/
 
     class UninstallReceiver extends BroadcastReceiver {
 
