@@ -1,6 +1,9 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -14,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
@@ -118,6 +119,8 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 popupDismiss();
             }
         });
+
+
     }
 
     private void initAdapter() {
@@ -200,6 +203,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 intentUninstall.setAction(Intent.ACTION_UNINSTALL_PACKAGE);
                 intentUninstall.setData(uri);
                 startActivityForResult(intentUninstall, 0);
+//                startActivity(intentUninstall);
                 break;
             case R.id.ll_ama_share:
                 Intent intentShare = new Intent();
@@ -217,7 +221,25 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //            initAdapter();
+            /*appInfos.remove(appInfo);
+            appInfoAdapter.notifyDataSetChanged();*/
+        UninstallReceiver uninstallReceiver = new UninstallReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addDataScheme("package");
+        registerReceiver(uninstallReceiver, intentFilter);
+        Log.i("aaaaa", "bbbbb");
+    }
+
+    class UninstallReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
             appInfos.remove(appInfo);
             appInfoAdapter.notifyDataSetChanged();
+            Toast.makeText(AppManagerAct.this, "do it", Toast.LENGTH_LONG).show();
+            Log.i("uninstall success", "fadfasfasdfsf");
+        }
     }
 }
