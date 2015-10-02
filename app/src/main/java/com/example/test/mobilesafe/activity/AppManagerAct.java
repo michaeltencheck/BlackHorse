@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
@@ -34,6 +35,7 @@ import com.example.test.mobilesafe.adapter.AppInfoAdapter;
 import com.example.test.mobilesafe.domain.AppInfo;
 import com.example.test.mobilesafe.engine.AppInfoAssist;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class AppManagerAct extends AppCompatActivity implements View.OnClickListener{
@@ -42,8 +44,10 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
     private static final int DELETE_SUCCECE = 23;
     private ListView lv_appInfos;
     private AppInfo appInfo;
+    private TextView textView_title;
     private AppInfoAdapter appInfoAdapter;
     private List<AppInfo> appInfos;
+    private boolean isLoading = false;
     private PopupWindow popupWindow = null;
     private View popupwindowView;
     private LinearLayout ll;
@@ -56,6 +60,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                     appInfoAdapter = new AppInfoAdapter(getApplicationContext(), appInfos);
                     lv_appInfos.setAdapter(appInfoAdapter);
                     ll.setVisibility(View.INVISIBLE);
+                    isLoading = false;
                     break;
                 default:
                     break;
@@ -71,6 +76,12 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         lv_appInfos = (ListView) findViewById(R.id.lv_ama_appInfo);
         ll = (LinearLayout) findViewById(R.id.ll_ama);
 
+        textView_title = (TextView) findViewById(R.id.tv_ama_title);
+        textView_title.setOnClickListener(this);
+
+        popupwindowView = View.inflate(AppManagerAct.this, R.layout.popupwindow_item, null);
+
+
         initAdapter();
 
         lv_appInfos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,7 +94,6 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 textView.setBackground(drawable);*/
                 Animation animation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f);
                 animation.setDuration(300);
-                popupwindowView = View.inflate(AppManagerAct.this, R.layout.popupwindow_item, null);
                 popupwindowView.setTag(position);
 
                 LinearLayout ll_start = (LinearLayout) popupwindowView.findViewById(R.id.ll_ama_start);
@@ -133,6 +143,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         new Thread(new Runnable() {
             @Override
             public void run() {
+                isLoading = true;
                 AppInfoAssist appInfoAssist = new AppInfoAssist(getApplicationContext());
                 appInfos = appInfoAssist.getAppInfos();
                 Message message = new Message();
@@ -171,15 +182,53 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
+    /*public void change(View view) {
+        String title = textView_title.getText().toString();
+        if (isLoading) {
+            return;
+        } else {
+            if (title.equals("所有程序")) {
+                textView_title.setText("用户程序");
+                for (AppInfo ai : appInfos) {
+                    if (ai.isSystemApp()) {
+                        appInfos.remove(ai);
+                    }
+                }
+                appInfoAdapter.notifyDataSetChanged();
+            }else if (title.equals("用户程序")) {
+                textView_title.setText("所有程序");
+                initAdapter();
+            }
+        }
+    }*/
+
     @Override
     public void onClick(View v) {
-        int position = (int) popupwindowView.getTag();
+        int position = 0;
+        if (popupwindowView.getTag() != null) {
+            position = (int) popupwindowView.getTag();
+        }
         appInfo = appInfos.get(position);
         String packageName = appInfo.getPackageName();
+        String title = textView_title.getText().toString();
         /*PackageInfo packageInfo = getPackageManager()
                 .getInstalledPackages(PackageManager.GET_UNINSTALLED_PACKAGES).get(position);*/
 
         switch (v.getId()) {
+            case R.id.tv_ama_title:
+                if (isLoading) {
+                    return;
+                } else {
+                    if (title.equals("所有程序")) {
+                        textView_title.setText("用户程序");
+                        getUserApp();
+                        appInfoAdapter.notifyDataSetChanged();
+                    } else if (title.equals("用户程序")) {
+                        textView_title.setText("所有程序");
+                        initAdapter();
+                    }
+                }
+                break;
             case R.id.ll_ama_start:
                 try {
 //                  packageInfo所含内容过多，需要flags修饰过滤，GET_UNINSTALLED_PACKAGES，即
@@ -220,6 +269,17 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
                 startActivity(intentShare);
                 popupWindow.dismiss();
                 break;
+        }
+    }
+
+    private void getUserApp() {
+        Iterator<AppInfo> iterator = appInfos.iterator();
+        while (iterator.hasNext()) {
+            AppInfo ai = iterator.next();
+            if (ai.isSystemApp()) {
+                iterator.remove();
+                break;
+            }
         }
     }
 
