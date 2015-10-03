@@ -17,4 +17,5 @@
     <string name="title_activity_app_manager">AppManagerAct</string>
     <string name="title_activity_test_cardview">TestCardview</string>
     <string name="title_activity_card_view_test">CardViewTest</string>
+    <string name="title_activity_app_locker">AppLockerActivity</string>
 </resources>

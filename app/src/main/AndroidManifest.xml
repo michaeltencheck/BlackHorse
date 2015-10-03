@@ -147,6 +147,11 @@
             android:name=".activity.CardViewTest"
             android:label="@string/title_activity_card_view_test" >
         </activity>
+        <activity
+            android:name=".activity.AppLockerActivity"
+            android:label="@string/title_activity_app_locker"
+            android:parentActivityName=".activity.HighCastActivity">
+        </activity>
     </application>
 
 </manifest>

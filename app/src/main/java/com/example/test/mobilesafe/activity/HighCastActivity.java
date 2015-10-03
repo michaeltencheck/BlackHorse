@@ -46,6 +46,7 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout locationChange;
     private RelativeLayout smsBackup;
     private RelativeLayout smsRestore;
+    private RelativeLayout appLocker;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
         @Override
@@ -82,6 +83,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
 
         numberLocation = (Button) findViewById(R.id.bt_numberLocation);
         numberLocation.setOnClickListener(this);
+
+        appLocker = (RelativeLayout) findViewById(R.id.rl_hc_appLocker);
+        appLocker.setOnClickListener(this);
 
         textView = (TextView) findViewById(R.id.tv_hc_showTelLocation);
 
@@ -225,6 +229,13 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 }).start();
+                break;
+            case R.id.rl_hc_appLocker:
+                Intent intent_appLocker = new Intent(this, AppLockerActivity.class);
+                startActivity(intent_appLocker);
+                break;
+            default:
+                break;
         }
     }
 
