@@ -25,6 +25,7 @@
 
     <ImageView
         android:id="@+id/iv_ala_locker"
+        android:src="@drawable/lock"
         android:layout_width="50dp"
         android:layout_height="80dp" />
 

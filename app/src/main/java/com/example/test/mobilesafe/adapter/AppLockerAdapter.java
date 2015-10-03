@@ -21,13 +21,10 @@ import java.util.List;
 public class AppLockerAdapter extends BaseAdapter{
     private Context context;
     private List<AppInfo> appInfos;
-    private Drawable drawable;
 
     public AppLockerAdapter(Context context, List<AppInfo> appInfos) {
         this.context = context;
         this.appInfos = appInfos;
-        drawable = Drawable.createFromPath
-                ("D:\\Users\\test\\AndroidStudioProjects\\BlackHorse\\app\\src\\main\\res\\drawable\\lock.png");
     }
 
     @Override
@@ -55,7 +52,6 @@ public class AppLockerAdapter extends BaseAdapter{
             viewHolder = new ViewHolder();
             viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_ama_icon);
             viewHolder.textView = (TextView) view.findViewById(R.id.tv_ama_appName);
-            viewHolder.locker = (ImageView) view.findViewById(R.id.iv_ala_locker);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -63,14 +59,11 @@ public class AppLockerAdapter extends BaseAdapter{
         }
         viewHolder.imageView.setImageDrawable(appInfos.get(position).getIcon());
         viewHolder.textView.setText(appInfos.get(position).getAppName());
-        viewHolder.locker.setImageDrawable(drawable);
-
         return view;
     }
 
     private static class ViewHolder {
         private ImageView imageView;
         private TextView textView;
-        private ImageView locker;
     }
 }
