@@ -25,7 +25,7 @@ public class AppLockerDAO {
         SQLiteDatabase database = helper.getReadableDatabase();
         if (database.isOpen()) {
             Cursor cursor = database.rawQuery
-                    ("select number from applocked where number=?", new String[]{packagename});
+                    ("select packagename from applocked where packagename=?", new String[]{packagename});
             if (cursor.moveToNext()) {
                 return true;
             }
@@ -41,7 +41,7 @@ public class AppLockerDAO {
         }
         SQLiteDatabase database = helper.getWritableDatabase();
         if (database.isOpen()) {
-            database.execSQL("insert into applocked (number) values (?)", new Object[]{packagename});
+            database.execSQL("insert into applocked (packagename) values (?)", new Object[]{packagename});
             database.close();
         }
     }
@@ -49,7 +49,7 @@ public class AppLockerDAO {
     public void delete(String packagename) {
         if (find(packagename)) {
             SQLiteDatabase database = helper.getWritableDatabase();
-            database.execSQL("delete from applocked where number=?", new Object[]{packagename});
+            database.execSQL("delete from applocked where packagename=?", new Object[]{packagename});
             database.close();
         } else {
             Log.i(TAG, "data does not exist.");

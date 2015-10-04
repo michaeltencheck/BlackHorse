@@ -21,9 +21,9 @@ import java.util.List;
 public class AppLockerAdapter extends BaseAdapter{
     private Context context;
     private List<AppInfo> appInfos;
-    private List<AppInfo> appLocked;
+    private List<String> appLocked;
 
-    public AppLockerAdapter(Context context, List<AppInfo> appInfos, List<AppInfo> appLocked) {
+    public AppLockerAdapter(Context context, List<AppInfo> appInfos, List<String> appLocked) {
         this.context = context;
         this.appInfos = appInfos;
         this.appLocked = appLocked;
@@ -62,7 +62,7 @@ public class AppLockerAdapter extends BaseAdapter{
         }
         viewHolder.imageView.setImageDrawable(appInfos.get(position).getIcon());
         viewHolder.textView.setText(appInfos.get(position).getAppName());
-        if (appLocked.contains(appInfos.get(position))) {
+        if (appLocked.contains(appInfos.get(position).getPackageName())) {
             viewHolder.appStatus.setImageResource(R.drawable.lock);
         } else {
             viewHolder.appStatus.setImageResource(R.drawable.unlock);
