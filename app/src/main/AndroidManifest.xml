@@ -150,7 +150,11 @@
         <activity
             android:name=".activity.AppLockerActivity"
             android:label="@string/title_activity_app_locker"
-            android:parentActivityName=".activity.HighCastActivity">
+            android:parentActivityName=".activity.HighCastActivity" >
+        </activity>
+        <activity
+            android:name=".activity.SettingCenterActivity"
+            android:label="@string/title_activity_setting_center" >
         </activity>
     </application>
 

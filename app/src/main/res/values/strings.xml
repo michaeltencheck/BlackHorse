@@ -18,4 +18,7 @@
     <string name="title_activity_test_cardview">TestCardview</string>
     <string name="title_activity_card_view_test">CardViewTest</string>
     <string name="title_activity_app_locker">AppLockerActivity</string>
+    <string name="title_activity_setting_center">SettingCenterActivity</string>
+    <string name="app_locker">程序锁</string>
+    <string name="cb_applocker_close">关闭</string>
 </resources>
