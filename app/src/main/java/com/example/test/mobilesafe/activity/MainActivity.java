@@ -123,6 +123,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent7);
                 overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
                 break;
+            case 8:
+                Intent intent8 = new Intent(this, SettingCenterActivity.class);
+                startActivity(intent8);
+                overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
+                break;
+            default:
+                break;
         }
     }
 }

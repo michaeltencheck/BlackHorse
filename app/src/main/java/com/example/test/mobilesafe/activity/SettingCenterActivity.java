@@ -1,18 +1,38 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.service.AppMonitorService;
 
 public class SettingCenterActivity extends AppCompatActivity {
+    private CheckBox checkBox;
+    private Intent appMonitor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_center);
+
+        appMonitor = new Intent(this, AppMonitorService.class);
+
+        checkBox = (CheckBox) findViewById(R.id.cb_sc_appLocker);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    startService(appMonitor);
+                } else {
+                    stopService(appMonitor);
+                }
+            }
+        });
     }
 
     @Override

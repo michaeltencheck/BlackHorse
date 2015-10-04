@@ -156,6 +156,12 @@
             android:name=".activity.SettingCenterActivity"
             android:label="@string/title_activity_setting_center" >
         </activity>
+
+        <service
+            android:name=".service.AppMonitorService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>
