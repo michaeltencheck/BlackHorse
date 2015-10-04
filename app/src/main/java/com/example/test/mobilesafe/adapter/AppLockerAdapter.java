@@ -21,10 +21,12 @@ import java.util.List;
 public class AppLockerAdapter extends BaseAdapter{
     private Context context;
     private List<AppInfo> appInfos;
+    private List<AppInfo> appLocked;
 
-    public AppLockerAdapter(Context context, List<AppInfo> appInfos) {
+    public AppLockerAdapter(Context context, List<AppInfo> appInfos, List<AppInfo> appLocked) {
         this.context = context;
         this.appInfos = appInfos;
+        this.appLocked = appLocked;
     }
 
     @Override
@@ -50,8 +52,9 @@ public class AppLockerAdapter extends BaseAdapter{
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.applocker_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_ama_icon);
-            viewHolder.textView = (TextView) view.findViewById(R.id.tv_ama_appName);
+            viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_ala_icon);
+            viewHolder.textView = (TextView) view.findViewById(R.id.tv_ala_appName);
+            viewHolder.appStatus = (ImageView) view.findViewById(R.id.iv_ala_locker);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -59,11 +62,17 @@ public class AppLockerAdapter extends BaseAdapter{
         }
         viewHolder.imageView.setImageDrawable(appInfos.get(position).getIcon());
         viewHolder.textView.setText(appInfos.get(position).getAppName());
+        if (appLocked.contains(appInfos.get(position))) {
+            viewHolder.appStatus.setImageResource(R.drawable.lock);
+        } else {
+            viewHolder.appStatus.setImageResource(R.drawable.unlock);
+        }
         return view;
     }
 
     private static class ViewHolder {
         private ImageView imageView;
         private TextView textView;
+        private ImageView appStatus;
     }
 }

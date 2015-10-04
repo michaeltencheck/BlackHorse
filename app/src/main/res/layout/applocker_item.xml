@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_ama_icon"
+        android:id="@+id/iv_ala_icon"
         android:layout_width="50dp"
         android:layout_height="80dp" />
 
@@ -16,7 +16,7 @@
         android:gravity="center_vertical"
         android:padding="5dp"
         android:textColor="@color/textcolor"
-        android:id="@+id/tv_ama_appName"
+        android:id="@+id/tv_ala_appName"
         android:textAppearance="@android:style/TextAppearance.Holo.Large"
         android:layout_width="0dp"
         android:layout_weight="1"
