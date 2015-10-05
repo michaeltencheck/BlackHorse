@@ -42,4 +42,10 @@ public class AppMonitorService extends Service {
             }
         }).start();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "service stopped");
+    }
 }

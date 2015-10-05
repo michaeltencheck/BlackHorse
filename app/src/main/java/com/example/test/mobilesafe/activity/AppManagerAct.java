@@ -46,6 +46,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
     private AppInfo appInfo;
     private TextView textView_title;
     private AppInfoAdapter appInfoAdapter;
+    private UninstallReceiver uninstallReceiver;
     private List<AppInfo> appInfos;
     private boolean isLoading = false;
     private PopupWindow popupWindow = null;
@@ -130,7 +131,7 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        UninstallReceiver uninstallReceiver = new UninstallReceiver();
+        uninstallReceiver = new UninstallReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
@@ -201,6 +202,15 @@ public class AppManagerAct extends AppCompatActivity implements View.OnClickList
             }
         }
     }*/
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        unregisterReceiver(uninstallReceiver);
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+        }
+    }
 
     @Override
     public void onClick(View v) {

@@ -1,5 +1,6 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.BroadcastReceiver;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;

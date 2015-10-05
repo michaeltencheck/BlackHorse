@@ -21,6 +21,8 @@ public class SettingCenterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting_center);
 
         appMonitor = new Intent(this, AppMonitorService.class);
+        /*appMonitor = new Intent();
+        appMonitor.setClassName(this.getApplication().getPackageName(), AppMonitorService.class.getName());*/
 
         checkBox = (CheckBox) findViewById(R.id.cb_sc_appLocker);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
