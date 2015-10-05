@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/cardviewtest" />
             <option value="$PROJECT_DIR$/testasjave" />
             <option value="$PROJECT_DIR$/testdeviceadmin" />
+            <option value="$PROJECT_DIR$/testservice" />
           </set>
         </option>
       </GradleProjectSettings>

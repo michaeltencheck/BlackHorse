@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/cardviewtest/cardviewtest.iml" filepath="$PROJECT_DIR$/cardviewtest/cardviewtest.iml" />
       <module fileurl="file://$PROJECT_DIR$/testasjave/testasjave.iml" filepath="$PROJECT_DIR$/testasjave/testasjave.iml" />
       <module fileurl="file://$PROJECT_DIR$/testdeviceadmin/testdeviceadmin.iml" filepath="$PROJECT_DIR$/testdeviceadmin/testdeviceadmin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testservice/testservice.iml" filepath="$PROJECT_DIR$/testservice/testservice.iml" />
     </modules>
   </component>
 </project>
