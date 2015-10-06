@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Log.i(TAG, "进入手机防盗");
                 Intent intent = new Intent(this, LostProtectActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
                 break;
             case 1:
                 Intent intent1 = new Intent(this, ContactGuardActvity.class);
@@ -115,8 +116,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
                 break;
             case 3:
-                Intent intent3 = new Intent(this, CardViewTest.class);
+                Intent intent3 = new Intent(this, TasksManager.class);
                 startActivity(intent3);
+                overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
+                break;
+            case 4:
                 break;
             case 7:
                 Intent intent7 = new Intent(this, HighCastActivity.class);
