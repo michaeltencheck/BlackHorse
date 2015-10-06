@@ -6,5 +6,5 @@ package com.example.test.testservice.interf;
 public interface Change {
     public void changeBoolean();
 
-    public void changeString();
+    public void changeString(String str);
 }

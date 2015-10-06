@@ -17,9 +17,9 @@ import com.example.test.testservice.service.MyService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
-    private Button button, button1,button2, button3;
+    private Button button, button1,button2, button3, button4;
     private Intent intent;
-    private Change myChange;
+//    private Change myChange;
     private MyConnection myConnection;
 
     @Override
@@ -41,7 +41,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button3 = (Button) findViewById(R.id.button3);
         button3.setOnClickListener(this);
 
+        button4 = (Button) findViewById(R.id.button4);
+        button4.setOnClickListener(this);
+
         myConnection = new MyConnection();
+
+
+
     }
 
     @Override
@@ -70,35 +76,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                bindService(intent, myConnection, BIND_AUTO_CREATE);
+//                bindService(intent, new MyConnection(), BIND_AUTO_CREATE);
+                startService(intent);
                 Log.i(TAG, "onClick button");
                 break;
             case R.id.button1:
-                myChange.changeBoolean();
+//                myChange.changeBoolean();
+                stopService(intent);
                 Log.i(TAG, "onClick button1");
                 break;
             case R.id.button2:
-                myChange.changeString();
+//                myChange.changeString();
+//                myChange.changeString("button2");
+                bindService(intent, myConnection, BIND_AUTO_CREATE);
                 Log.i(TAG, "onClick button2");
                 break;
             case R.id.button3:
-                unbindService(myConnection);
+//                stopService(intent);
+//                myChange.changeString("button3");
                 Log.i(TAG, "onClick unbindService");
-
+                break;
+            case R.id.button4:
+//                myChange.changeString("button4");
+                unbindService(myConnection);
+                Log.i(TAG, "onClick button4");
                 break;
         }
     }
 
     private class MyConnection implements ServiceConnection {
-
+        Change myChange;
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+//            myChange = (MyService.MyChange) service;
             myChange = (Change) service;
+            myChange.changeString("onServiceConnected");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            myChange.changeString("onServiceDisconnected");
         }
     }
 }

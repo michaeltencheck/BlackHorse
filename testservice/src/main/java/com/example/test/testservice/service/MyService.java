@@ -12,17 +12,19 @@ public class MyService extends Service {
     private static final String TAG = "MyService";
     private String str;
     private boolean flags;
+    private int count;
+
     public MyService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        Mychange mychange = new Mychange();
-        return mychange;
+        MyChange myChange = new MyChange();
+        return myChange;
     }
 
-    private class Mychange extends Binder implements Change {
+    public class MyChange extends Binder implements Change {
 
         @Override
         public void changeBoolean() {
@@ -36,13 +38,13 @@ public class MyService extends Service {
         }
 
         @Override
-        public void changeString() {
-            changeS();
+        public void changeString(String something) {
+            changeS(something);
         }
     }
 
-    public void changeS() {
-        str = "bbbb";
+    public void changeS(String something) {
+        this.str = something;
     }
 
     public void changeB() {
@@ -55,20 +57,30 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        flags = true;
+        flags = false;
         str = "1212";
+        count = 0;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (flags) {
+                while (!flags) {
                     try {
                         Log.i(TAG, str);
                         Thread.sleep(1111);
+                        count++;
+                        Log.i(TAG, "run is----->" + count);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        flags = true;
+        Log.i(TAG, "onDestroy ");
     }
 }
