@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:gravity="center"
             android:id="@+id/tv_tm_processInfo"
             android:layout_weight="1"
             android:textColor="@color/textcolor"
@@ -22,6 +23,7 @@
 
         <TextView
             android:id="@+id/tv_tm_memoryInfo"
+            android:gravity="center"
             android:textColor="@color/textcolor"
             android:textAppearance="@android:style/TextAppearance.Medium"
             android:layout_weight="1"

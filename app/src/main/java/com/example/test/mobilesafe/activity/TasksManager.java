@@ -6,16 +6,19 @@ import android.app.ActivityManager;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.util.DecimalFormater;
 
 import java.util.List;
 
 public class TasksManager extends AppCompatActivity {
+    private static final String TAG = "TasksManager";
     private ActivityManager manager;
     private TextView processInfo, memoryInfo;
     private List<ActivityManager.RunningAppProcessInfo> list;
@@ -31,10 +34,12 @@ public class TasksManager extends AppCompatActivity {
         processInfo = (TextView) findViewById(R.id.tv_tm_processInfo);
         memoryInfo = (TextView) findViewById(R.id.tv_tm_memoryInfo);
 
-        processInfo.setText("正在运行的进程数为：" + getProcessInfo());
 
         men = new ActivityManager.MemoryInfo();
         manager.getMemoryInfo(men);
+
+        processInfo.setText("正在运行的进程数为：" + getProcessInfo());
+        memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
 
     }
 
@@ -45,12 +50,14 @@ public class TasksManager extends AppCompatActivity {
 
     private String getAvailableMemory() {
         long avaMemory = men.availMem;
-        return null;
+        Log.i(TAG, "getAvailableMemory " + avaMemory);
+        return DecimalFormater.getNumber(avaMemory);
     }
 
     private String getTotalMemory() {
         long totalMemory = men.totalMem;
-        return null;
+        Log.i(TAG, "getTotalMemory " + totalMemory);
+        return DecimalFormater.getNumber(totalMemory);
     }
 
     @Override
