@@ -19,6 +19,7 @@ public class TasksManager extends AppCompatActivity {
     private ActivityManager manager;
     private TextView processInfo, memoryInfo;
     private List<ActivityManager.RunningAppProcessInfo> list;
+    private ActivityManager.MemoryInfo men;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +33,24 @@ public class TasksManager extends AppCompatActivity {
 
         processInfo.setText("正在运行的进程数为：" + getProcessInfo());
 
-
-
+        men = new ActivityManager.MemoryInfo();
+        manager.getMemoryInfo(men);
 
     }
 
     private int getProcessInfo() {
         list = manager.getRunningAppProcesses();
         return list.size();
+    }
+
+    private String getAvailableMemory() {
+        long avaMemory = men.availMem;
+        return null;
+    }
+
+    private String getTotalMemory() {
+        long totalMemory = men.totalMem;
+        return null;
     }
 
     @Override
