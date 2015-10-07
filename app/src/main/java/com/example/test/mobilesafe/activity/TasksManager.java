@@ -2,22 +2,44 @@ package com.example.test.mobilesafe.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
 
+import java.util.List;
+
 public class TasksManager extends AppCompatActivity {
+    private ActivityManager manager;
+    private TextView processInfo, memoryInfo;
+    private List<ActivityManager.RunningAppProcessInfo> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_manager);
 
+        manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
 
+        processInfo = (TextView) findViewById(R.id.tv_tm_processInfo);
+        memoryInfo = (TextView) findViewById(R.id.tv_tm_memoryInfo);
+
+        processInfo.setText("正在运行的进程数为：" + getProcessInfo());
+
+
+
+
+    }
+
+    private int getProcessInfo() {
+        list = manager.getRunningAppProcesses();
+        return list.size();
     }
 
     @Override
