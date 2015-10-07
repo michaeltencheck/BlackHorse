@@ -176,6 +176,7 @@
 
         <activity
             android:name=".activity.TasksManager"
+            android:parentActivityName=".activity.MainActivity"
             android:label="@string/title_activity_tasks_manager" >
         </activity>
     </application>
