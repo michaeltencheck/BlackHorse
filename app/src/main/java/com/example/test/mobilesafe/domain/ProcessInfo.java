@@ -8,15 +8,17 @@ import android.widget.CheckBox;
  */
 public class ProcessInfo {
     private String name;
-    private String memory;
+    private int memory;
+    private int pid;
     private Drawable icon;
-    private CheckBox checkBox;
+    private boolean isChecked;
 
-    public ProcessInfo(String name, String memory, Drawable icon, CheckBox checkBox) {
+    public ProcessInfo(String name, int memory, int pid, Drawable icon, boolean isChecked) {
         this.name = name;
         this.memory = memory;
+        this.pid = pid;
         this.icon = icon;
-        this.checkBox = checkBox;
+        this.isChecked = isChecked;
     }
 
     public String getName() {
@@ -27,12 +29,20 @@ public class ProcessInfo {
         this.name = name;
     }
 
-    public String getMemory() {
+    public long getMemory() {
         return memory;
     }
 
-    public void setMemory(String memory) {
+    public void setMemory(int memory) {
         this.memory = memory;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public Drawable getIcon() {
@@ -43,11 +53,11 @@ public class ProcessInfo {
         this.icon = icon;
     }
 
-    public CheckBox getCheckBox() {
-        return checkBox;
+    public boolean isChecked() {
+        return isChecked;
     }
 
-    public void setCheckBox(CheckBox checkBox) {
-        this.checkBox = checkBox;
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
     }
 }
