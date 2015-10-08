@@ -3,16 +3,23 @@ package com.example.test.mobilesafe.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.adapter.ProcessInfoAdapter;
+import com.example.test.mobilesafe.domain.ProcessInfo;
+import com.example.test.mobilesafe.engine.ProcessInfoFactory;
 import com.example.test.mobilesafe.util.DecimalFormater;
 
 import java.util.List;
@@ -23,28 +30,55 @@ public class TasksManager extends AppCompatActivity {
     private TextView processInfo, memoryInfo;
     private List<ActivityManager.RunningAppProcessInfo> list;
     private ActivityManager.MemoryInfo men;
+    private List<ProcessInfo> processInfos;
+    private ProcessInfoAdapter adapter;
+    private ListView listView;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            processInfo.setText("正在运行的进程数为：" + getProcessInfo());
+            memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
+            listView.setAdapter(adapter);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks_manager);
 
+        listView = (ListView) findViewById(R.id.lv_tm_processDetail);
+
         manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
 
         processInfo = (TextView) findViewById(R.id.tv_tm_processInfo);
         memoryInfo = (TextView) findViewById(R.id.tv_tm_memoryInfo);
 
-
         men = new ActivityManager.MemoryInfo();
         manager.getMemoryInfo(men);
 
-        processInfo.setText("正在运行的进程数为：" + getProcessInfo());
-        memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
+        initProcessInfo();
+    }
 
+    private void initProcessInfo() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ProcessInfoFactory factory = new ProcessInfoFactory(getApplicationContext());
+                try {
+                    list = manager.getRunningAppProcesses();
+                    processInfos = factory.getProcessInfos(list);
+                    adapter = new ProcessInfoAdapter(getApplicationContext(), processInfos);
+                    handler.sendEmptyMessage(0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private int getProcessInfo() {
-        list = manager.getRunningAppProcesses();
         return list.size();
     }
 

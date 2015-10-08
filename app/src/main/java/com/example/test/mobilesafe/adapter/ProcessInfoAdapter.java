@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.domain.AppInfo;
 import com.example.test.mobilesafe.domain.ProcessInfo;
+import com.example.test.mobilesafe.util.DecimalFormater;
 
 import java.util.List;
 
@@ -59,7 +60,9 @@ public class ProcessInfoAdapter extends BaseAdapter{
         }
         viewHolder.imageView.setImageDrawable(list.get(position).getIcon());
         viewHolder.name.setText(list.get(position).getName());
-        viewHolder.memory.setText(list.get(position).getMemory()+"");
+        /*viewHolder.memory.setText
+                ("所占内存: "+ DecimalFormater.getKBNumber(list.get(position).getMemory())+"");*/
+        viewHolder.memory.setText(list.get(position).getPid()+"");
 
         return view;
     }

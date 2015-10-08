@@ -25,4 +25,10 @@ public class DecimalFormater {
 //        return decimalFormat.format(size / 1024) + "aaa";
 //        return decimalFormat.format(size / 1024f / 1024f / 1024f) + "GB";
     }
+
+    public static String getKBNumber(long size) {
+        DecimalFormat decimalFormat = new DecimalFormat("####.00");
+        float kNumber = size / 1024f;
+        return decimalFormat.format(kNumber) + "MB";
+    }
 }

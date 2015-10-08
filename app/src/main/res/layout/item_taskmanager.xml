@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,13 +18,15 @@
 
         <TextView
             android:id="@+id/tv_it_name"
-            android:textAppearance="@android:style/TextAppearance.Medium"
+            tools:text="fasfas"
+            android:textAppearance="@android:style/TextAppearance.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_it_memory"
             android:textAppearance="@android:style/TextAppearance.Medium"
+            tools:text="fafasfas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
