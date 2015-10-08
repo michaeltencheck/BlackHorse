@@ -32,7 +32,8 @@ public class ProcessInfoFactory {
         for (ActivityManager.RunningAppProcessInfo info : list) {
             int pID = info.pid;
             String packageName = info.processName;
-            ApplicationInfo applicationInfo = pm.getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
+            ApplicationInfo applicationInfo =
+                    pm.getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
             Drawable drawable = applicationInfo.loadIcon(pm);
             String appName = applicationInfo.name;
             Debug.MemoryInfo[] memoryInfos = am.getProcessMemoryInfo(new int[]{pID});
