@@ -22,4 +22,6 @@
     <string name="app_locker">程序锁</string>
     <string name="cb_applocker_close">关闭</string>
     <string name="title_activity_tasks_manager">任务管理器</string>
+    <string name="setting">设置</string>
+    <string name="clear">清除</string>
 </resources>

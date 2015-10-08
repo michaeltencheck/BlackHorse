@@ -8,6 +8,7 @@
     tools:context="com.example.test.mobilesafe.activity.TasksManager">
 
     <LinearLayout
+        android:id="@+id/ll_tm"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,4 +31,41 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/ll_tm"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/lv_tm_processDetail"
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/bt_tm_setting"
+                android:layout_width="130dp"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:text="@string/setting"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/bt_tm_clear"
+                android:layout_width="130dp"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:text="@string/clear"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
