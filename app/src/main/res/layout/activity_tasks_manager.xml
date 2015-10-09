@@ -7,6 +7,29 @@
     android:background="@color/backgroundcolor"
     tools:context="com.example.test.mobilesafe.activity.TasksManager">
 
+
+    <LinearLayout
+        android:id="@+id/ll_tm_progressBar"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/pb_tm_progressBar"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:text="正在加载，请稍候"
+            android:textColor="@color/textcolor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_tm"
         android:orientation="horizontal"

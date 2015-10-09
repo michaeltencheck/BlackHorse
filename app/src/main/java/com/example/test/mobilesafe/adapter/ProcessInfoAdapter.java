@@ -60,9 +60,9 @@ public class ProcessInfoAdapter extends BaseAdapter{
         }
         viewHolder.imageView.setImageDrawable(list.get(position).getIcon());
         viewHolder.name.setText(list.get(position).getName());
-        /*viewHolder.memory.setText
-                ("所占内存: "+ DecimalFormater.getKBNumber(list.get(position).getMemory())+"");*/
-        viewHolder.memory.setText(list.get(position).getPid()+"");
+        viewHolder.memory.setText
+                ("使用内存: "+ DecimalFormater.getKBNumber(list.get(position).getMemory())+"");
+//        viewHolder.memory.setText(list.get(position).getPid()+"");
 
         return view;
     }

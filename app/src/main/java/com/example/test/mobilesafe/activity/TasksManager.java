@@ -13,8 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
@@ -35,6 +38,7 @@ public class TasksManager extends AppCompatActivity {
     private List<String> pn, pn1;
     private ActivityManager.MemoryInfo men;
     private List<ProcessInfo> processInfos;
+    private LinearLayout progressBar;
     private ProcessInfoAdapter adapter;
     private ListView listView;
     private PackageManager pm;
@@ -45,6 +49,7 @@ public class TasksManager extends AppCompatActivity {
             processInfo.setText("正在运行的进程数为：" + getProcessInfo());
             memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
             listView.setAdapter(adapter);
+            progressBar.setVisibility(View.INVISIBLE);
         }
     };
 
@@ -54,6 +59,7 @@ public class TasksManager extends AppCompatActivity {
         setContentView(R.layout.activity_tasks_manager);
 
         listView = (ListView) findViewById(R.id.lv_tm_processDetail);
+        progressBar = (LinearLayout) findViewById(R.id.ll_tm_progressBar);
 
         manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         pm = this.getPackageManager();
@@ -88,7 +94,7 @@ public class TasksManager extends AppCompatActivity {
                             pn.add(packageName);
                         }
                     }
-                    processInfos = factory.getProcessInfos(list);
+                    processInfos = factory.getProcessInfos(list,pn);
                     adapter = new ProcessInfoAdapter(getApplicationContext(), processInfos);
                     handler.sendEmptyMessage(0);
                 } catch (PackageManager.NameNotFoundException e) {
