@@ -26,7 +26,7 @@ public class ProcessInfoFactory {
         this.pm = context.getPackageManager();
     }
 
-    public List<ProcessInfo> getProcessInfos
+    public List<ProcessInfo> getCustomerProcessInfos
             (List<ActivityManager.RunningAppProcessInfo> list,List<String> list1)
             throws PackageManager.NameNotFoundException {
         List<ProcessInfo> processInfos = new ArrayList<>();
@@ -36,13 +36,16 @@ public class ProcessInfoFactory {
             if (list1.contains(packageName)) {
                 ApplicationInfo applicationInfo =
                         pm.getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-                Drawable icon = applicationInfo.loadIcon(pm);
-                String name = applicationInfo.loadLabel(pm).toString();
-                Debug.MemoryInfo[] memoryInfos = am.getProcessMemoryInfo(new int[]{pID});
-                Debug.MemoryInfo memoryInfo = memoryInfos[0];
-                int memory = memoryInfo.getTotalPrivateDirty();
-                ProcessInfo processInfo = new ProcessInfo(name, memory, pID, icon, false);
-                processInfos.add(processInfo);
+                AppInfoAssist appInfoAssist = new AppInfoAssist(context);
+                if (appInfoAssist.filterApp(applicationInfo)) {
+                    Drawable icon = applicationInfo.loadIcon(pm);
+                    String name = applicationInfo.loadLabel(pm).toString();
+                    Debug.MemoryInfo[] memoryInfos = am.getProcessMemoryInfo(new int[]{pID});
+                    Debug.MemoryInfo memoryInfo = memoryInfos[0];
+                    int memory = memoryInfo.getTotalPrivateDirty();
+                    ProcessInfo processInfo = new ProcessInfo(name, memory, pID, icon, false);
+                    processInfos.add(processInfo);
+                }
             }
             /*ApplicationInfo applicationInfo =
                     pm.getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);*/
@@ -59,6 +62,31 @@ public class ProcessInfoFactory {
                     processInfos.add(processInfo);
                 }
             }*/
+        }
+        return processInfos;
+    }
+
+    public List<ProcessInfo> getSystemProcessInfos
+            (List<ActivityManager.RunningAppProcessInfo> list,List<String> list1)
+            throws PackageManager.NameNotFoundException {
+        List<ProcessInfo> processInfos = new ArrayList<>();
+        for (ActivityManager.RunningAppProcessInfo info : list) {
+            int pID = info.pid;
+            String packageName = info.processName;
+            if (list1.contains(packageName)) {
+                ApplicationInfo applicationInfo =
+                        pm.getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
+                AppInfoAssist appInfoAssist = new AppInfoAssist(context);
+                if (!appInfoAssist.filterApp(applicationInfo)) {
+                    Drawable icon = applicationInfo.loadIcon(pm);
+                    String name = applicationInfo.loadLabel(pm).toString();
+                    Debug.MemoryInfo[] memoryInfos = am.getProcessMemoryInfo(new int[]{pID});
+                    Debug.MemoryInfo memoryInfo = memoryInfos[0];
+                    int memory = memoryInfo.getTotalPrivateDirty();
+                    ProcessInfo processInfo = new ProcessInfo(name, memory, pID, icon, false);
+                    processInfos.add(processInfo);
+                }
+            }
         }
         return processInfos;
     }

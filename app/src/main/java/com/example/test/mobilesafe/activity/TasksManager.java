@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -37,7 +38,8 @@ public class TasksManager extends AppCompatActivity {
     private List<ApplicationInfo> list1;
     private List<String> pn, pn1;
     private ActivityManager.MemoryInfo men;
-    private List<ProcessInfo> processInfos;
+    private List<ProcessInfo> customerProcessInfos;
+    private List<ProcessInfo> systemProcessInfos;
     private LinearLayout progressBar;
     private ProcessInfoAdapter adapter;
     private ListView listView;
@@ -94,8 +96,9 @@ public class TasksManager extends AppCompatActivity {
                             pn.add(packageName);
                         }
                     }
-                    processInfos = factory.getProcessInfos(list,pn);
-                    adapter = new ProcessInfoAdapter(getApplicationContext(), processInfos);
+                    customerProcessInfos = factory.getCustomerProcessInfos(list,pn);
+                    systemProcessInfos = factory.getSystemProcessInfos(list, pn);
+                    adapter = new ProcessInfoAdapter(getApplicationContext(), customerProcessInfos, systemProcessInfos);
                     handler.sendEmptyMessage(0);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();

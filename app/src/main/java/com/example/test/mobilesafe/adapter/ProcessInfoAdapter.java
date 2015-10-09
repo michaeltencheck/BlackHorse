@@ -20,31 +20,107 @@ import java.util.List;
  */
 public class ProcessInfoAdapter extends BaseAdapter{
     private Context context;
-    private List<ProcessInfo> list;
+    private List<ProcessInfo> customer, system;
 
-    public ProcessInfoAdapter(Context context, List<ProcessInfo> list) {
+    public ProcessInfoAdapter(Context context, List<ProcessInfo> customer, List<ProcessInfo> system) {
         this.context = context;
-        this.list = list;
+        this.customer = customer;
+        this.system = system;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return customer.size() + system.size() + 2;
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        if (position == 0) {
+            String customerApp = "用户程序";
+            return customerApp;
+        }else if (position <= customer.size()) {
+            return customer.get(position - 1);
+        }else if (position == customer.size() + 1) {
+            String systemApp = "系统程序";
+            return systemApp;
+        }else if (position > customer.size() + 1) {
+            return system.get(position - customer.size() - 2);
+        }
+        return null;
     }
 
     @Override
     public long getItemId(int position) {
+        if (position == 0) {
+            return -1;
+        }else if (position <= customer.size()) {
+            return position - 1;
+        }else if (position == customer.size() + 1) {
+            return -1;
+        }else if (position > customer.size() + 1) {
+            return position - 2;
+        }
         return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
+        ViewHolder viewHolder;
+        if (position == 0) {
+            TextView textView = new TextView(context);
+            textView.setTextSize(30);
+            textView.setText("用户程序");
+            return textView;
+        }else if (position <= customer.size()) {
+            if (convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                view = inflater.inflate(R.layout.item_taskmanager, null);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_it_icon);
+                viewHolder.name = (TextView) view.findViewById(R.id.tv_it_name);
+                viewHolder.memory = (TextView) view.findViewById(R.id.tv_it_memory);
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+            viewHolder.imageView.setImageDrawable(customer.get(position - 1).getIcon());
+            viewHolder.name.setText(customer.get(position - 1).getName());
+            viewHolder.memory.setText
+                    ("使用内存: "+ DecimalFormater.getKBNumber(customer.get(position-1).getMemory())+"");
+            return view;
+        }else if (position == customer.size() + 1) {
+            TextView textView = new TextView(context);
+            textView.setText("系统程序");
+            textView.setTextSize(30);
+            return textView;
+        } else {
+            if (convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                view = inflater.inflate(R.layout.item_taskmanager, null);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_it_icon);
+                viewHolder.name = (TextView) view.findViewById(R.id.tv_it_name);
+                viewHolder.memory = (TextView) view.findViewById(R.id.tv_it_memory);
+                view.setTag(viewHolder);
+            } else {
+                view = convertView;
+                viewHolder = (ViewHolder) view.getTag();
+            }
+            viewHolder.imageView.setImageDrawable(system.get(position -customer.size()-2).getIcon());
+            viewHolder.name.setText(system.get(position -customer.size()-2).getName());
+            viewHolder.memory.setText
+                    ("使用内存: "+ DecimalFormater.getKBNumber(system.get(position -customer.size()-2).getMemory())+"");
+            return view;
+        }
+/*        if (position == 0) {
+            TextView textView = new TextView(context);
+            textView.setTextSize(30);
+            textView.setText("用户程序");
+            return textView;
+        }*/
+        /*View view;
         ViewHolder viewHolder;
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -64,7 +140,7 @@ public class ProcessInfoAdapter extends BaseAdapter{
                 ("使用内存: "+ DecimalFormater.getKBNumber(list.get(position).getMemory())+"");
 //        viewHolder.memory.setText(list.get(position).getPid()+"");
 
-        return view;
+        return view;*/
     }
 
     private static class ViewHolder {
