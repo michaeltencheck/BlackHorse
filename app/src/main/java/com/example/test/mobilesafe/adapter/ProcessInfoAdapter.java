@@ -65,15 +65,16 @@ public class ProcessInfoAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
-        ViewHolder viewHolder;
         if (position == 0) {
             TextView textView = new TextView(context);
             textView.setTextSize(30);
             textView.setText("用户程序");
             return textView;
-        }else if (position <= customer.size()) {
-            if (convertView == null) {
+        } else if (position <= customer.size()) {
+            View view;
+            ViewHolder viewHolder;
+            if (convertView == null || convertView.getVerticalScrollbarPosition() == 0 ||
+                    convertView.getVerticalScrollbarPosition() == customer.size() + 1) {
                 LayoutInflater inflater = LayoutInflater.from(context);
                 view = inflater.inflate(R.layout.item_taskmanager, null);
                 viewHolder = new ViewHolder();
@@ -88,15 +89,18 @@ public class ProcessInfoAdapter extends BaseAdapter{
             viewHolder.imageView.setImageDrawable(customer.get(position - 1).getIcon());
             viewHolder.name.setText(customer.get(position - 1).getName());
             viewHolder.memory.setText
-                    ("使用内存: "+ DecimalFormater.getKBNumber(customer.get(position-1).getMemory())+"");
+                    ("使用内存: " + DecimalFormater.getKBNumber(customer.get(position - 1).getMemory()) + "");
             return view;
-        }else if (position == customer.size() + 1) {
+        } else if (position == customer.size() + 1) {
             TextView textView = new TextView(context);
             textView.setText("系统程序");
             textView.setTextSize(30);
             return textView;
         } else {
-            if (convertView == null) {
+            View view;
+            ViewHolder viewHolder;
+            if (convertView == null || convertView.getVerticalScrollbarPosition() == 0 ||
+                    convertView.getVerticalScrollbarPosition() == customer.size() + 1) {
                 LayoutInflater inflater = LayoutInflater.from(context);
                 view = inflater.inflate(R.layout.item_taskmanager, null);
                 viewHolder = new ViewHolder();
@@ -108,10 +112,10 @@ public class ProcessInfoAdapter extends BaseAdapter{
                 view = convertView;
                 viewHolder = (ViewHolder) view.getTag();
             }
-            viewHolder.imageView.setImageDrawable(system.get(position -customer.size()-2).getIcon());
-            viewHolder.name.setText(system.get(position -customer.size()-2).getName());
+            viewHolder.imageView.setImageDrawable(system.get(position - customer.size() - 2).getIcon());
+            viewHolder.name.setText(system.get(position - customer.size() - 2).getName());
             viewHolder.memory.setText
-                    ("使用内存: "+ DecimalFormater.getKBNumber(system.get(position -customer.size()-2).getMemory())+"");
+                    ("使用内存: " + DecimalFormater.getKBNumber(system.get(position - customer.size() - 2).getMemory()) + "");
             return view;
         }
 /*        if (position == 0) {
