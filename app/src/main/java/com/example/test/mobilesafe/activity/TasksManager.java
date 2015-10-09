@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -37,6 +39,7 @@ public class TasksManager extends AppCompatActivity {
     private List<ActivityManager.RunningAppProcessInfo> list;
     private List<ApplicationInfo> list1;
     private List<String> pn, pn1;
+    private CheckBox checkBox;
     private ActivityManager.MemoryInfo men;
     private List<ProcessInfo> customerProcessInfos;
     private List<ProcessInfo> systemProcessInfos;
@@ -63,6 +66,8 @@ public class TasksManager extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.lv_tm_processDetail);
         progressBar = (LinearLayout) findViewById(R.id.ll_tm_progressBar);
 
+        checkBox = (CheckBox) findViewById(R.id.cb_it_checkbox);
+
         manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         pm = this.getPackageManager();
 
@@ -76,6 +81,34 @@ public class TasksManager extends AppCompatActivity {
         manager.getMemoryInfo(men);
 
         initProcessInfo();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0 || position == customerProcessInfos.size() + 1) {
+
+                }else{
+                    ProcessInfo processInfo = (ProcessInfo) listView.getItemAtPosition(position);
+                    if (processInfo.isChecked()) {
+                        processInfo.setIsChecked(false);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        processInfo.setIsChecked(true);
+                        adapter.notifyDataSetChanged();
+                    }
+                }/*else if (position >= customerProcessInfos.size() + 2) {
+                    ProcessInfo processInfo =
+                            (ProcessInfo) listView.getItemAtPosition(position - customerProcessInfos.size() - 2);
+                    if (processInfo.isChecked()) {
+                        processInfo.setIsChecked(false);
+                        checkBox.setChecked(false);
+                    } else {
+                        processInfo.setIsChecked(true);
+                        checkBox.setChecked(true);
+                    }
+                }*/
+            }
+        });
     }
 
     private void initProcessInfo() {

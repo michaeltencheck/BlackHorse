@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -81,6 +82,7 @@ public class ProcessInfoAdapter extends BaseAdapter{
                 viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_it_icon);
                 viewHolder.name = (TextView) view.findViewById(R.id.tv_it_name);
                 viewHolder.memory = (TextView) view.findViewById(R.id.tv_it_memory);
+                viewHolder.checkBox = (CheckBox) view.findViewById(R.id.cb_it_checkbox);
                 view.setTag(viewHolder);
             } else {
                 view = convertView;
@@ -90,6 +92,11 @@ public class ProcessInfoAdapter extends BaseAdapter{
             viewHolder.name.setText(customer.get(position - 1).getName());
             viewHolder.memory.setText
                     ("使用内存: " + DecimalFormater.getKBNumber(customer.get(position - 1).getMemory()) + "");
+            if (customer.get(position - 1).isChecked()) {
+                viewHolder.checkBox.setChecked(true);
+            } else {
+                viewHolder.checkBox.setChecked(false);
+            }
             return view;
         } else if (position == customer.size() + 1) {
             TextView textView = new TextView(context);
@@ -107,6 +114,7 @@ public class ProcessInfoAdapter extends BaseAdapter{
                 viewHolder.imageView = (ImageView) view.findViewById(R.id.iv_it_icon);
                 viewHolder.name = (TextView) view.findViewById(R.id.tv_it_name);
                 viewHolder.memory = (TextView) view.findViewById(R.id.tv_it_memory);
+                viewHolder.checkBox = (CheckBox) view.findViewById(R.id.cb_it_checkbox);
                 view.setTag(viewHolder);
             } else {
                 view = convertView;
@@ -116,6 +124,11 @@ public class ProcessInfoAdapter extends BaseAdapter{
             viewHolder.name.setText(system.get(position - customer.size() - 2).getName());
             viewHolder.memory.setText
                     ("使用内存: " + DecimalFormater.getKBNumber(system.get(position - customer.size() - 2).getMemory()) + "");
+            if (system.get(position - customer.size() - 2).isChecked()) {
+                viewHolder.checkBox.setChecked(true);
+            } else {
+                viewHolder.checkBox.setChecked(false);
+            }
             return view;
         }
 /*        if (position == 0) {
@@ -150,5 +163,6 @@ public class ProcessInfoAdapter extends BaseAdapter{
     private static class ViewHolder {
         private ImageView imageView;
         private TextView name,memory;
+        private CheckBox checkBox;
     }
 }
