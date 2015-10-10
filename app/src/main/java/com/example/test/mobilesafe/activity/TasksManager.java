@@ -57,12 +57,16 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            processInfo.setText("正在运行的进程数为：" + getProcessInfo(customerProcessInfos,systemProcessInfos));
-            memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
+            showSummary();
             listView.setAdapter(adapter);
             progressBar.setVisibility(View.INVISIBLE);
         }
     };
+
+    private void showSummary() {
+        processInfo.setText("正在运行的进程数为：" + getProcessInfo(customerProcessInfos,systemProcessInfos));
+        memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +95,6 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
         processInfo = (TextView) findViewById(R.id.tv_tm_processInfo);
         memoryInfo = (TextView) findViewById(R.id.tv_tm_memoryInfo);
 
-        men = new ActivityManager.MemoryInfo();
-        manager.getMemoryInfo(men);
 
         initProcessInfo();
 
@@ -123,6 +125,11 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
                 }*/
             }
         });
+    }
+
+    private void getMemInfo() {
+        men = new ActivityManager.MemoryInfo();
+        manager.getMemoryInfo(men);
     }
 
     private void initProcessInfo() {
@@ -185,12 +192,14 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
     }
 
     private String getAvailableMemory() {
+        getMemInfo();
         long avaMemory = men.availMem;
         Log.i(TAG, "getAvailableMemory " + avaMemory);
         return DecimalFormater.getNumber(avaMemory);
     }
 
     private String getTotalMemory() {
+        getMemInfo();
         long totalMemory = men.totalMem;
         Log.i(TAG, "getTotalMemory " + totalMemory);
         return DecimalFormater.getNumber(totalMemory);
@@ -226,6 +235,9 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
                 refreshCustomer();
                 refreshSystem();
                 adapter.notifyDataSetChanged();
+                showSummary();
+                break;
+            default:
                 break;
         }
     }
@@ -247,7 +259,6 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
             ProcessInfo info = iterator.next();
             if (info.isChecked()) {
                 iterator.remove();
-                break;
             }
         }
     }
