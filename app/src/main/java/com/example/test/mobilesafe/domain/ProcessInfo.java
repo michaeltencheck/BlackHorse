@@ -10,15 +10,25 @@ public class ProcessInfo {
     private String name;
     private int memory;
     private int pid;
+    private String packageName;
     private Drawable icon;
     private boolean isChecked;
 
-    public ProcessInfo(String name, int memory, int pid, Drawable icon, boolean isChecked) {
+    public ProcessInfo(String name, int memory, int pid, String packageName, Drawable icon, boolean isChecked) {
         this.name = name;
         this.memory = memory;
         this.pid = pid;
+        this.packageName = packageName;
         this.icon = icon;
         this.isChecked = isChecked;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public String getName() {

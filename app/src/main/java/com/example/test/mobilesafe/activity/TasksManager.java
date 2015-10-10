@@ -17,11 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.adapter.ProcessInfoAdapter;
@@ -32,7 +34,7 @@ import com.example.test.mobilesafe.util.DecimalFormater;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TasksManager extends AppCompatActivity {
+public class TasksManager extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "TasksManager";
     private ActivityManager manager;
     private TextView processInfo, memoryInfo;
@@ -41,10 +43,13 @@ public class TasksManager extends AppCompatActivity {
     private List<String> pn, pn1;
     private CheckBox checkBox;
     private ActivityManager.MemoryInfo men;
+    private Button clear, setting;
     private List<ProcessInfo> customerProcessInfos;
     private List<ProcessInfo> systemProcessInfos;
+    private List<ProcessInfo> totalProcessInfos;
     private LinearLayout progressBar;
     private ProcessInfoAdapter adapter;
+    private ActivityManager activityManager;
     private ListView listView;
     private PackageManager pm;
     private Handler handler = new Handler(){
@@ -65,6 +70,14 @@ public class TasksManager extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.lv_tm_processDetail);
         progressBar = (LinearLayout) findViewById(R.id.ll_tm_progressBar);
+
+        clear = (Button) findViewById(R.id.bt_tm_clear);
+        setting = (Button) findViewById(R.id.bt_tm_setting);
+
+        clear.setOnClickListener(this);
+        setting.setOnClickListener(this);
+
+        activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
         checkBox = (CheckBox) findViewById(R.id.cb_it_checkbox);
 
@@ -131,13 +144,39 @@ public class TasksManager extends AppCompatActivity {
                     }
                     customerProcessInfos = factory.getCustomerProcessInfos(list,pn);
                     systemProcessInfos = factory.getSystemProcessInfos(list, pn);
-                    adapter = new ProcessInfoAdapter(getApplicationContext(), customerProcessInfos, systemProcessInfos);
+                    totalProcessInfos = factory.getTotalProcessInfos(list, pn);
+                    adapter = new ProcessInfoAdapter
+                            (getApplicationContext(), customerProcessInfos, systemProcessInfos);
                     handler.sendEmptyMessage(0);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
+
+    private void killBackground() {
+        int count = 0;
+        long memories = 0;
+        for (ProcessInfo info : customerProcessInfos) {
+            if (info.isChecked()) {
+                String packageName = info.getPackageName();
+                activityManager.killBackgroundProcesses(packageName);
+                count++;
+                memories += info.getMemory();
+            }
+        }
+        for (ProcessInfo info : systemProcessInfos) {
+            if (info.isChecked()) {
+                String packageName = info.getPackageName();
+                activityManager.killBackgroundProcesses(packageName);
+                count++;
+                memories += info.getMemory();
+            }
+        }
+        Toast.makeText(this,
+                "此次操作总共为您清理" + count + "个后台进程，释放" + DecimalFormater.getKBNumber(memories) + "内存空间",
+                Toast.LENGTH_SHORT).show();
     }
 
     private int getProcessInfo() {
@@ -176,5 +215,14 @@ public class TasksManager extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.bt_tm_clear:
+                killBackground();
+                break;
+        }
     }
 }

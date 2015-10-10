@@ -92,11 +92,7 @@ public class ProcessInfoAdapter extends BaseAdapter{
             viewHolder.name.setText(customer.get(position - 1).getName());
             viewHolder.memory.setText
                     ("使用内存: " + DecimalFormater.getKBNumber(customer.get(position - 1).getMemory()) + "");
-            if (customer.get(position - 1).isChecked()) {
-                viewHolder.checkBox.setChecked(true);
-            } else {
-                viewHolder.checkBox.setChecked(false);
-            }
+            viewHolder.checkBox.setChecked(customer.get(position - 1).isChecked());
             return view;
         } else if (position == customer.size() + 1) {
             TextView textView = new TextView(context);
@@ -124,11 +120,7 @@ public class ProcessInfoAdapter extends BaseAdapter{
             viewHolder.name.setText(system.get(position - customer.size() - 2).getName());
             viewHolder.memory.setText
                     ("使用内存: " + DecimalFormater.getKBNumber(system.get(position - customer.size() - 2).getMemory()) + "");
-            if (system.get(position - customer.size() - 2).isChecked()) {
-                viewHolder.checkBox.setChecked(true);
-            } else {
-                viewHolder.checkBox.setChecked(false);
-            }
+            viewHolder.checkBox.setChecked(system.get(position - customer.size() - 2).isChecked());
             return view;
         }
 /*        if (position == 0) {
