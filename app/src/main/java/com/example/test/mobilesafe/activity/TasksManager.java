@@ -105,12 +105,14 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
 
                 }else{
                     ProcessInfo processInfo = (ProcessInfo) listView.getItemAtPosition(position);
-                    if (processInfo.isChecked()) {
-                        processInfo.setIsChecked(false);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        processInfo.setIsChecked(true);
-                        adapter.notifyDataSetChanged();
+                    if (!processInfo.getPackageName().equals(getApplication().getPackageName())) {
+                        if (processInfo.isChecked()) {
+                            processInfo.setIsChecked(false);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            processInfo.setIsChecked(true);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 }/*else if (position >= customerProcessInfos.size() + 2) {
                     ProcessInfo processInfo =

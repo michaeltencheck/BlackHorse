@@ -88,6 +88,15 @@ public class ProcessInfoAdapter extends BaseAdapter{
                 view = convertView;
                 viewHolder = (ViewHolder) view.getTag();
             }
+
+            if (customer.get(position - 1).getPackageName().equals(context.getPackageName())) {
+                viewHolder.imageView.setImageDrawable(customer.get(position - 1).getIcon());
+                viewHolder.name.setText(customer.get(position - 1).getName());
+                viewHolder.memory.setText
+                        ("使用内存: " + DecimalFormater.getKBNumber(customer.get(position - 1).getMemory()) + "");
+                viewHolder.checkBox.setEnabled(false);
+                return view;
+            }
             viewHolder.imageView.setImageDrawable(customer.get(position - 1).getIcon());
             viewHolder.name.setText(customer.get(position - 1).getName());
             viewHolder.memory.setText
