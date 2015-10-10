@@ -32,6 +32,7 @@ import com.example.test.mobilesafe.engine.ProcessInfoFactory;
 import com.example.test.mobilesafe.util.DecimalFormater;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TasksManager extends AppCompatActivity implements View.OnClickListener{
@@ -56,7 +57,7 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            processInfo.setText("正在运行的进程数为：" + getProcessInfo());
+            processInfo.setText("正在运行的进程数为：" + getProcessInfo(customerProcessInfos,systemProcessInfos));
             memoryInfo.setText("系统剩余内存/总内存：" + getAvailableMemory() + "/" + getTotalMemory());
             listView.setAdapter(adapter);
             progressBar.setVisibility(View.INVISIBLE);
@@ -179,8 +180,8 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
                 Toast.LENGTH_SHORT).show();
     }
 
-    private int getProcessInfo() {
-        return pn.size();
+    private int getProcessInfo(List list1,List list2) {
+        return list1.size() + list2.size();
     }
 
     private String getAvailableMemory() {
@@ -222,7 +223,32 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.bt_tm_clear:
                 killBackground();
+                refreshCustomer();
+                refreshSystem();
+                adapter.notifyDataSetChanged();
                 break;
+        }
+    }
+
+    public void refreshCustomer() {
+        Iterator<ProcessInfo> iterator = customerProcessInfos.iterator();
+        while (iterator.hasNext()) {
+            ProcessInfo info = iterator.next();
+            if (info.isChecked()) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+    public void refreshSystem() {
+        Iterator<ProcessInfo> iterator = systemProcessInfos.iterator();
+        while (iterator.hasNext()) {
+            ProcessInfo info = iterator.next();
+            if (info.isChecked()) {
+                iterator.remove();
+                break;
+            }
         }
     }
 }
