@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:background="@color/backgroundcolor"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_itx_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:textColor="@color/textcolor"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:id="@+id/tv_itx_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

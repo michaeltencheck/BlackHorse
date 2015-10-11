@@ -94,7 +94,7 @@ public class ProcessInfoAdapter extends BaseAdapter{
                 viewHolder.name.setText(customer.get(position - 1).getName());
                 viewHolder.memory.setText
                         ("使用内存: " + DecimalFormater.getKBNumber(customer.get(position - 1).getMemory()) + "");
-                viewHolder.checkBox.setEnabled(false);
+                viewHolder.checkBox.setVisibility(View.INVISIBLE);
                 return view;
             }
             viewHolder.imageView.setImageDrawable(customer.get(position - 1).getIcon());

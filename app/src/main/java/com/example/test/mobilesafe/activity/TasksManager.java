@@ -30,6 +30,7 @@ import com.example.test.mobilesafe.adapter.ProcessInfoAdapter;
 import com.example.test.mobilesafe.domain.ProcessInfo;
 import com.example.test.mobilesafe.engine.ProcessInfoFactory;
 import com.example.test.mobilesafe.util.DecimalFormater;
+import com.example.test.mobilesafe.util.MyToast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -185,8 +186,8 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
             }
         }
         Toast.makeText(this,
-                "此次操作总共为您清理" + count + "个后台进程，释放" + DecimalFormater.getKBNumber(memories) + "内存空间",
-                Toast.LENGTH_SHORT).show();
+                "此次操作总共为您清理" + count + "个后台进程，释放" + DecimalFormater.getKBNumber(memories) + "内存空间", Toast.LENGTH_SHORT).show();
+/*        MyToast.showToast(this,"此次操作总共为您清理" + count + "个后台进程，释放" + DecimalFormater.getKBNumber(memories) + "内存空间",R.drawable.icon5);*/
     }
 
     private int getProcessInfo(List list1,List list2) {
