@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -134,8 +135,11 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0 & position != customerProcessInfos.size() + 1) {
-                    Intent intent = new Intent(getApplicationContext(), PermissionDetailActivity.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), PermissionDetailActivity.class);
+                        ProcessInfo processInfo = (ProcessInfo) listView.getItemAtPosition(position);
+                        String packageName = processInfo.getPackageName();
+                        intent.putExtra("packageName", packageName);
+                        startActivity(intent);
                 }
                 return false;
             }

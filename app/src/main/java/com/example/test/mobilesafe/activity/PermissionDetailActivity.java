@@ -1,18 +1,40 @@
 package com.example.test.mobilesafe.activity;
 
+import android.app.ActivityManager;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
 
 public class PermissionDetailActivity extends AppCompatActivity {
+    private Intent intent;
+    private ImageView imageView;
+    private TextView appName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_detail);
+
+        imageView = (ImageView) findViewById(R.id.iv_apd_icon);
+
+        intent = getIntent();
+        String packageName = intent.getStringExtra("packageName");
+        PackageManager manager = getPackageManager();
+        try {
+            Drawable icon = manager.getApplicationIcon(packageName);
+            imageView.setImageDrawable(icon);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
