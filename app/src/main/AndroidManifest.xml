@@ -177,8 +177,12 @@
 
         <activity
             android:name=".activity.TasksManager"
-            android:parentActivityName=".activity.MainActivity"
-            android:label="@string/title_activity_tasks_manager" >
+            android:label="@string/title_activity_tasks_manager"
+            android:parentActivityName=".activity.MainActivity" >
+        </activity>
+        <activity
+            android:name=".activity.PermissionDetailActivity"
+            android:label="@string/title_activity_permission_detail" >
         </activity>
     </application>
 
