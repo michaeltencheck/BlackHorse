@@ -3,6 +3,7 @@ package com.example.test.mobilesafe.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -104,7 +105,7 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0 || position == customerProcessInfos.size() + 1) {
 
-                }else{
+                } else {
                     ProcessInfo processInfo = (ProcessInfo) listView.getItemAtPosition(position);
                     if (!processInfo.getPackageName().equals(getApplication().getPackageName())) {
                         if (processInfo.isChecked()) {
@@ -126,6 +127,17 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
                         checkBox.setChecked(true);
                     }
                 }*/
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0 & position != customerProcessInfos.size() + 1) {
+                    Intent intent = new Intent(getApplicationContext(), PermissionDetailActivity.class);
+                    startActivity(intent);
+                }
+                return false;
             }
         });
     }
