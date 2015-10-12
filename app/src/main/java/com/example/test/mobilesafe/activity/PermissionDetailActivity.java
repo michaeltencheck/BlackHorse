@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
@@ -26,8 +29,27 @@ public class PermissionDetailActivity extends AppCompatActivity {
     private Intent intent;
     private ImageView imageView;
     private TextView textView;
-    private LinearLayout layout;
-    private View myView;
+    private String packageName;
+    private String appName;
+    private ScrollView scrollView;
+    private PackageManager manager;
+    private LinearLayout progress;
+    private View view;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            scrollView.addView(view);
+            textView.setText(appName);
+            try {
+                Drawable icon = manager.getApplicationIcon(packageName);
+                imageView.setImageDrawable(icon);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            progress.setVisibility(View.INVISIBLE);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +58,16 @@ public class PermissionDetailActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.iv_apd_icon);
         textView = (TextView) findViewById(R.id.tv_apd_appName);
-        layout = (LinearLayout) findViewById(R.id.ll_apd_permission);
+        scrollView = (ScrollView) findViewById(R.id.sv_apd_permission);
+        progress = (LinearLayout) findViewById(R.id.ll_apd_progress);
 
         showPermissionDetails();
 
-
-
         intent = getIntent();
-        String packageName = intent.getStringExtra("packageName");
-        String appName = intent.getStringExtra("appName");
+        packageName = intent.getStringExtra("packageName");
+        appName = intent.getStringExtra("appName");
 
-        textView.setText(appName);
-        PackageManager manager = getPackageManager();
-        try {
-            Drawable icon = manager.getApplicationIcon(packageName);
-            imageView.setImageDrawable(icon);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        manager = getPackageManager();
     }
 
     private void showPermissionDetails() {
@@ -64,11 +78,11 @@ public class PermissionDetailActivity extends AppCompatActivity {
                     Class clazz = getClass().getClassLoader().loadClass("android.widget.AppSecurityPermissions");
                     Log.i(TAG, "run is" + clazz.toString());
                     Constructor constructor = clazz.getConstructor(Context.class, String.class);
-                    Object o = constructor.newInstance(getApplicationContext(), "com.example.test.mobilesafe");
+                    Object o = constructor.newInstance(getApplicationContext(), packageName);
 //                    Method method = clazz.getDeclaredMethod("getPermissionsView", new Class[]{});
                     Method method = clazz.getDeclaredMethod("getPermissionsView", null);
-                    View view = (View) method.invoke(o, null);
-                    setContentView(view);
+                    view = (View) method.invoke(o, null);
+                    handler.sendEmptyMessage(0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

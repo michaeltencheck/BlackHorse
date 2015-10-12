@@ -24,19 +24,54 @@
             android:id="@+id/tv_apd_appName"
             android:textAppearance="@android:style/TextAppearance.Large"
             tools:text="adfasdf"
+            android:textColor="@color/textcolor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_apd_permission"
-        android:orientation="vertical"
-        android:nestedScrollingEnabled="true"
-        android:layout_weight="10"
+    <TextView
+        android:text="权限："
+        android:textColor="@color/textcolor"
+        android:textAppearance="@android:style/TextAppearance.Large"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="10"
         android:layout_height="0dp">
-    </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/sv_apd_permission"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/ll_apd_progress"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <TextView
+                android:text="正在加载，请稍候"
+                android:textAppearance="@android:style/TextAppearance.Large"
+                android:textColor="@color/textcolor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
