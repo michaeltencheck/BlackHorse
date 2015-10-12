@@ -135,11 +135,13 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0 & position != customerProcessInfos.size() + 1) {
-                        Intent intent = new Intent(getApplicationContext(), PermissionDetailActivity.class);
-                        ProcessInfo processInfo = (ProcessInfo) listView.getItemAtPosition(position);
-                        String packageName = processInfo.getPackageName();
-                        intent.putExtra("packageName", packageName);
-                        startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), PermissionDetailActivity.class);
+                    ProcessInfo processInfo = (ProcessInfo) listView.getItemAtPosition(position);
+                    String packageName = processInfo.getPackageName();
+                    String appName = processInfo.getName();
+                    intent.putExtra("appName", appName);
+                    intent.putExtra("packageName", packageName);
+                    startActivity(intent);
                 }
                 return false;
             }
