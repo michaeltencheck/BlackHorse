@@ -4,4 +4,9 @@
     tools:context="com.example.test.mobilesafe.activity.TasksManager">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/menu_item_share"
+        app:showAsAction="ifRoom"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
+        android:title="Share"/>
 </menu>

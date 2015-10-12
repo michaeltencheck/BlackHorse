@@ -1,6 +1,7 @@
 package com.example.test.mobilesafe.activity;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
@@ -96,6 +98,8 @@ public class PermissionDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_permission_detail, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

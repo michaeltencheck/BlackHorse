@@ -6,24 +6,21 @@ import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.support.v7.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +31,7 @@ import com.example.test.mobilesafe.engine.ProcessInfoFactory;
 import com.example.test.mobilesafe.util.DecimalFormater;
 import com.example.test.mobilesafe.util.MyToast;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,6 +45,7 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
     private List<String> pn, pn1;
     private CheckBox checkBox;
     private ActivityManager.MemoryInfo men;
+    private ShareActionProvider provider;
     private Button clear, setting;
     private List<ProcessInfo> customerProcessInfos;
     private List<ProcessInfo> systemProcessInfos;
@@ -55,6 +54,7 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
     private ProcessInfoAdapter adapter;
     private ActivityManager activityManager;
     private ListView listView;
+    private Intent sendIntent;
     private PackageManager pm;
     private Handler handler = new Handler(){
         @Override
@@ -91,6 +91,11 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
 
         manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         pm = this.getPackageManager();
+
+        sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        sendIntent.setType("text/plain");
 
         pn = new ArrayList<>();
         pn1 = new ArrayList<>();
@@ -230,6 +235,11 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_tasks_manager, menu);
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        provider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        if (provider != null) {
+            provider.setShareIntent(sendIntent);
+        }
         return true;
     }
 
