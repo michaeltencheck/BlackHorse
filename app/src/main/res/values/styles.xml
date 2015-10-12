@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="MyDialog" parent="Base.Theme.AppCompat.Dialog">
@@ -82,5 +83,10 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:text">上一步</item>
     </style>
+
+    <style name="activity_float" parent="Theme.AppCompat.Dialog" >
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 
 </resources>

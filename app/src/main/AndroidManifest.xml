@@ -182,6 +182,7 @@
         </activity>
         <activity
             android:name=".activity.PermissionDetailActivity"
+            android:theme="@style/activity_float"
             android:label="@string/title_activity_permission_detail" >
         </activity>
     </application>
