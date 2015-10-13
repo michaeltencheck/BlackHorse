@@ -84,8 +84,7 @@
         <item name="android:text">上一步</item>
     </style>
 
-    <style name="activity_float" parent="Theme.AppCompat.Dialog" >
-        <item name="android:windowBackground">@android:color/transparent</item>
+    <style name="activity_float" parent="Theme.AppCompat.DialogWhenLarge" >
     </style>
 
 

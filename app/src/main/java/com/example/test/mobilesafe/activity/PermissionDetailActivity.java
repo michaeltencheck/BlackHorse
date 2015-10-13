@@ -82,8 +82,11 @@ public class PermissionDetailActivity extends AppCompatActivity {
                     Constructor constructor = clazz.getConstructor(Context.class, String.class);
                     Object o = constructor.newInstance(getApplicationContext(), packageName);
 //                    Method method = clazz.getDeclaredMethod("getPermissionsView", new Class[]{});
-                    Method method = clazz.getDeclaredMethod("getPermissionsView", null);
-                    view = (View) method.invoke(o, null);
+                    Method method = clazz.getDeclaredMethod("getPermissionsView", new Class[]{});
+
+/*                    Object object = clazz.getDeclaredField("PermissionItemView");
+                    Method method1 = clazz.getDeclaredMethod("onClick", null);*/
+                    view = (View) method.invoke(o, new Object[]{});
                     handler.sendEmptyMessage(0);
                 } catch (Exception e) {
                     e.printStackTrace();

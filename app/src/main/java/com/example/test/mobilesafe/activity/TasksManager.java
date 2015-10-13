@@ -3,9 +3,15 @@ package com.example.test.mobilesafe.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
@@ -15,12 +21,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.support.v7.widget.ShareActionProvider;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +38,7 @@ import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.adapter.ProcessInfoAdapter;
 import com.example.test.mobilesafe.domain.ProcessInfo;
 import com.example.test.mobilesafe.engine.ProcessInfoFactory;
+import com.example.test.mobilesafe.receiver.BackgroundKiller;
 import com.example.test.mobilesafe.util.DecimalFormater;
 import com.example.test.mobilesafe.util.MyToast;
 
@@ -43,14 +54,15 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
     private List<ActivityManager.RunningAppProcessInfo> list;
     private List<ApplicationInfo> list1;
     private List<String> pn, pn1;
-    private CheckBox checkBox;
     private ActivityManager.MemoryInfo men;
     private ShareActionProvider provider;
     private Button clear, setting;
+    private LinearLayout linearLayout;
     private List<ProcessInfo> customerProcessInfos;
     private List<ProcessInfo> systemProcessInfos;
-    private List<ProcessInfo> totalProcessInfos;
     private LinearLayout progressBar;
+    private RelativeLayout relativeLayout;
+    private WindowManager.LayoutParams wl;
     private ProcessInfoAdapter adapter;
     private ActivityManager activityManager;
     private ListView listView;
@@ -81,13 +93,33 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
 
         clear = (Button) findViewById(R.id.bt_tm_clear);
         setting = (Button) findViewById(R.id.bt_tm_setting);
+        linearLayout = (LinearLayout) findViewById(R.id.ll_tm_allApps);
+
+        relativeLayout = (RelativeLayout) getLayoutInflater()
+                .inflate(R.layout.activity_tasks_manager, null);
+
+/*        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                List<ActivityManager.RunningAppProcessInfo> list = manager.getRunningAppProcesses();
+                for (ActivityManager.RunningAppProcessInfo info : list) {
+                    String packageName = info.processName;
+                    Log.i(TAG, "onReceive " + packageName);
+                    manager.killBackgroundProcesses(packageName);
+            }
+        }};*/
+
+        BackgroundKiller killer = new BackgroundKiller();
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(killer, filter);
 
         clear.setOnClickListener(this);
         setting.setOnClickListener(this);
 
         activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
-        checkBox = (CheckBox) findViewById(R.id.cb_it_checkbox);
 
         manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         pm = this.getPackageManager();
@@ -146,7 +178,28 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
                     String appName = processInfo.getName();
                     intent.putExtra("appName", appName);
                     intent.putExtra("packageName", packageName);
+
+                    WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
+                    layoutParams.dimAmount = 1.0f;
+                    getWindow().setAttributes(layoutParams);
+
                     startActivity(intent);
+                    overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
+
+
+
+/*                    ImageView imageView = new ImageView(getApplicationContext());
+                    Drawable drawable = new ColorDrawable(Color.CYAN);
+                    imageView.setImageDrawable(drawable);
+                    linearLayout.setVisibility(View.INVISIBLE);
+                    linearLayout.addView(imageView);*/
+/*                    RelativeLayout relativeLayout = (RelativeLayout) getLayoutInflater()
+                            .inflate(R.layout.activity_tasks_manager, null);
+                    WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+                    WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) relativeLayout.getLayoutParams();
+                    layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                    layoutParams.dimAmount = 0.3f;
+                    wm.updateViewLayout(relativeLayout, layoutParams);*/
                 }
                 return false;
             }
@@ -176,9 +229,8 @@ public class TasksManager extends AppCompatActivity implements View.OnClickListe
                             pn.add(packageName);
                         }
                     }
-                    customerProcessInfos = factory.getCustomerProcessInfos(list,pn);
+                    customerProcessInfos = factory.getCustomerProcessInfos(list, pn);
                     systemProcessInfos = factory.getSystemProcessInfos(list, pn);
-                    totalProcessInfos = factory.getTotalProcessInfos(list, pn);
                     adapter = new ProcessInfoAdapter
                             (getApplicationContext(), customerProcessInfos, systemProcessInfos);
                     handler.sendEmptyMessage(0);

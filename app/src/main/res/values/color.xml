@@ -6,4 +6,5 @@
     <color name="color_wizard_background">#ff777777</color>
     <color name="color_pressed">#F0F0F0</color>
     <color name="color_focus">#00F000</color>
+    <color name="half_transparent">#CC888888</color>
 </resources>

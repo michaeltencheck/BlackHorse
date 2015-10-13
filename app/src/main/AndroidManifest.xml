@@ -182,9 +182,18 @@
         </activity>
         <activity
             android:name=".activity.PermissionDetailActivity"
-            android:theme="@style/activity_float"
-            android:label="@string/title_activity_permission_detail" >
+            android:label="@string/title_activity_permission_detail"
+            android:theme="@style/activity_float" >
         </activity>
+
+        <receiver
+            android:name=".receiver.BackgroundKiller"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_OFF" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
