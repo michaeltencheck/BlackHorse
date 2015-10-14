@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <CardView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,11 +18,54 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/tv_wbk_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
+                <ImageView
+                    android:src="@drawable/devide_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tv_wbk_availableMemory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/icon5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_weight="10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bt_wbk_killProcess"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </CardView>
+    </android.support.v7.widget.CardView>
 </LinearLayout>
