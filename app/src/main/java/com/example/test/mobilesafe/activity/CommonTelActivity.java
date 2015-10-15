@@ -1,5 +1,7 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.res.AssetManager;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,9 +12,16 @@ import com.example.test.mobilesafe.R;
 import com.example.test.mobilesafe.adapter.CommonTelAdapter;
 import com.example.test.mobilesafe.adapter.ContactInfoAdapter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class CommonTelActivity extends AppCompatActivity {
     private ExpandableListView showCommonTel;
     private CommonTelAdapter commonTelAdapter;
+    private File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +31,31 @@ public class CommonTelActivity extends AppCompatActivity {
         showCommonTel = (ExpandableListView) findViewById(R.id.elv_act_commonTel);
         commonTelAdapter = new CommonTelAdapter(this);
         showCommonTel.setAdapter(commonTelAdapter);
+
+        AssetManager manager = getAssets();
+
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/commonnum.db";
+        file = new File(path);
+
+        String state = Environment.getExternalStorageState();
+        boolean isAvailable = state.equals(Environment.MEDIA_MOUNTED);
+        if (isAvailable) {
+            if (!file.exists()) {
+                try {
+                    InputStream is = manager.open("commonnum.db");
+                    FileOutputStream fos = new FileOutputStream(file);
+                    byte[] bytes = new byte[1024];
+                    int len ;
+                    while ((len = is.read(bytes)) != -1) {
+                        fos.write(bytes,0,len);
+                    }
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     @Override
