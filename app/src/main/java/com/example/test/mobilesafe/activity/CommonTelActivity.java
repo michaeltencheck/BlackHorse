@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class CommonTelActivity extends AppCompatActivity {
+    private static final String TAG = "CommonTelActivity";
     private ExpandableListView showCommonTel;
     private CommonTelAdapter commonTelAdapter;
     private File file;
@@ -29,8 +31,6 @@ public class CommonTelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_common_tel);
 
         showCommonTel = (ExpandableListView) findViewById(R.id.elv_act_commonTel);
-        commonTelAdapter = new CommonTelAdapter(this);
-        showCommonTel.setAdapter(commonTelAdapter);
 
         AssetManager manager = getAssets();
 
@@ -56,6 +56,11 @@ public class CommonTelActivity extends AppCompatActivity {
                 }
             }
         }
+
+        Log.i(TAG, "onCreate " + file.getAbsolutePath());
+
+        commonTelAdapter = new CommonTelAdapter(this,file);
+        showCommonTel.setAdapter(commonTelAdapter);
     }
 
     @Override
