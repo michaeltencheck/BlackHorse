@@ -47,6 +47,7 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout smsBackup;
     private RelativeLayout smsRestore;
     private RelativeLayout appLocker;
+    private RelativeLayout commonTel;
     private ProgressDialog pd;
     private Handler handler = new Handler(){
         @Override
@@ -86,6 +87,9 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
 
         appLocker = (RelativeLayout) findViewById(R.id.rl_hc_appLocker);
         appLocker.setOnClickListener(this);
+
+        commonTel = (RelativeLayout) findViewById(R.id.rl_hc_commonTel);
+        commonTel.setOnClickListener(this);
 
         textView = (TextView) findViewById(R.id.tv_hc_showTelLocation);
 
@@ -233,6 +237,11 @@ public class HighCastActivity extends AppCompatActivity implements View.OnClickL
             case R.id.rl_hc_appLocker:
                 Intent intent_appLocker = new Intent(this, AppLockerActivity.class);
                 startActivity(intent_appLocker);
+                break;
+            case R.id.rl_hc_commonTel:
+                Intent intent_commonTel = new Intent(this, CommonTelActivity.class);
+                startActivity(intent_commonTel);
+                overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
                 break;
             default:
                 break;
