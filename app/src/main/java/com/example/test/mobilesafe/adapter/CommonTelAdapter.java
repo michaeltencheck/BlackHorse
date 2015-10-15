@@ -39,7 +39,15 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return 8;
+        int childrenCount = 0;
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select count(*) from table"+(groupPosition+1), null);
+            if (cursor.moveToNext()) {
+                childrenCount = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return childrenCount;
     }
 
     @Override
