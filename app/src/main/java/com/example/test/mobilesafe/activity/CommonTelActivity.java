@@ -4,15 +4,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.adapter.CommonTelAdapter;
+import com.example.test.mobilesafe.adapter.ContactInfoAdapter;
 
 public class CommonTelActivity extends AppCompatActivity {
+    private ExpandableListView showCommonTel;
+    private CommonTelAdapter commonTelAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_tel);
+
+        showCommonTel = (ExpandableListView) findViewById(R.id.elv_act_commonTel);
+        commonTelAdapter = new CommonTelAdapter(this);
+        showCommonTel.setAdapter(commonTelAdapter);
     }
 
     @Override
