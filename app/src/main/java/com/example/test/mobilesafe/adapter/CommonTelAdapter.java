@@ -95,13 +95,14 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
         }
         String name = "";
         if (db.isOpen()) {
-            Cursor cursor = db.rawQuery("select name from classlist where idx=?", new String[]{groupPosition + 1 + ""});
+            Cursor cursor = db.rawQuery("select name from classlist where idx=?",
+                    new String[]{groupPosition + 1 + ""});
             if (cursor.moveToNext()) {
                 name = cursor.getString(0);
             }
             cursor.close();
         }
-        viewHolder.textView.setText("       " + name);
+        viewHolder.textView.setText("        " + name);
         return view;
     }
 
@@ -113,8 +114,30 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
         View view;
         ChileViewHolder viewHolder;
         if (convertView == null) {
-
+            view = View.inflate(context, R.layout.common_num_child, null);
+            viewHolder = new ChileViewHolder();
+            viewHolder.name = (TextView) view.findViewById(R.id.tv_cnc_name);
+            viewHolder.number = (TextView) view.findViewById(R.id.tv_cnc_number);
+            view.setTag(viewHolder);
+        } else {
+            view = convertView;
+            viewHolder = (ChileViewHolder) view.getTag();
         }
+        String name = "";
+        String number = "";
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select name,number from table"
+                    + (groupPosition + 1) + " where _id=?", new String[]{childPosition + 1 + ""});
+            if (cursor.moveToNext()) {
+                name = cursor.getString(0);
+                number = cursor.getString(1);
+            }
+            cursor.close();
+        }
+        viewHolder.name.setText("        " + name + ":");
+        viewHolder.number.setText("        " + number);
+        return view;
+
     }
 
     @Override
