@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.example.test.mobilesafe.R;
+
 import java.io.File;
 
 /**
@@ -77,9 +79,30 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        TextView textView = new TextView(context);
+/*        TextView textView = new TextView(context);
         textView.setText("              " + "我在马路边" + groupPosition);
-        return textView;
+        return textView;*/
+        View view;
+        GroupViewHolder viewHolder;
+        if (convertView == null) {
+            view = View.inflate(context, R.layout.common_num_group, null);
+            viewHolder = new GroupViewHolder();
+            viewHolder.textView = (TextView) view.findViewById(R.id.tv_cng_group);
+            view.setTag(viewHolder);
+        } else {
+            view = convertView;
+            viewHolder = (GroupViewHolder) view.getTag();
+        }
+        String name = "";
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select name from classlist where idx=?", new String[]{groupPosition + 1 + ""});
+            if (cursor.moveToNext()) {
+                name = cursor.getString(0);
+            }
+            cursor.close();
+        }
+        viewHolder.textView.setText("       " + name);
+        return view;
     }
 
     @Override
@@ -92,5 +115,9 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    private static class GroupViewHolder {
+        private TextView textView;
     }
 }
