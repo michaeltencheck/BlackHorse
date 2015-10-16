@@ -107,9 +107,14 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        TextView textView = new TextView(context);
+/*        TextView textView = new TextView(context);
         textView.setText("              " + "捡到" + childPosition+"分钱");
-        return textView;
+        return textView;*/
+        View view;
+        ChileViewHolder viewHolder;
+        if (convertView == null) {
+
+        }
     }
 
     @Override
@@ -119,5 +124,10 @@ public class CommonTelAdapter extends BaseExpandableListAdapter{
 
     private static class GroupViewHolder {
         private TextView textView;
+    }
+
+    private static class ChileViewHolder {
+        private TextView name;
+        private TextView number;
     }
 }
