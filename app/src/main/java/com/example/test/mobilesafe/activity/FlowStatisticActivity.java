@@ -1,9 +1,12 @@
 package com.example.test.mobilesafe.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -14,6 +17,15 @@ public class FlowStatisticActivity extends AppCompatActivity {
     private LinearLayout layout;
     private ListView listView;
     private FlowAdapter adapter;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            listView.setAdapter(adapter);
+            layout.setVisibility(View.INVISIBLE);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +34,17 @@ public class FlowStatisticActivity extends AppCompatActivity {
         layout = (LinearLayout) findViewById(R.id.ll_afs_progress);
         listView = (ListView) findViewById(R.id.lv_afs_flowDetail);
 
-        adapter = new FlowAdapter(this);
+        getAdapter();
+    }
 
-        listView.setAdapter(adapter);
+    public void getAdapter() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                adapter = new FlowAdapter(getApplicationContext());
+                handler.sendEmptyMessage(0);
+            }
+        }).start();
     }
 
     @Override
