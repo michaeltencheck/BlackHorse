@@ -4,15 +4,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.example.test.mobilesafe.R;
 
 public class FlowStatisticActivity extends AppCompatActivity {
-
+    private LinearLayout layout;
+    private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flow_statistic);
+
+        layout = (LinearLayout) findViewById(R.id.ll_afs_progress);
+        listView = (ListView) findViewById(R.id.lv_afs_flowDetail);
     }
 
     @Override
