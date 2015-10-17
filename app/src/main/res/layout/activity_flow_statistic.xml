@@ -35,10 +35,41 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lv_alf_flowDetail"
+
+    <RelativeLayout
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+
+        <ListView
+            android:id="@+id/lv_alf_flowDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+
+
+        <LinearLayout
+            android:id="@+id/ll_afs_progress"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/pb_afs_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="正在加载，请稍候"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="@color/textcolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 </LinearLayout>
