@@ -15,11 +15,11 @@
 
         <TextView
             android:id="@+id/tv_afs_mobileFlow"
-            android:gravity="center"
+            android:gravity="end"
             android:text="2g/3g总流量"
             android:textColor="@color/textcolor"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
@@ -29,7 +29,7 @@
             android:textColor="@color/textcolor"
             android:text="wifi总流量"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 

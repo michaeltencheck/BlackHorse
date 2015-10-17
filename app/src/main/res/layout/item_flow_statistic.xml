@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/iv_ifs_appIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 
     <TextView
         android:id="@+id/tv_ifs_appName"
@@ -19,12 +19,12 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_width="0dp"
-        android:layout_height="30dp">
+        android:layout_height="50dp">
 
         <ImageView
             android:src="@drawable/threeg"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/tv_ifs_mobile_flow"
@@ -37,12 +37,12 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:layout_width="0dp"
-        android:layout_height="30dp">
+        android:layout_height="50dp">
 
         <ImageView
             android:src="@drawable/wifigreen"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/tv_ifs_wifi_flow"

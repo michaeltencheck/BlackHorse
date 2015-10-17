@@ -8,10 +8,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.adapter.FlowAdapter;
 
 public class FlowStatisticActivity extends AppCompatActivity {
     private LinearLayout layout;
     private ListView listView;
+    private FlowAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,10 @@ public class FlowStatisticActivity extends AppCompatActivity {
 
         layout = (LinearLayout) findViewById(R.id.ll_afs_progress);
         listView = (ListView) findViewById(R.id.lv_afs_flowDetail);
+
+        adapter = new FlowAdapter(this);
+
+        listView.setAdapter(adapter);
     }
 
     @Override

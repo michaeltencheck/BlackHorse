@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 overridePendingTransition(R.anim.anim_in_translate, R.anim.anim_out_translate);
                 break;
             case 4:
-                Intent intent4 = new Intent(this, TestActivity.class);
+                Intent intent4 = new Intent(this, FlowStatisticActivity.class);
                 startActivity(intent4);
                 overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
                 break;
