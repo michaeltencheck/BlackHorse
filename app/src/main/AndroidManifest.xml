@@ -203,6 +203,10 @@
             android:name=".activity.CommonTelActivity"
             android:label="@string/title_activity_common_tel" >
         </activity>
+        <activity
+            android:name=".activity.FlowStatisticActivity"
+            android:label="@string/title_activity_flow_statistic" >
+        </activity>
     </application>
 
 </manifest>
