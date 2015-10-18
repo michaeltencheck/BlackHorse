@@ -21,10 +21,10 @@
         android:layout_width="0dp"
         android:layout_height="50dp">
 
-        <ImageView
+<!--        <ImageView
             android:src="@drawable/threeg"
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp" />-->
 
         <TextView
             android:id="@+id/tv_ifs_mobile_flow"
@@ -39,10 +39,10 @@
         android:layout_width="0dp"
         android:layout_height="50dp">
 
-        <ImageView
+<!--        <ImageView
             android:src="@drawable/wifigreen"
             android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp" />-->
 
         <TextView
             android:id="@+id/tv_ifs_wifi_flow"

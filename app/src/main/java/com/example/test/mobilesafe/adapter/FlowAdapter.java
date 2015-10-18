@@ -71,8 +71,13 @@ public class FlowAdapter extends BaseAdapter{
             long downloadFlow = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidRxPackets(uid);
             long uploadFlow = TrafficStats.getUidTxBytes(uid) + TrafficStats.getUidTxPackets(uid);
 
-            downloadFlows.add(DecimalFormater.getNumber(downloadFlow));
-            uploadFlows.add(DecimalFormater.getNumber(uploadFlow));
+            if (downloadFlow < 0 & uploadFlow < 0) {
+/*                downloadFlows.add("nothing");
+                uploadFlows.add("nothing");*/
+            } else {
+                downloadFlows.add(DecimalFormater.getNumber(downloadFlow));
+                uploadFlows.add(DecimalFormater.getNumber(uploadFlow));
+            }
         }
 
         this.icons = icons1;
@@ -84,7 +89,7 @@ public class FlowAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return icons.size();
+        return dFlows.size();
     }
 
     @Override
@@ -113,11 +118,21 @@ public class FlowAdapter extends BaseAdapter{
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
+        /*if (!dFlows.get(position).equals("nothing")) {
+            viewHolder.appIcon.setImageDrawable(icons.get(position));
+            viewHolder.appName.setText(names.get(position));
+            viewHolder.downloadFlow.setText(dFlows.get(position));
+            viewHolder.uploadFlow.setText(uFlows.get(position));
+        } else {
+            icons.remove(position);
+            names.remove(position);
+            dFlows.remove(position);
+            uFlows.remove(position);
+        }*/
         viewHolder.appIcon.setImageDrawable(icons.get(position));
         viewHolder.appName.setText(names.get(position));
         viewHolder.downloadFlow.setText(dFlows.get(position));
         viewHolder.uploadFlow.setText(uFlows.get(position));
-
         return view;
     }
 
