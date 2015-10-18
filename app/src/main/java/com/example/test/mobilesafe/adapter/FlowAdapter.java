@@ -2,9 +2,11 @@ package com.example.test.mobilesafe.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.net.TrafficStats;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.util.DecimalFormater;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +26,16 @@ public class FlowAdapter extends BaseAdapter{
     private Context context;
     private List<Drawable> icons;
     private List<String> names;
-/*    private List<String> mobileFlows;
-    private List<String> wifiFlows;*/
+    private List<String> dFlows;
+    private List<String> uFlows;
 
     public FlowAdapter(Context context) {
         this.context = context;
 
         List<Drawable> icons1 = new ArrayList<>();
         List<String> names1 = new ArrayList<>();
-        List<String> mobileFlows = new ArrayList<>();
-        List<String> wifiFlows = new ArrayList<>();
+        List<String> downloadFlows = new ArrayList<>();
+        List<String> uploadFlows = new ArrayList<>();
 
         PackageManager pm = context.getPackageManager();
 
@@ -42,16 +45,41 @@ public class FlowAdapter extends BaseAdapter{
 
         List<ResolveInfo> list = pm.queryIntentActivities(intent, PackageManager.GET_UNINSTALLED_PACKAGES);
 
+        List<ApplicationInfo> infos = pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
+
+
+
+/*
         for (ResolveInfo info : list) {
             String name = (String) info.loadLabel(pm);
             names1.add(name);
 
             Drawable icon = info.loadIcon(pm);
             icons1.add(icon);
+
+
+        }
+*/
+        for (ApplicationInfo info : infos) {
+            String name = (String) info.loadLabel(pm);
+            names1.add(name);
+
+            Drawable drawable = info.loadIcon(pm);
+            icons1.add(drawable);
+
+            int uid = info.uid;
+            long downloadFlow = TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidRxPackets(uid);
+            long uploadFlow = TrafficStats.getUidTxBytes(uid) + TrafficStats.getUidTxPackets(uid);
+
+            downloadFlows.add(DecimalFormater.getNumber(downloadFlow));
+            uploadFlows.add(DecimalFormater.getNumber(uploadFlow));
         }
 
         this.icons = icons1;
         this.names = names1;
+
+        this.dFlows = downloadFlows;
+        this.uFlows = uploadFlows;
     }
 
     @Override
@@ -78,8 +106,8 @@ public class FlowAdapter extends BaseAdapter{
             viewHolder = new ViewHolder();
             viewHolder.appIcon = (ImageView) view.findViewById(R.id.iv_ifs_appIcon);
             viewHolder.appName = (TextView) view.findViewById(R.id.tv_ifs_appName);
-            viewHolder.moblieFlow = (TextView) view.findViewById(R.id.tv_ifs_mobile_flow);
-            viewHolder.wifiFlow = (TextView) view.findViewById(R.id.tv_ifs_wifi_flow);
+            viewHolder.downloadFlow = (TextView) view.findViewById(R.id.tv_ifs_mobile_flow);
+            viewHolder.uploadFlow = (TextView) view.findViewById(R.id.tv_ifs_wifi_flow);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -87,13 +115,16 @@ public class FlowAdapter extends BaseAdapter{
         }
         viewHolder.appIcon.setImageDrawable(icons.get(position));
         viewHolder.appName.setText(names.get(position));
+        viewHolder.downloadFlow.setText(dFlows.get(position));
+        viewHolder.uploadFlow.setText(uFlows.get(position));
+
         return view;
     }
 
     private static class ViewHolder {
         private ImageView appIcon;
         private TextView appName;
-        private TextView moblieFlow;
-        private TextView wifiFlow;
+        private TextView downloadFlow;
+        private TextView uploadFlow;
     }
 }
