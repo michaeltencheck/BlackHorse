@@ -26,16 +26,28 @@ public class FlowStatisticActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            long mobileFlow = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileRxPackets()
-                    + TrafficStats.getMobileTxBytes() + TrafficStats.getMobileTxPackets();
-            long wifiFlow = TrafficStats.getTotalRxBytes() + TrafficStats.getTotalRxPackets()
-                    + TrafficStats.getTotalTxBytes() + TrafficStats.getTotalTxPackets()-mobileFlow;
+            if (msg.what == 0) {
+                long mobileFlow = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileRxPackets()
+                        + TrafficStats.getMobileTxBytes() + TrafficStats.getMobileTxPackets();
+                long wifiFlow = TrafficStats.getTotalRxBytes() + TrafficStats.getTotalRxPackets()
+                        + TrafficStats.getTotalTxBytes() + TrafficStats.getTotalTxPackets()-mobileFlow;
 
-            mobile.setText(DecimalFormater.getNumber(mobileFlow));
-            wifi.setText(DecimalFormater.getNumber(wifiFlow));
+                mobile.setText(DecimalFormater.getNumber(mobileFlow));
+                wifi.setText(DecimalFormater.getNumber(wifiFlow));
 
-            listView.setAdapter(adapter);
-            layout.setVisibility(View.INVISIBLE);
+                listView.setAdapter(adapter);
+                layout.setVisibility(View.INVISIBLE);
+            }else if (msg.what == 1) {
+                long mobileFlow = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileRxPackets()
+                        + TrafficStats.getMobileTxBytes() + TrafficStats.getMobileTxPackets();
+                long wifiFlow = TrafficStats.getTotalRxBytes() + TrafficStats.getTotalRxPackets()
+                        + TrafficStats.getTotalTxBytes() + TrafficStats.getTotalTxPackets()-mobileFlow;
+
+                mobile.setText(DecimalFormater.getNumber(mobileFlow));
+                wifi.setText(DecimalFormater.getNumber(wifiFlow));
+                listView.setAdapter(adapter);
+            }
+
         }
     };
 
@@ -59,6 +71,19 @@ public class FlowStatisticActivity extends AppCompatActivity {
             public void run() {
                 adapter = new FlowAdapter(getApplicationContext());
                 handler.sendEmptyMessage(0);
+            }
+        }).start();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                adapter = new FlowAdapter(getApplicationContext());
+                handler.sendEmptyMessage(1);
             }
         }).start();
     }
