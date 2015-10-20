@@ -125,6 +125,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent4);
                 overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
                 break;
+            case 5:
+                Intent intent5 = new Intent(this, VirusKillerActivity.class);
+                startActivity(intent5);
+                overridePendingTransition(R.anim.anim_in_translate,R.anim.anim_out_translate);
+                break;
             case 7:
                 Intent intent7 = new Intent(this, HighCastActivity.class);
                 startActivity(intent7);
