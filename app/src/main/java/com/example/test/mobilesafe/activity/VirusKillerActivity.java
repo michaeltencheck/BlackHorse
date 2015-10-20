@@ -1,18 +1,35 @@
 package com.example.test.mobilesafe.activity;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
 
 public class VirusKillerActivity extends AppCompatActivity {
+    private ImageView imageView;
+    private TextView textView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_virus_killer);
+
+        imageView = (ImageView) findViewById(R.id.iv_avk_picture);
+        textView = (TextView) findViewById(R.id.tv_avk_scan);
+        progressBar = (ProgressBar) findViewById(R.id.pb_avk_progress);
+
+
+        imageView.setBackgroundResource(R.drawable.anim_scan);
+        AnimationDrawable drawable = (AnimationDrawable) imageView.getBackground();
+        drawable.start();
     }
 
     @Override
