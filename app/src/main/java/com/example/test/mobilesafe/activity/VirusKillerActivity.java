@@ -1,6 +1,8 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.res.AssetManager;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class VirusKillerActivity extends AppCompatActivity {
     private ImageView imageView;
@@ -30,6 +37,38 @@ public class VirusKillerActivity extends AppCompatActivity {
         imageView.setBackgroundResource(R.drawable.anim_scan);
         AnimationDrawable drawable = (AnimationDrawable) imageView.getBackground();
         drawable.start();
+
+        downloadDb();
+    }
+
+    private void downloadDb() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String state = Environment.getExternalStorageState();
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
+                File file = new File(path);
+                if (state.equals(Environment.MEDIA_MOUNTED)) {
+                    if (!file.exists()) {
+                        AssetManager am = getAssets();
+                        InputStream is;
+                        try {
+                            is = am.open("antivirus.db");
+                            FileOutputStream fos = new FileOutputStream(file);
+                            byte[] bytes = new byte[1024];
+                            int len = 0;
+                            while ((len = is.read()) != -1) {
+                                fos.write(bytes,0,len);
+                            }
+                            fos.flush();
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     @Override
