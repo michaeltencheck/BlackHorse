@@ -207,6 +207,10 @@
             android:name=".activity.FlowStatisticActivity"
             android:label="@string/title_activity_flow_statistic" >
         </activity>
+        <activity
+            android:name=".activity.VirusKillerActivity"
+            android:label="@string/title_activity_virus_killer" >
+        </activity>
     </application>
 
 </manifest>

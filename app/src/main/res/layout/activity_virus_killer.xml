@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backgroundcolor"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.test.mobilesafe.activity.VirusKillerActivity">
+
+    <ImageView
+        android:id="@+id/iv_avk_picture"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+
+    <ProgressBar
+        android:id="@+id/pb_avk_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_avk_scan"
+        android:textColor="@color/textcolor"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
