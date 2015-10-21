@@ -4,6 +4,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Environment;
@@ -29,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Signature;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VirusKillerActivity extends AppCompatActivity {
@@ -39,6 +41,7 @@ public class VirusKillerActivity extends AppCompatActivity {
     private Button button;
     private boolean isClick;
     private AnimationDrawable drawable;
+    private AssetManager am;
     private SQLiteDatabase database;
     private String path;
     private String state;
@@ -53,6 +56,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                     break;
                 case 1:
                     database = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+                    Log.i(TAG, "handleMessage "+database.getPath());
                     button.setVisibility(View.VISIBLE);
                     break;
             }
@@ -70,6 +74,7 @@ public class VirusKillerActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.bt_avk_scan);
         isClick = false;
         state = Environment.getExternalStorageState();
+        am = getAssets();
 
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
@@ -90,15 +95,32 @@ public class VirusKillerActivity extends AppCompatActivity {
                 if (!isClick) {
                     drawable.start();
                     isClick = true;
+                    int count = 0;
                     PackageManager pm = getPackageManager();
+                    List<String> strs = new ArrayList<String>();
                     List<PackageInfo> infos = pm.getInstalledPackages
-                            (PackageManager.GET_UNINSTALLED_PACKAGES & PackageManager.GET_SIGNATURES);
+                            (PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
+                    Cursor c = database.rawQuery("select md5 from datable", null);
+                    while (c.moveToNext()) {
+                        String str = c.getColumnName(0);
+                        strs.add(str);
+                    }
+                    Log.i(TAG, "onClick "+strs.size());
+                    c.close();
                     for (PackageInfo info : infos) {
                         android.content.pm.Signature[] signatures = info.signatures;
-                        android.content.pm.Signature signature = signatures[0];
-                        String si = signature.toCharsString();
+//                        String si = signatures.toString();
+                        String si = signatures[0].toCharsString();
+//                        Log.i(TAG, "onClick "+si);
                         String md5 = MD5Encode.MD5Encoding(si);
+                        if (strs.contains(md5)) {
+                            count++;
+                        }
+                        Log.i(TAG, "onClick " + info.packageName);
+                        textView.setText("正在扫描" + info.packageName);
                     }
+                    textView.setText("扫描完毕");
+                    isClick = false;
                 }
             }
         });
@@ -112,10 +134,8 @@ public class VirusKillerActivity extends AppCompatActivity {
             public void run() {
                 File file = new File(path);
                 if (!file.exists()) {
-                    AssetManager am = getAssets();
-                    InputStream is;
                     try {
-                        is = am.open("antivirus.db");
+                        InputStream is = am.open("antivirus.db");
                         FileOutputStream fos = new FileOutputStream(file);
                         byte[] bytes = new byte[1024];
                         int len = 0;
