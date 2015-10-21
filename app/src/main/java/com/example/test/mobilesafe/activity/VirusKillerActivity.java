@@ -1,5 +1,8 @@
 package com.example.test.mobilesafe.activity;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.AnimationDrawable;
@@ -19,11 +22,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.util.MD5Encode;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Signature;
+import java.util.List;
 
 public class VirusKillerActivity extends AppCompatActivity {
     private static final String TAG = "VirusKillerActivity";
@@ -84,6 +90,15 @@ public class VirusKillerActivity extends AppCompatActivity {
                 if (!isClick) {
                     drawable.start();
                     isClick = true;
+                    PackageManager pm = getPackageManager();
+                    List<PackageInfo> infos = pm.getInstalledPackages
+                            (PackageManager.GET_UNINSTALLED_PACKAGES & PackageManager.GET_SIGNATURES);
+                    for (PackageInfo info : infos) {
+                        android.content.pm.Signature[] signatures = info.signatures;
+                        android.content.pm.Signature signature = signatures[0];
+                        String si = signature.toCharsString();
+                        String md5 = MD5Encode.MD5Encoding(si);
+                    }
                 }
             }
         });
