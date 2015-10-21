@@ -27,4 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/bt_avk_scan"
+        android:layout_gravity="center_horizontal"
+        android:text="扫描"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

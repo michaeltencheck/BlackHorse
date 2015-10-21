@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -23,6 +25,9 @@ public class VirusKillerActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView textView;
     private ProgressBar progressBar;
+    private Button button;
+    private boolean isClick;
+    private AnimationDrawable drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +37,22 @@ public class VirusKillerActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.iv_avk_picture);
         textView = (TextView) findViewById(R.id.tv_avk_scan);
         progressBar = (ProgressBar) findViewById(R.id.pb_avk_progress);
+        button = (Button) findViewById(R.id.bt_avk_scan);
+        isClick = false;
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isClick) {
+                    drawable.start();
+                    isClick = true;
+                }
+            }
+        });
 
 
         imageView.setBackgroundResource(R.drawable.anim_scan);
-        AnimationDrawable drawable = (AnimationDrawable) imageView.getBackground();
-        drawable.start();
+        drawable = (AnimationDrawable) imageView.getBackground();
 
         downloadDb();
     }
