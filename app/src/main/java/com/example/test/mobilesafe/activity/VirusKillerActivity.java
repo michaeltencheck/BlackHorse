@@ -48,6 +48,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                 String state = Environment.getExternalStorageState();
                 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
                 File file = new File(path);
+                File file1 = new File(getApplicationContext().getFilesDir(), "antivirus.db");
                 if (state.equals(Environment.MEDIA_MOUNTED)) {
                     if (!file.exists()) {
                         AssetManager am = getAssets();
@@ -58,7 +59,25 @@ public class VirusKillerActivity extends AppCompatActivity {
                             byte[] bytes = new byte[1024];
                             int len = 0;
                             while ((len = is.read()) != -1) {
-                                fos.write(bytes,0,len);
+                                fos.write(bytes, 0, len);
+                            }
+                            fos.flush();
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    if (!file1.exists()) {
+                        AssetManager am = getAssets();
+                        InputStream is;
+                        try {
+                            is = am.open("antivirus.db");
+                            FileOutputStream fos = new FileOutputStream(file);
+                            byte[] bytes = new byte[1024];
+                            int len = 0;
+                            while ((len = is.read()) != -1) {
+                                fos.write(bytes, 0, len);
                             }
                             fos.flush();
                             fos.close();
