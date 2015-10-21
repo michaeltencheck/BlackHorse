@@ -30,6 +30,7 @@
     <Button
         android:layout_marginTop="50dp"
         android:id="@+id/bt_avk_scan"
+        android:visibility="invisible"
         android:layout_gravity="center_horizontal"
         android:text="扫描"
         android:textAppearance="@android:style/TextAppearance.Large"

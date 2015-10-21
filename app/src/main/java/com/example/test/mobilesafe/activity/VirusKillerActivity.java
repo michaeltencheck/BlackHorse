@@ -4,8 +4,11 @@ import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class VirusKillerActivity extends AppCompatActivity {
+    private static final String TAG = "VirusKillerActivity";
     private ImageView imageView;
     private TextView textView;
     private ProgressBar progressBar;
@@ -32,6 +36,22 @@ public class VirusKillerActivity extends AppCompatActivity {
     private SQLiteDatabase database;
     private String path;
     private String state;
+    private Handler handler=new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    database = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+                    button.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    database = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+                    button.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +87,8 @@ public class VirusKillerActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     private void downloadDb() {
@@ -87,9 +109,14 @@ public class VirusKillerActivity extends AppCompatActivity {
                         }
                         fos.flush();
                         fos.close();
+                        Log.i(TAG, "run "+file.getTotalSpace());
+                        handler.sendEmptyMessage(0);
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }}}}).start();
+                    }
+                } else {
+                    handler.sendEmptyMessage(1);
+                } }}).start();
     }
 
     @Override
