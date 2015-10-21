@@ -1,6 +1,7 @@
 package com.example.test.mobilesafe.activity;
 
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class VirusKillerActivity extends AppCompatActivity {
     private Button button;
     private boolean isClick;
     private AnimationDrawable drawable;
+    private SQLiteDatabase database;
+    private String path;
+    private String state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,20 @@ public class VirusKillerActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.pb_avk_progress);
         button = (Button) findViewById(R.id.bt_avk_scan);
         isClick = false;
+        state = Environment.getExternalStorageState();
+
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
+        } else {
+            path = this.getFilesDir() + "/antivirus.db";
+        }
+
+//        database = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+
+        imageView.setBackgroundResource(R.drawable.anim_scan);
+        drawable = (AnimationDrawable) imageView.getBackground();
+
+        downloadDb();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,61 +67,29 @@ public class VirusKillerActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-        imageView.setBackgroundResource(R.drawable.anim_scan);
-        drawable = (AnimationDrawable) imageView.getBackground();
-
-        downloadDb();
     }
 
     private void downloadDb() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String state = Environment.getExternalStorageState();
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
                 File file = new File(path);
-                File file1 = new File(getApplicationContext().getFilesDir(), "antivirus.db");
-                if (state.equals(Environment.MEDIA_MOUNTED)) {
-                    if (!file.exists()) {
-                        AssetManager am = getAssets();
-                        InputStream is;
-                        try {
-                            is = am.open("antivirus.db");
-                            FileOutputStream fos = new FileOutputStream(file);
-                            byte[] bytes = new byte[1024];
-                            int len = 0;
-                            while ((len = is.read()) != -1) {
-                                fos.write(bytes, 0, len);
-                            }
-                            fos.flush();
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                if (!file.exists()) {
+                    AssetManager am = getAssets();
+                    InputStream is;
+                    try {
+                        is = am.open("antivirus.db");
+                        FileOutputStream fos = new FileOutputStream(file);
+                        byte[] bytes = new byte[1024];
+                        int len = 0;
+                        while ((len = is.read()) != -1) {
+                            fos.write(bytes, 0, len);
                         }
-                    }
-                } else {
-                    if (!file1.exists()) {
-                        AssetManager am = getAssets();
-                        InputStream is;
-                        try {
-                            is = am.open("antivirus.db");
-                            FileOutputStream fos = new FileOutputStream(file);
-                            byte[] bytes = new byte[1024];
-                            int len = 0;
-                            while ((len = is.read()) != -1) {
-                                fos.write(bytes, 0, len);
-                            }
-                            fos.flush();
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
+                        fos.flush();
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }}}}).start();
     }
 
     @Override
