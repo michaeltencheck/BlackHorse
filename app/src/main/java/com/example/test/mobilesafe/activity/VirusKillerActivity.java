@@ -19,10 +19,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.test.mobilesafe.R;
+import com.example.test.mobilesafe.adapter.VirusAdapter;
 import com.example.test.mobilesafe.util.MD5Encode;
 
 import java.io.File;
@@ -43,10 +45,12 @@ public class VirusKillerActivity extends AppCompatActivity {
     private AnimationDrawable drawable;
     private AssetManager am;
     private SQLiteDatabase database;
+    private ListView listView;
     private TextView pro;
     private TextView detail;
     private List<PackageInfo> virus;
     private List<PackageInfo> infos;
+    private VirusAdapter virusAdapter;
     private int count;
     private String path;
     private String state;
@@ -64,6 +68,10 @@ public class VirusKillerActivity extends AppCompatActivity {
                     Log.i(TAG, "handleMessage "+database.getPath());
                     button.setVisibility(View.VISIBLE);
                     break;
+                case 2:
+                    virusAdapter = new VirusAdapter(getApplicationContext(), virus);
+                    listView.setAdapter(virusAdapter);
+                    break;
             }
         }
     };
@@ -78,6 +86,7 @@ public class VirusKillerActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.pb_avk_progress);
         pro = (TextView) findViewById(R.id.tv_avk_progress);
         button = (Button) findViewById(R.id.bt_avk_scan);
+        listView = (ListView) findViewById(R.id.lv_avk_virus);
         virus = new ArrayList<>();
         isClick = false;
         state = Environment.getExternalStorageState();
@@ -142,6 +151,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                     }
                     isClick = false;
                     drawable.stop();
+                    handler.sendEmptyMessage(2);
                 }
             }
         });
