@@ -13,8 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="250dp" />
 
+    <TextView
+        android:id="@+id/tv_avk_progress"
+        android:textColor="@color/textcolor"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ProgressBar
-        android:layout_marginTop="20dp"
         android:id="@+id/pb_avk_progress"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"

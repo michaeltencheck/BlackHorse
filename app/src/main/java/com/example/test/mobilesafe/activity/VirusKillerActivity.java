@@ -43,8 +43,10 @@ public class VirusKillerActivity extends AppCompatActivity {
     private AnimationDrawable drawable;
     private AssetManager am;
     private SQLiteDatabase database;
+    private TextView pro;
     private TextView detail;
     private List<String> virus;
+    private List<PackageInfo> infos;
     private int count;
     private String path;
     private String state;
@@ -74,6 +76,7 @@ public class VirusKillerActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.iv_avk_picture);
         textView = (TextView) findViewById(R.id.tv_avk_scan);
         progressBar = (ProgressBar) findViewById(R.id.pb_avk_progress);
+        pro = (TextView) findViewById(R.id.tv_avk_progress);
         button = (Button) findViewById(R.id.bt_avk_scan);
         virus = new ArrayList<>();
         isClick = false;
@@ -81,6 +84,10 @@ public class VirusKillerActivity extends AppCompatActivity {
         am = getAssets();
         count = 0;
         detail = (TextView) findViewById(R.id.tv_avk_detail);
+        PackageManager pm = getPackageManager();
+        infos = pm.getInstalledPackages
+                (PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
+        progressBar.setMax(infos.size());
 
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
@@ -101,10 +108,8 @@ public class VirusKillerActivity extends AppCompatActivity {
                 if (!isClick) {
                     drawable.start();
                     isClick = true;
-                    PackageManager pm = getPackageManager();
                     List<String> strs = new ArrayList<String>();
-                    List<PackageInfo> infos = pm.getInstalledPackages
-                            (PackageManager.GET_UNINSTALLED_PACKAGES | PackageManager.GET_SIGNATURES);
+
                     Cursor c = database.rawQuery("select md5 from datable", null);
                     while (c.moveToNext()) {
                         String str = c.getColumnName(0);
@@ -112,6 +117,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                     }
                     Log.i(TAG, "onClick " + strs.size());
                     c.close();
+                    int progress = 0;
                     for (PackageInfo info : infos) {
                         android.content.pm.Signature[] signatures = info.signatures;
 //                        String si = signatures.toString();
@@ -124,6 +130,9 @@ public class VirusKillerActivity extends AppCompatActivity {
                         }
                         Log.i(TAG, "onClick " + info.packageName);
                         textView.setText("正在扫描" + info.packageName);
+                        progress++;
+                        progressBar.setProgress(progress);
+                        pro.setText(progress + "/" + infos.size());
                     }
                     textView.setText("扫描完毕");
                     if (count == 0) {
