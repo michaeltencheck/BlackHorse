@@ -43,6 +43,9 @@ public class VirusKillerActivity extends AppCompatActivity {
     private AnimationDrawable drawable;
     private AssetManager am;
     private SQLiteDatabase database;
+    private TextView detail;
+    private List<String> virus;
+    private int count;
     private String path;
     private String state;
     private Handler handler=new Handler() {
@@ -72,9 +75,12 @@ public class VirusKillerActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.tv_avk_scan);
         progressBar = (ProgressBar) findViewById(R.id.pb_avk_progress);
         button = (Button) findViewById(R.id.bt_avk_scan);
+        virus = new ArrayList<>();
         isClick = false;
         state = Environment.getExternalStorageState();
         am = getAssets();
+        count = 0;
+        detail = (TextView) findViewById(R.id.tv_avk_detail);
 
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/antivirus.db";
@@ -95,7 +101,6 @@ public class VirusKillerActivity extends AppCompatActivity {
                 if (!isClick) {
                     drawable.start();
                     isClick = true;
-                    int count = 0;
                     PackageManager pm = getPackageManager();
                     List<String> strs = new ArrayList<String>();
                     List<PackageInfo> infos = pm.getInstalledPackages
@@ -105,7 +110,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                         String str = c.getColumnName(0);
                         strs.add(str);
                     }
-                    Log.i(TAG, "onClick "+strs.size());
+                    Log.i(TAG, "onClick " + strs.size());
                     c.close();
                     for (PackageInfo info : infos) {
                         android.content.pm.Signature[] signatures = info.signatures;
@@ -115,12 +120,19 @@ public class VirusKillerActivity extends AppCompatActivity {
                         String md5 = MD5Encode.MD5Encoding(si);
                         if (strs.contains(md5)) {
                             count++;
+                            virus.add(info.packageName);
                         }
                         Log.i(TAG, "onClick " + info.packageName);
                         textView.setText("正在扫描" + info.packageName);
                     }
                     textView.setText("扫描完毕");
+                    if (count == 0) {
+                        detail.setText("您的系统安全，没有找到病毒");
+                    } else {
+                        detail.setText("共找到"+count+"个病毒");
+                    }
                     isClick = false;
+                    drawable.stop();
                 }
             }
         });

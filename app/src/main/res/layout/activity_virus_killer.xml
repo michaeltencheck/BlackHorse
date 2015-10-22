@@ -27,6 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/tv_avk_detail"
+        android:textColor="@color/textcolor"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:layout_marginTop="50dp"
         android:id="@+id/bt_avk_scan"
