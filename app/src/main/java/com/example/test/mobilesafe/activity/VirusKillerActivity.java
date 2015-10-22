@@ -45,7 +45,7 @@ public class VirusKillerActivity extends AppCompatActivity {
     private SQLiteDatabase database;
     private TextView pro;
     private TextView detail;
-    private List<String> virus;
+    private List<PackageInfo> virus;
     private List<PackageInfo> infos;
     private int count;
     private String path;
@@ -126,7 +126,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                         String md5 = MD5Encode.MD5Encoding(si);
                         if (strs.contains(md5)) {
                             count++;
-                            virus.add(info.packageName);
+                            virus.add(info);
                         }
                         Log.i(TAG, "onClick " + info.packageName);
                         textView.setText("正在扫描" + info.packageName);
