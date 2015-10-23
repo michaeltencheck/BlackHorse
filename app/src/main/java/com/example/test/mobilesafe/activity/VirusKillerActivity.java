@@ -12,7 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import com.example.test.mobilesafe.util.Logger;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,7 +65,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                     break;
                 case 1:
                     database = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
-                    Log.i(TAG, "handleMessage "+database.getPath());
+                    Logger.i(TAG, "handleMessage "+database.getPath());
                     button.setVisibility(View.VISIBLE);
                     break;
                 case 2:
@@ -124,20 +124,20 @@ public class VirusKillerActivity extends AppCompatActivity {
                         String str = c.getColumnName(0);
                         strs.add(str);
                     }
-                    Log.i(TAG, "onClick " + strs.size());
+                    Logger.i(TAG, "onClick " + strs.size());
                     c.close();
                     int progress = 0;
                     for (PackageInfo info : infos) {
                         android.content.pm.Signature[] signatures = info.signatures;
 //                        String si = signatures.toString();
                         String si = signatures[0].toCharsString();
-//                        Log.i(TAG, "onClick "+si);
+//                        Logger.i(TAG, "onClick "+si);
                         String md5 = MD5Encode.MD5Encoding(si);
                         if (strs.contains(md5)) {
                             count++;
                             virus.add(info);
                         }
-                        Log.i(TAG, "onClick " + info.packageName);
+                        Logger.i(TAG, "onClick " + info.packageName);
                         textView.setText("正在扫描" + info.packageName);
                         progress++;
                         progressBar.setProgress(progress);
@@ -175,7 +175,7 @@ public class VirusKillerActivity extends AppCompatActivity {
                         }
                         fos.flush();
                         fos.close();
-                        Log.i(TAG, "run "+file.getTotalSpace());
+                        Logger.i(TAG, "run "+file.getTotalSpace());
                         handler.sendEmptyMessage(0);
                     } catch (IOException e) {
                         e.printStackTrace();
