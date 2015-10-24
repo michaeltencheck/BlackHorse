@@ -12,12 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.test.testservice.activity.PreMoblieSafeActivity;
+import com.example.test.testservice.activity.PreMoblieSafeActivityFragment;
 import com.example.test.testservice.interf.Change;
 import com.example.test.testservice.service.MyService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
-    private Button button, button1,button2, button3, button4;
+    private Button button, button1,button2, button3, button4, button5;
     private Intent intent;
 //    private Change myChange;
     private MyConnection myConnection;
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         button4 = (Button) findViewById(R.id.button4);
         button4.setOnClickListener(this);
+
+        button5 = (Button) findViewById(R.id.button5);
+        button5.setOnClickListener(this);
 
         myConnection = new MyConnection();
 
@@ -100,6 +105,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                myChange.changeString("button4");
                 unbindService(myConnection);
                 Log.i(TAG, "onClick button4");
+                break;
+            case R.id.button5:
+                Intent intent = new Intent(this, PreMoblieSafeActivity.class);
+                startActivity(intent);
                 break;
         }
     }

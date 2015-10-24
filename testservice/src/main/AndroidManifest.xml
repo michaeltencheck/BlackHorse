@@ -22,6 +22,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".activity.PreMoblieSafeActivity"
+            android:label="@string/title_activity_pre_moblie_safe" >
+        </activity>
     </application>
 
 </manifest>
